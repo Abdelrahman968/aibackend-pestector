@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs - Pestector: Plant Disease Classifier</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" href="../static/img/icon.png" type="image/x-icon">
+    <style>
+        .faq-item.active .faq-answer {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        .faq-item .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        .faq-item.active .toggle-icon .plus {
+            display: none;
+        }
+
+        .faq-item.active .toggle-icon .minus {
+            display: inline-block;
+        }
+
+        .faq-item .toggle-icon .plus {
+            display: inline-block;
+        }
+
+        .faq-item .toggle-icon .minus {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-green-600 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-white text-xl font-bold flex items-center">
+                        <i class="fas fa-leaf mr-2"></i><a href="/">Pestector</a>
+                    </span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="/" class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Home
+                    </a>
+                    <a href="#features"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Features
+                    </a>
+                    <a href="#how-it-works"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        How It Works
+                    </a>
+                    <div id="authButtons" class="guest-content">
+                        <a href="/changelog"
+                            class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                            <i class="fas fa-file-alt mr-1"></i> Changelog
+                        </a>
+                    </div>
+                    <div id="userMenu" class="user-content hidden">
+                        <a href="/scan"
+                            class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-camera mr-1"></i> Scan Now
+                        </a>
+                    </div>
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobileMenuButton" class="text-white">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-green-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#features"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    Features
+                </a>
+                <a href="#how-it-works"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    How It Works
+                </a>
+                <div id="authButtonss" class="guest-content">
+                    <a href="/changelog"
+                        class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                        <i class="fas fa-file-alt mr-1"></i> Changelog
+                    </a>
+                </div>
+                <div id="mobileUserMenu" class="user-content hidden">
+                    <a href="/scan"
+                        class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-camera mr-1"></i> Scan Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Header section -->
+    <header class="relative bg-gradient-to-b from-green-500 to-green-600 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
+            <p class="text-xl max-w-3xl mx-auto">Find answers to common questions about Pestector, our plant disease
+                classification system, and how to get the most out of our service.</p>
+        </div>
+    </header>
+
+    <!-- Search section -->
+    <section class="py-8 bg-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <input type="text" id="faq-search" placeholder="Search FAQs..."
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <button class="absolute right-3 top-3 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Categories -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button
+                    class="category-btn bg-green-100 hover:bg-green-200 text-green-800 font-semibold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 active"
+                    data-category="all">
+                    All Questions
+                </button>
+                <button
+                    class="category-btn bg-green-100 hover:bg-green-200 text-green-800 font-semibold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                    data-category="general">
+                    General
+                </button>
+                <button
+                    class="category-btn bg-green-100 hover:bg-green-200 text-green-800 font-semibold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                    data-category="scanning">
+                    Scanning &amp; Analysis
+                </button>
+                <button
+                    class="category-btn bg-green-100 hover:bg-green-200 text-green-800 font-semibold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                    data-category="treatment">
+                    Treatment
+                </button>
+                <button
+                    class="category-btn bg-green-100 hover:bg-green-200 text-green-800 font-semibold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                    data-category="technical">
+                    Technical
+                </button>
+                <button
+                    class="category-btn bg-green-100 hover:bg-green-200 text-green-800 font-semibold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                    data-category="account">
+                    Account &amp; Pricing
+                </button>
+            </div>
+
+            <!-- FAQ Items -->
+            <div class="max-w-4xl mx-auto">
+                <!-- General FAQs -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-green-800 mb-6" id="general">General Questions</h2>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="general">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">What is Pestector?</h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                Pestector is an AI-powered plant disease classification system designed to help farmers,
+                                gardeners, and agricultural professionals identify plant diseases quickly and
+                                accurately. By simply uploading a photo of the affected plant, our advanced machine
+                                learning model can diagnose the disease and provide treatment recommendations.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="general">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">How accurate is Pestector?</h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                Our classification model has been trained on the comprehensive PlantVillage dataset and
+                                achieves an accuracy of over 98% on test data. However, real-world conditions may vary,
+                                and factors like image quality, lighting, and disease progression can affect results. We
+                                display a confidence level with each prediction to help you gauge the reliability of the
+                                diagnosis.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="general">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">Which plants and diseases can Pestector
+                                identify?</h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                Pestector can identify diseases in 14 different plant types, including apple, tomato,
+                                potato, corn, grape, and more. Our system recognizes 38 different classes, including
+                                healthy plants and various diseases like leaf blight, bacterial spot, powdery mildew,
+                                and many others. You can view the complete list in our <a href="/library"
+                                    class="text-green-600 hover:underline">Disease Library</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scanning & Analysis FAQs -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-green-800 mb-6" id="scanning">Scanning &amp; Analysis</h2>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="scanning">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">How do I take the best photo for analysis?
+                            </h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                For the most accurate results, follow these guidelines:
+                            </p>
+                            <ul class="list-disc ml-6 mt-2 text-gray-600 pb-3">
+                                <li>Ensure good lighting - natural daylight works best</li>
+                                <li>Focus directly on the affected area of the plant</li>
+                                <li>Include enough of the plant to show context (leaf, stem, etc.)</li>
+                                <li>Avoid shadows or glare on the plant surface</li>
+                                <li>Keep the camera steady to avoid blur</li>
+                                <li>If possible, include both affected and healthy parts for comparison</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="scanning">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">What file types are supported for uploads?
+                            </h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                Pestector supports common image formats including JPEG, PNG, and GIF. The maximum file
+                                size is 10MB. For best results, we recommend using high-resolution images but be aware
+                                that very large files may take longer to process.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="scanning">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">What does the confidence score mean?</h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                The confidence score represents how certain our AI model is about the diagnosis. A
+                                higher percentage indicates greater certainty. We categorize confidence as:
+                            </p>
+                            <ul class="list-disc ml-6 mt-2 text-gray-600 pb-3">
+                                <li><span class="font-semibold">High confidence ( &gt; 85%)</span>: The model is very
+                                    certain
+                                    of its diagnosis</li>
+                                <li><span class="font-semibold">Medium confidence (70-85%)</span>: The model is
+                                    reasonably confident but some uncertainty exists</li>
+                                <li><span class="font-semibold">Low confidence (&gt; 70%) </span>: The model is less
+                                    certain
+                                    and expert review is recommended</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Treatment FAQs -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-green-800 mb-6" id="treatment">Treatment Information</h2>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="treatment">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">How reliable are the treatment
+                                recommendations?</h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                Our treatment recommendations are based on agricultural best practices and are reviewed
+                                by experts. However, they should be considered as general guidance rather than
+                                definitive solutions. Local conditions, regulations, and the specific severity of the
+                                disease may require adaptations to our recommendations. For severe infestations or when
+                                uncertain, we recommend consulting with a local agricultural extension office or plant
+                                pathologist.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="treatment">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">Does Pestector recommend organic solutions?
+                            </h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                Yes, whenever possible, we provide both conventional and organic treatment options. Our
+                                treatment recommendations typically include cultural practices, biological controls, and
+                                organic remedies alongside conventional chemical treatments when necessary. Users can
+                                choose the approach that best aligns with their gardening or farming philosophy.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="treatment">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">What if the recommended treatment doesn't
+                                work?</h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                If the recommended treatments aren't effective, several factors could be at play:
+                            </p>
+                            <ul class="list-disc ml-6 mt-2 text-gray-600 pb-3">
+                                <li>The disease might be misidentified - try uploading a clearer image</li>
+                                <li>The disease might be at an advanced stage making it harder to treat</li>
+                                <li>There might be multiple issues affecting the plant simultaneously</li>
+                                <li>Local environmental factors may be impacting effectiveness</li>
+                            </ul>
+                            <p class="text-gray-600 pb-3 mt-2">
+                                You can contact us for additional support or consult with a local plant expert. We're
+                                continuously working to improve our recommendations based on user feedback.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical FAQs -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-green-800 mb-6" id="technical">Technical Questions</h2>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="technical">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">How does the AI technology work?</h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                Pestector uses a deep learning neural network based on the VGG16 architecture,
+                                fine-tuned specifically for plant disease classification. The model has been trained on
+                                over 54,000 images from the PlantVillage dataset and other sources. When you upload an
+                                image, our system:
+                            </p>
+                            <ol class="list-decimal ml-6 mt-2 text-gray-600 pb-3">
+                                <li>Preprocesses the image for analysis</li>
+                                <li>Runs it through our neural network model</li>
+                                <li>Identifies the most likely diseases based on visual patterns</li>
+                                <li>Calculates confidence scores for each potential diagnosis</li>
+                                <li>Retrieves the appropriate treatment information</li>
+                            </ol>
+                            <p class="text-gray-600 pb-3 mt-2">
+                                For more detailed information about our technology, visit our <a href="/research"
+                                    class="text-green-600 hover:underline">Research</a> page.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="technical">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">Is there an API available for developers?
+                            </h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                Yes, we offer a RESTful API for developers who want to integrate Pestector's plant
+                                disease classification capabilities into their own applications. Our API supports
+                                classification endpoints, category listings, and detailed disease information. API
+                                access is available with our Professional and Enterprise plans. For API documentation
+                                and access, please contact our support team or visit the API documentation section in
+                                your account dashboard.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="technical">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">What browsers and devices are supported?
+                            </h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                Pestector is compatible with all modern browsers including:
+                            </p>
+                            <ul class="list-disc ml-6 mt-2 text-gray-600 pb-3">
+                                <li>Google Chrome (recommended)</li>
+                                <li>Mozilla Firefox</li>
+                                <li>Apple Safari</li>
+                                <li>Microsoft Edge</li>
+                            </ul>
+                            <p class="text-gray-600 pb-3 mt-2">
+                                The platform is fully responsive and works on desktops, tablets, and mobile devices. For
+                                the best mobile experience, we recommend using our mobile app available for iOS and
+                                Android devices.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account & Pricing FAQs -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-green-800 mb-6" id="account">Account &amp; Pricing</h2>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="account">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">What subscription plans are available?</h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                We offer several subscription tiers to meet different needs:
+                            </p>
+                            <ul class="list-disc ml-6 mt-2 text-gray-600 pb-3">
+                                <li><span class="font-semibold">Free Plan:</span> Limited to 5 scans per month, basic
+                                    disease information</li>
+                                <li><span class="font-semibold">Basic Plan ($9.99/month):</span> 50 scans per month,
+                                    detailed treatment guides, PDF reports</li>
+                                <li><span class="font-semibold">Professional Plan ($19.99/month):</span> Unlimited
+                                    scans, API access, priority support</li>
+                                <li><span class="font-semibold">Enterprise Plan:</span> Custom solutions for
+                                    agricultural businesses, contact us for pricing</li>
+                            </ul>
+                            <p class="text-gray-600 pb-3 mt-2">
+                                Visit our <a href="/pricing" class="text-green-600 hover:underline">Pricing</a> page for
+                                complete details and to compare features.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="account">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">How do I upgrade or change my subscription?
+                            </h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                You can upgrade, downgrade, or cancel your subscription at any time through your account
+                                dashboard:
+                            </p>
+                            <ol class="list-decimal ml-6 mt-2 text-gray-600 pb-3">
+                                <li>Log in to your Pestector account</li>
+                                <li>Navigate to "Account Settings"</li>
+                                <li>Select "Subscription"</li>
+                                <li>Choose "Change Plan" or "Cancel Subscription"</li>
+                            </ol>
+                            <p class="text-gray-600 pb-3 mt-2">
+                                Plan changes take effect at the start of your next billing cycle. If you upgrade
+                                mid-cycle, you'll be charged the prorated difference immediately and gain access to new
+                                features right away.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" data-category="account">
+                        <div class="faq-question cursor-pointer p-4 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">Do you offer discounts for educational
+                                institutions?</h3>
+                            <div class="toggle-icon text-green-700">
+                                <i class="fas fa-plus plus"></i>
+                                <i class="fas fa-minus minus"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer px-4">
+                            <p class="text-gray-600 pb-3">
+                                Yes, we offer special educational discounts for schools, universities, and agricultural
+                                training programs. We believe in supporting agricultural education and research.
+                                Educational institutions can receive up to 50% off our Professional plan with verified
+                                status. Contact our support team at education@pestector.com with proof of your
+                                institutional affiliation to learn more about our educational program.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Still have questions section -->
+    <section class="py-12 bg-green-50">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-green-800 mb-6">Still Have Questions?</h2>
+            <p class="text-xl text-gray-700 max-w-2xl mx-auto mb-8">
+                Our support team is ready to help! Contact us and we'll get back to you as soon as possible.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/contact"
+                    class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center">
+                    <i class="fas fa-envelope mr-2"></i> Contact Support
+                </a>
+                <a href="mailto:help@pestector.com"
+                    class="bg-white hover:bg-gray-100 text-green-700 font-bold py-3 px-6 rounded-lg border border-green-600 transition duration-200 flex items-center justify-center">
+                    <i class="fas fa-paper-plane mr-2"></i> Email Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-green-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo and description -->
+                <div class="md:col-span-1">
+                    <div class="flex items-center mb-4">
+                        <img src="static/logo.png" alt="Pestector Logo" class="h-10 w-auto mr-2">
+                        <h2 class="text-xl font-bold">Pestector</h2>
+                    </div>
+                    <p class="text-green-200 mb-4">AI-powered plant disease classification for better crop management
+                        and food security.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-green-300"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white hover:text-green-300"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white hover:text-green-300"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white hover:text-green-300"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <!-- Quick links -->
+                <div class="md:col-span-1">
+                    <h3 class="text-lg font-bold mb-4 border-b border-green-700 pb-2">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-green-200 hover:text-white">Home</a></li>
+                        <li><a href="/scan" class="text-green-200 hover:text-white">Scan</a></li>
+                        <li><a href="/library" class="text-green-200 hover:text-white">Disease Library</a></li>
+                        <li><a href="/treatment" class="text-green-200 hover:text-white">Treatment Guide</a></li>
+                        <li><a href="/faqs" class="text-green-200 hover:text-white">FAQs</a></li>
+                        <li><a href="/contact" class="text-green-200 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <!-- Resources -->
+                <div class="md:col-span-1">
+                    <h3 class="text-lg font-bold mb-4 border-b border-green-700 pb-2">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/blog" class="text-green-200 hover:text-white">Blog</a></li>
+                        <li><a href="/research" class="text-green-200 hover:text-white">Research Papers</a></li>
+                        <li><a href="/tutorials" class="text-green-200 hover:text-white">Tutorials</a></li>
+                        <li><a href="/api-docs" class="text-green-200 hover:text-white">API Documentation</a></li>
+                        <li><a href="/glossary" class="text-green-200 hover:text-white">Plant Disease Glossary</a></li>
+                    </ul>
+                </div>
+                <!-- Contact info -->
+                <div class="md:col-span-1">
+                    <h3 class="text-lg font-bold mb-4 border-b border-green-700 pb-2">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3 text-green-300"></i>
+                            <span>support@pestector.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-3 text-green-300"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-green-300"></i>
+                            <span>123 Botany Lane, San Francisco, CA 94107</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-green-700 mt-8 pt-6 text-center text-green-300">
+                <p>&copy; 2025 Pestector. All rights reserved.</p>
+                <div class="mt-2">
+                    <a href="/privacy" class="text-green-200 hover:text-white mx-2">Privacy Policy</a>
+                    <a href="/terms" class="text-green-200 hover:text-white mx-2">Terms of Service</a>
+                    <a href="/cookies" class="text-green-200 hover:text-white mx-2">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // FAQ toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Category filtering
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Reset active state on all buttons
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // Set active state on clicked button
+                button.classList.add('active');
+
+                const category = button.getAttribute('data-category');
+
+                // Filter FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        document.getElementById('faq-search').addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question h3').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show/hide category headers based on visible FAQs
+            document.querySelectorAll('h2').forEach(header => {
+                const sectionId = header.id;
+                const sectionHasFaqs = Array.from(document.querySelectorAll(`.faq-item[data-category="${sectionId}"]`))
+                    .some(item => item.style.display !== 'none');
+
+                if (sectionHasFaqs || searchTerm === '') {
+                    header.style.display = 'block';
+                } else {
+                    header.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

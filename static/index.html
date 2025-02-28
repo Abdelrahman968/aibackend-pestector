@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pestector - Plant Disease Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../static/img/icon.png" type="image/x-icon">
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-green-600 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-white text-xl font-bold flex items-center">
+                        <i class="fas fa-leaf mr-2"></i><a href="/">Pestector</a>
+                    </span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="/" class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Home
+                    </a>
+                    <a href="#features"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Features
+                    </a>
+                    <a href="#how-it-works"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        How It Works
+                    </a>
+                    <div id="authButtons" class="guest-content">
+                        <a href="/changelog"
+                            class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                            <i class="fas fa-file-alt mr-1"></i> Changelog
+                        </a>
+                    </div>
+                    <div id="userMenu" class="user-content hidden">
+                        <a href="/scan"
+                            class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-camera mr-1"></i> Scan Now
+                        </a>
+                    </div>
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobileMenuButton" class="text-white">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-green-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#features"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    Features
+                </a>
+                <a href="#how-it-works"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    How It Works
+                </a>
+                <div id="authButtonss" class="guest-content">
+                    <a href="/changelog"
+                        class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                        <i class="fas fa-file-alt mr-1"></i> Changelog
+                    </a>
+                </div>
+                <div id="mobileUserMenu" class="user-content hidden">
+                    <a href="/scan"
+                        class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-camera mr-1"></i> Scan Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-b from-green-500 to-green-600 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Keep Your Plants Healthy to Protect the Planet</h1>
+                    <p class="text-xl mb-6">Instantly identify plant diseases and get treatment recommendations with our
+                        AI-powered plant health scanner.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/scan"
+                            class="bg-white text-green-600 hover:bg-green-50 px-6 py-3 rounded-lg font-medium shadow-md transition-colors">
+                            <i class="fas fa-camera mr-2"></i> Scan Your Plant
+                        </a>
+                        <a href="/treatment"
+                            class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-green-600 px-6 py-3 rounded-lg font-medium transition-colors">
+                            Treatment Guide
+                        </a>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <div class="relative">
+                        <img src="../static/img/hero-plant-2.png" alt="Healthy plant"
+                            class="rounded-lg max-h-96 relative z-10">
+                        <div class="absolute -bottom-4 -right-4 bg-white p-3 rounded-lg shadow-lg z-20">
+                            <span class="text-green-600 font-bold flex items-center">
+                                <i class="fas fa-check-circle text-xl mr-2"></i>
+                                Healthy Plants, Happy Planet
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-white"
+            style="clip-path: polygon(0 100%, 100% 100%, 100% 0);"></div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Why Choose Pestector</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-green-50 rounded-xl p-6 shadow-md transition-transform hover:transform hover:scale-105">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-bolt text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Instant Analysis</h3>
+                    <p class="text-gray-600">Upload a photo and get results in seconds. Our AI quickly identifies
+                        diseases and provides detailed information.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-green-50 rounded-xl p-6 shadow-md transition-transform hover:transform hover:scale-105">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-seedling text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Precise Diagnosis</h3>
+                    <p class="text-gray-600">Advanced image recognition technology can identify over 50 common plant
+                        diseases with high accuracy.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-green-50 rounded-xl p-6 shadow-md transition-transform hover:transform hover:scale-105">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-prescription-bottle text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Treatment Plans</h3>
+                    <p class="text-gray-600">Get customized treatment recommendations for each identified disease,
+                        including organic and chemical options.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <!-- Feature 4 -->
+                <div
+                    class="bg-green-50 rounded-xl p-6 shadow-md transition-transform hover:transform hover:scale-105 flex">
+                    <div
+                        class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-file-pdf text-green-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">Detailed Reports</h3>
+                        <p class="text-gray-600">Generate comprehensive PDF reports with disease information, severity
+                            analysis, and step-by-step treatment guides.</p>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div
+                    class="bg-green-50 rounded-xl p-6 shadow-md transition-transform hover:transform hover:scale-105 flex">
+                    <div
+                        class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-history text-green-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">Scan History</h3>
+                        <p class="text-gray-600">Access your previous scans and track plant health over time. Monitor
+                            treatment effectiveness with historical data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">How Pestector Works</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Step 1 -->
+                <div class="bg-white rounded-xl p-6 shadow-md relative">
+                    <div
+                        class="absolute -top-4 -left-4 w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">
+                        1</div>
+                    <img src="../static/img/step1.png" alt="Take photo" class="w-full object-cover rounded-lg mb-4">
+                    <h3 class="text-lg font-semibold mb-2 text-gray-800">Take a Photo</h3>
+                    <p class="text-gray-600">Use your smartphone or camera to take a clear photo of the affected plant
+                        part.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-white rounded-xl p-6 shadow-md relative">
+                    <div
+                        class="absolute -top-4 -left-4 w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">
+                        2</div>
+                    <img src="../static/img/step2.png" alt="Upload image" class="w-full object-cover rounded-lg mb-4">
+                    <h3 class="text-lg font-semibold mb-2 text-gray-800">Upload to Pestector</h3>
+                    <p class="text-gray-600">Upload the image to our platform with optional AI enhancement for detailed
+                        analysis.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-md relative">
+                    <div
+                        class="absolute -top-4 -left-4 w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">
+                        3</div>
+                    <img src="../static/img/step3.png" alt="Get results" class="w-full object-cover rounded-lg mb-4">
+                    <h3 class="text-lg font-semibold mb-2 text-gray-800">Receive Diagnosis</h3>
+                    <p class="text-gray-600">Our AI analyzes the image and provides a detailed diagnosis with confidence
+                        score.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="bg-white rounded-xl p-6 shadow-md relative">
+                    <div
+                        class="absolute -top-4 -left-4 w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">
+                        4</div>
+                    <img src="../static/img/step4.png" alt="Apply treatment"
+                        class="w-full object-cover rounded-lg mb-4">
+                    <h3 class="text-lg font-semibold mb-2 text-gray-800">Apply Treatment</h3>
+                    <p class="text-gray-600">Follow the recommended treatment plan to restore your plant's health.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="learn-more" class="py-16 bg-gradient-to-br from-green-500 to-green-600 text-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Keep Your Plants Healthy?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Start diagnosing plant diseases instantly with our easy-to-use
+                tool. No more guesswork - get accurate results and effective treatments.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/scan"
+                    class="bg-white text-green-600 hover:bg-green-50 px-8 py-4 rounded-lg font-medium shadow-lg transition-colors text-lg">
+                    <i class="fas fa-camera mr-2"></i> Start Scanning
+                </a>
+                <a href="/doc"
+                    class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-green-600 px-8 py-4 rounded-lg font-medium transition-colors text-lg">
+                    <i class="fa fa-book mr-2"></i> For Developers
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">What Our Users Say</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 flex">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"Saved my tomato plants! I noticed spots on the leaves and Pestector
+                        identified early blight. Following the treatment recommendations stopped it from spreading."</p>
+                    <div class="flex items-center">
+                        <img src="../static/img/user1.png" alt="User" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-medium text-gray-800">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-500">Home Gardener</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 flex">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"As a professional landscaper, I need quick and accurate plant disease
+                        identification. Pestector has been incredibly reliable and the detailed PDF reports are perfect
+                        for client communication."</p>
+                    <div class="flex items-center">
+                        <img src="../static/img/user2.png" alt="User" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-medium text-gray-800">Mark Rodriguez</h4>
+                            <p class="text-sm text-gray-500">Landscape Professional</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 flex">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"I was about to throw out my monstera plant until Pestector identified
+                        it wasn't a disease but a watering issue. The app gave me a correction plan and now my plant is
+                        thriving again!"</p>
+                    <div class="flex items-center">
+                        <img src="../static/img/user1.png" alt="User" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-medium text-gray-800">Emily Chen</h4>
+                            <p class="text-sm text-gray-500">Houseplant Enthusiast</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-leaf mr-2"></i> Pestector
+                    </h3>
+                    <p class="text-gray-400 mb-4">Helping you keep your plants healthy with AI-powered disease detection
+                        and treatment recommendations.</p>
+                    <div class="flex space-x-4 m-2">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-github text-xl"></i></a>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/scan" class="text-gray-400 hover:text-white">Scan Plant</a></li>
+                        <li><a href="/#features" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="/#how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact us</a></li>
+                        <li><a href="/library" class="text-gray-400 hover:text-white">Disease Library</a>
+                        </li>
+                        <li><a href="/faqs" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="/knowledge" class="text-gray-400 hover:text-white">Knowledge Base</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-green-400"></i>
+                            <a href="mailto:support@pestector.com"
+                                class="text-gray-400 hover:text-white">support@pestector.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-green-400"></i>
+                            <a href="tel:+18005551234" class="text-gray-400 hover:text-white">20-127-550-2636</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-green-400"></i>
+                            <span class="text-gray-400">El-Mansoura, Egypty</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 Pestector. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Auth status check (simplified for example)
+            const isAuthenticated = localStorage.getItem('authToken') ? true : false;
+
+            // Update UI based on auth status
+            function updateUIBasedOnAuth() {
+                const guestContent = document.querySelectorAll('.guest-content');
+                const userContent = document.querySelectorAll('.user-content');
+
+                if (isAuthenticated) {
+                    guestContent.forEach(el => el.classList.add('hidden'));
+                    userContent.forEach(el => el.classList.remove('hidden'));
+                } else {
+                    guestContent.forEach(el => el.classList.remove('hidden'));
+                    userContent.forEach(el => el.classList.add('hidden'));
+                }
+            }
+
+            // Logout functionality
+            function handleLogout() {
+                localStorage.removeItem('authToken');
+                window.location.reload();
+            }
+
+            // Add event listeners
+            const logoutButton = document.getElementById('logoutButton');
+            const mobileLogoutButton = document.getElementById('mobileLogoutButton');
+
+            if (logoutButton) {
+                logoutButton.addEventListener('click', handleLogout);
+            }
+
+            if (mobileLogoutButton) {
+                mobileLogoutButton.addEventListener('click', handleLogout);
+            }
+
+            // Initialize UI
+            updateUIBasedOnAuth();
+        });
+    </script>
+</body>
+
+</html>

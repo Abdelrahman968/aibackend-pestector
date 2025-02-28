@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pestector - Plant Disease Knowledge Base</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content.open {
+            max-height: 1000px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-green-600 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-white text-xl font-bold flex items-center">
+                        <i class="fas fa-leaf mr-2"></i><a href="/">Pestector</a>
+                    </span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="/" class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Home
+                    </a>
+                    <a href="#features"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Features
+                    </a>
+                    <a href="#how-it-works"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        How It Works
+                    </a>
+                    <div id="authButtons" class="guest-content">
+                        <a href="/changelog"
+                            class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                            <i class="fas fa-file-alt mr-1"></i> Changelog
+                        </a>
+                    </div>
+                    <div id="userMenu" class="user-content hidden">
+                        <a href="/scan"
+                            class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-camera mr-1"></i> Scan Now
+                        </a>
+                    </div>
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobileMenuButton" class="text-white">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-green-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#features"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    Features
+                </a>
+                <a href="#how-it-works"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    How It Works
+                </a>
+                <div id="authButtonss" class="guest-content">
+                    <a href="/changelog"
+                        class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                        <i class="fas fa-file-alt mr-1"></i> Changelog
+                    </a>
+                </div>
+                <div id="mobileUserMenu" class="user-content hidden">
+                    <a href="/scan"
+                        class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-camera mr-1"></i> Scan Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-green-700 to-green-900 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Plant Health Knowledge Base</h1>
+                <p class="text-xl md:text-2xl mb-8">Comprehensive resources for identifying, treating, and preventing
+                    plant diseases</p>
+                <div class="flex justify-center">
+                    <a href="#search-section"
+                        class="bg-white text-green-800 hover:bg-green-100 transition px-6 py-3 rounded-lg font-semibold text-lg mx-2">
+                        <i class="fas fa-search mr-2"></i>Search Knowledge
+                    </a>
+                    <a href="/research"
+                        class="bg-green-600 hover:bg-green-500 transition px-6 py-3 rounded-lg font-semibold text-lg mx-2">
+                        <i class="fa fa-book mr-2"></i> Research Papers
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section id="search-section" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-green-800 mb-4">Search Our Knowledge Base</h2>
+                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="flex-1">
+                            <div class="relative">
+                                <input type="text" placeholder="Search for plant diseases, treatments, or symptoms..."
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                                <div class="absolute left-3 top-3 text-gray-400">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="bg-green-700 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition">
+                            Search
+                        </button>
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="text-sm text-gray-500 mr-2">Popular searches:</span>
+                        <a href="#"
+                            class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full text-gray-700 transition">Tomato
+                            blight</a>
+                        <a href="#"
+                            class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full text-gray-700 transition">Apple
+                            scab</a>
+                        <a href="#"
+                            class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full text-gray-700 transition">Leaf
+                            spots</a>
+                        <a href="#"
+                            class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full text-gray-700 transition">Powdery
+                            mildew</a>
+                        <a href="#"
+                            class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full text-gray-700 transition">Organic
+                            treatments</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-green-800 mb-12">Explore Knowledge Categories</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Disease Identification -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                    <div class="h-48 bg-cover bg-center"
+                        style="background-image: url('https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e')">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">Disease Identification</h3>
+                        <p class="text-gray-600 mb-4">Learn how to identify common plant diseases by visual symptoms,
+                            affected plant parts, and progression patterns.</p>
+                        <a href="#"
+                            class="inline-block bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded font-medium transition">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Treatment Methods -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                    <div class="h-48 bg-cover bg-center"
+                        style="background-image: url('https://images.unsplash.com/photo-1590682300882-60c7cb23bb42')">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">Treatment Methods</h3>
+                        <p class="text-gray-600 mb-4">Comprehensive guides on organic, chemical, and integrated
+                            approaches to treating various plant diseases.</p>
+                        <a href="#"
+                            class="inline-block bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded font-medium transition">
+                            Explore Treatments
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Prevention Strategies -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                    <div class="h-48 bg-cover bg-center"
+                        style="background-image: url('https://images.unsplash.com/photo-1495908333425-29a1e0918c5f')">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">Prevention Strategies</h3>
+                        <p class="text-gray-600 mb-4">Best practices for preventing disease outbreaks, including proper
+                            watering, spacing, and resistant varieties.</p>
+                        <a href="#"
+                            class="inline-block bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded font-medium transition">
+                            View Strategies
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Plant Care -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                    <div class="h-48 bg-cover bg-center"
+                        style="background-image: url('https://images.unsplash.com/photo-1623227732637-f78c81a5da1e')">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">Plant Care Fundamentals</h3>
+                        <p class="text-gray-600 mb-4">Essential knowledge about plant nutrition, watering practices,
+                            soil health, and environmental conditions.</p>
+                        <a href="#"
+                            class="inline-block bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded font-medium transition">
+                            Read More
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Organic Farming -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                    <div class="h-48 bg-cover bg-center"
+                        style="background-image: url('https://images.unsplash.com/photo-1585149597823-5059333ff216')">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">Organic Farming</h3>
+                        <p class="text-gray-600 mb-4">Techniques and principles for organic plant disease management and
+                            sustainable farming practices.</p>
+                        <a href="#"
+                            class="inline-block bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded font-medium transition">
+                            Discover More
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Seasonal Guides -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                    <div class="h-48 bg-cover bg-center"
+                        style="background-image: url('https://images.unsplash.com/photo-1620782620930-ee3661dd407b')">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">Seasonal Guides</h3>
+                        <p class="text-gray-600 mb-4">Season-specific guidance for monitoring, preventing, and treating
+                            plant diseases throughout the year.</p>
+                        <a href="#"
+                            class="inline-block bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded font-medium transition">
+                            View Guides
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Articles Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-green-800 mb-4">Featured Articles</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Explore our expert-written articles on plant
+                health, disease management, and sustainable practices</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Article 1 -->
+                <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition">
+                    <img src="https://images.unsplash.com/photo-1599076612505-6e4397c8b39b" alt="Article Image"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Disease
+                                Management</span>
+                            <span class="mx-2">•</span>
+                            <span>Feb 15, 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Understanding and Managing Tomato Late Blight
+                        </h3>
+                        <p class="text-gray-600 mb-4">A comprehensive guide to identifying, treating, and preventing one
+                            of the most devastating tomato diseases.</p>
+                        <a href="#"
+                            class="text-green-700 hover:text-green-600 font-semibold inline-flex items-center transition">
+                            Read Full Article
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Article 2 -->
+                <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition">
+                    <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076" alt="Article Image"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <span
+                                class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Prevention</span>
+                            <span class="mx-2">•</span>
+                            <span>Jan 28, 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">5 Essential Crop Rotation Strategies for
+                            Disease Prevention</h3>
+                        <p class="text-gray-600 mb-4">Learn how proper crop rotation can significantly reduce disease
+                            pressure in your garden or farm.</p>
+                        <a href="#"
+                            class="text-green-700 hover:text-green-600 font-semibold inline-flex items-center transition">
+                            Read Full Article
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Article 3 -->
+                <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition">
+                    <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2" alt="Article Image"
+                        class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <span
+                                class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Treatment</span>
+                            <span class="mx-2">•</span>
+                            <span>Feb 5, 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Organic Solutions for Powdery Mildew Control
+                        </h3>
+                        <p class="text-gray-600 mb-4">Discover effective organic remedies and treatments to combat
+                            powdery mildew on various plants.</p>
+                        <a href="#"
+                            class="text-green-700 hover:text-green-600 font-semibold inline-flex items-center transition">
+                            Read Full Article
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
+                <a href="#"
+                    class="inline-block bg-green-700 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition">
+                    View All Articles
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-green-800 mb-4">Frequently Asked Questions</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Find answers to common questions about plant
+                diseases, treatments, and our AI classification system</p>
+
+            <div class="max-w-3xl mx-auto">
+                <!-- FAQ Item 1 -->
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                    <button
+                        class="accordion-button w-full bg-white px-6 py-4 text-left font-semibold text-green-800 hover:bg-gray-50 transition flex justify-between items-center">
+                        <span>How accurate is the AI plant disease classifier?</span>
+                        <i class="fas fa-chevron-down text-green-600 transform transition-transform"></i>
+                    </button>
+                    <div class="accordion-content px-6 py-0 bg-white">
+                        <div class="py-4 text-gray-600 border-t border-gray-100">
+                            Our AI classification system has been trained on over 54,000 images across 38 different
+                            plant disease classes. It achieves an average accuracy of 98.6% on the PlantVillage dataset.
+                            However, real-world conditions may vary, which is why we also provide a confidence score
+                            with each prediction and recommend expert review for cases with low confidence or severe
+                            diseases.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                    <button
+                        class="accordion-button w-full bg-white px-6 py-4 text-left font-semibold text-green-800 hover:bg-gray-50 transition flex justify-between items-center">
+                        <span>What information should I include when uploading a plant image?</span>
+                        <i class="fas fa-chevron-down text-green-600 transform transition-transform"></i>
+                    </button>
+                    <div class="accordion-content px-6 py-0 bg-white">
+                        <div class="py-4 text-gray-600 border-t border-gray-100">
+                            For the best results, upload clear, well-lit images that show the affected plant parts in
+                            detail. Include multiple images if possible, showing both healthy and diseased portions for
+                            comparison. Close-ups of symptoms like leaf spots, wilting, or discoloration are
+                            particularly helpful. If you know the plant species, including this information can improve
+                            classification accuracy.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                    <button
+                        class="accordion-button w-full bg-white px-6 py-4 text-left font-semibold text-green-800 hover:bg-gray-50 transition flex justify-between items-center">
+                        <span>How do I distinguish between different types of plant diseases?</span>
+                        <i class="fas fa-chevron-down text-green-600 transform transition-transform"></i>
+                    </button>
+                    <div class="accordion-content px-6 py-0 bg-white">
+                        <div class="py-4 text-gray-600 border-t border-gray-100">
+                            Different plant diseases often have distinctive visual symptoms. Fungal diseases typically
+                            present as spots, blotches, or powdery/fuzzy growth. Bacterial diseases often create
+                            water-soaked lesions with yellow halos. Viral diseases commonly cause mottling, mosaic
+                            patterns, or leaf deformation. Our Disease Library section provides detailed guides with
+                            images to help you distinguish between various plant diseases based on their visual
+                            characteristics.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                    <button
+                        class="accordion-button w-full bg-white px-6 py-4 text-left font-semibold text-green-800 hover:bg-gray-50 transition flex justify-between items-center">
+                        <span>What's the difference between organic and chemical treatments?</span>
+                        <i class="fas fa-chevron-down text-green-600 transform transition-transform"></i>
+                    </button>
+                    <div class="accordion-content px-6 py-0 bg-white">
+                        <div class="py-4 text-gray-600 border-t border-gray-100">
+                            Organic treatments use naturally-derived substances like neem oil, copper, sulfur, or
+                            biological controls like beneficial microorganisms. They typically have less environmental
+                            impact but may require more frequent application. Chemical treatments use synthesized
+                            compounds developed specifically for disease control. They often provide more immediate and
+                            long-lasting control but may have greater environmental impacts and residue concerns. Our
+                            treatment recommendations provide both options with guidance on when each is most
+                            appropriate.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
+                    <button
+                        class="accordion-button w-full bg-white px-6 py-4 text-left font-semibold text-green-800 hover:bg-gray-50 transition flex justify-between items-center">
+                        <span>How can I prevent plant diseases from spreading?</span>
+                        <i class="fas fa-chevron-down text-green-600 transform transition-transform"></i>
+                    </button>
+                    <div class="accordion-content px-6 py-0 bg-white">
+                        <div class="py-4 text-gray-600 border-t border-gray-100">
+                            To prevent the spread of plant diseases: (1) Remove and dispose of infected plant material
+                            promptly; (2) Disinfect gardening tools between plants; (3) Avoid working with plants when
+                            they're wet; (4) Maintain proper spacing between plants for good air circulation; (5) Use
+                            drip irrigation instead of overhead watering; (6) Practice crop rotation; (7) Choose
+                            disease-resistant varieties when available; and (8) Monitor plants regularly for early signs
+                            of disease.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
+                <a href="/faqs"
+                    class="inline-block bg-green-700 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition">
+                    View All FAQs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-16 bg-gradient-to-r from-green-700 to-green-900 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Protect Your Plants?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Use our AI-powered tool to identify plant diseases and get
+                customized treatment recommendations</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="/scan"
+                    class="bg-white text-green-800 hover:bg-green-100 transition px-8 py-4 rounded-lg font-bold text-lg">
+                    <i class="fas fa-camera mr-2"></i>Scan Your Plant
+                </a>
+                <a href="/contact"
+                    class="bg-green-600 hover:bg-green-500 transition px-8 py-4 rounded-lg font-bold text-lg">
+                    <i class="fas fa-envelope mr-2"></i>Contact Expert
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-leaf mr-2"></i> Pestector
+                    </h3>
+                    <p class="text-gray-400 mb-4">Helping you keep your plants healthy with AI-powered disease detection
+                        and treatment recommendations.</p>
+                    <div class="flex space-x-4 m-2">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-github text-xl"></i></a>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/scan" class="text-gray-400 hover:text-white">Scan Plant</a></li>
+                        <li><a href="/#features" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="/#how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact us</a></li>
+                        <li><a href="/library" class="text-gray-400 hover:text-white">Disease Library</a>
+                        </li>
+                        <li><a href="/faqs" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="/knowledge" class="text-gray-400 hover:text-white">Knowledge Base</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-green-400"></i>
+                            <a href="mailto:support@pestector.com"
+                                class="text-gray-400 hover:text-white">support@pestector.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-green-400"></i>
+                            <a href="tel:+18005551234" class="text-gray-400 hover:text-white">20-127-550-2636</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-green-400"></i>
+                            <span class="text-gray-400">El-Mansoura, Egypty</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 Pestector. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Accordion functionality
+        const accordionButtons = document.querySelectorAll('.accordion-button');
+
+        accordionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+
+                // Toggle current accordion
+                content.classList.toggle('open');
+                icon.classList.toggle('transform');
+                icon.classList.toggle('rotate-180');
+
+                // Close other accordions (optional)
+                accordionButtons.forEach(otherButton => {
+                    if (otherButton !== button) {
+                        const otherContent = otherButton.nextElementSibling;
+                        const otherIcon = otherButton.querySelector('i');
+
+                        otherContent.classList.remove('open');
+                        otherIcon.classList.remove('rotate-180');
+                    }
+                });
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

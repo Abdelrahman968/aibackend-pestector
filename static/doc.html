@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Classifier - Documentation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/python.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="../static/img/icon.png" type="image/x-icon">
+
+    <style>
+        pre code {
+            border-radius: 0.375rem;
+        }
+
+        .hljs {
+            padding: 1.25rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+    <header class="bg-green-700 text-white py-6 shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="flex items-center">
+                    <span class="text-white text-xl font-bold flex items-center">
+                        <i class="fas fa-leaf mr-2"></i><a href="/">Pestector</a>
+                    </span>
+                </div>
+                <nav class="mt-4 md:mt-0">
+                    <ul class="flex space-x-6">
+                        <li><a href="#overview" class="hover:text-green-200 transition">Overview</a></li>
+                        <li><a href="#api" class="hover:text-green-200 transition">API</a></li>
+                        <li><a href="#model" class="hover:text-green-200 transition">Model</a></li>
+                        <li><a href="#examples" class="hover:text-green-200 transition">Examples</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section id="overview" class="mb-12">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-green-700 mb-4">System Overview</h2>
+                <p class="mb-4">
+                    Pestector is an AI-powered plant disease classification system designed to help farmers, gardeners,
+                    and agricultural professionals
+                    identify plant diseases quickly and accurately. The system uses deep learning to analyze plant
+                    images
+                    and provide detailed information about plant health, disease identification, treatment
+                    recommendations, and prevention strategies.
+                </p>
+                <div class="flex flex-col md:flex-row gap-6 mt-6">
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200 flex-1">
+                        <h3 class="font-bold text-green-800 mb-2">Key Features</h3>
+                        <ul class="list-disc ml-5 space-y-1 text-gray-700">
+                            <li>38 disease classes covering multiple plant species</li>
+                            <li>High-accuracy classification (98.6% on test data)</li>
+                            <li>Confidence scoring and severity assessment</li>
+                            <li>Detailed treatment recommendations</li>
+                            <li>PDF report generation</li>
+                            <li>Optional Gemini API integration for enhanced recommendations</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 flex-1">
+                        <h3 class="font-bold text-blue-800 mb-2">Technology Stack</h3>
+                        <ul class="list-disc ml-5 space-y-1 text-gray-700">
+                            <li>FastAPI backend framework</li>
+                            <li>TensorFlow[&] VGG16 for model architecture</li>
+                            <li>ReportLab for PDF generation</li>
+                            <li>EXIF metadata extraction</li>
+                            <li>Google Gemini Pro for enhanced analysis</li>
+                            <li>Responsive front-end interface</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="api" class="mb-12">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-green-700 mb-4">API Reference</h2>
+
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Authentication</h3>
+                    <p class="mb-4">
+                        The API uses API key authentication. Include your API key in the request header:
+                    </p>
+                    <pre><code class="language-python">headers = {
+    "X-API-KEY": "your_api_key_here"
+}</code></pre>
+                    <p class="mt-2 text-gray-600 text-sm">Valid API keys are managed by the system administrator.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h3 class="font-bold text-green-700">GET /health</h3>
+                        <p class="text-sm text-gray-600 mb-2">Health check endpoint to verify system status</p>
+                        <p class="font-medium">Response:</p>
+                        <pre class="mt-1 text-xs"><code class="language-json">{
+  "status": "healthy",
+  "model_loaded": true,
+  "timestamp": "2025-02-26T10:15:30",
+  "model_info": {
+    "path": "model/vgg_model.h5",
+    "num_classes": 38
+  }
+}</code></pre>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h3 class="font-bold text-green-700">GET /categories</h3>
+                        <p class="text-sm text-gray-600 mb-2">Retrieve available plant categories and diseases</p>
+                        <p class="font-medium">Response:</p>
+                        <pre class="mt-1 text-xs"><code class="language-json">{
+  "total_categories": 14,
+  "categories": {
+    "Apple": {
+      "healthy_samples_available": true,
+      "diseases": ["Apple scab", "Black rot", "Cedar apple rust"],
+      "total_samples": 4
+    },
+    ...
+  }
+}</code></pre>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-4 md:col-span-2">
+                        <h3 class="font-bold text-green-700">POST /classify</h3>
+                        <p class="text-sm text-gray-600 mb-2">Classify plant disease from an uploaded image</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <p class="font-medium">Parameters:</p>
+                                <ul class="list-disc ml-5 text-sm">
+                                    <li><span class="font-mono">file</span>: Image file (required)</li>
+                                    <li><span class="font-mono">use_gemini</span>: Boolean to enable Gemini API
+                                        (optional)</li>
+                                    <li><span class="font-mono">generate_report</span>: Boolean to generate PDF report
+                                        (optional)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="font-medium">Example Request:</p>
+                                <pre class="mt-1 text-xs"><code class="language-python">import requests
+
+url = "https://api.pestector.com/classify"
+headers = {"X-API-KEY": "your_api_key"}
+files = {"file": open("plant_image.jpg", "rb")}
+params = {"use_gemini": True, "generate_report": True}
+
+response = requests.post(url, headers=headers, files=files, params=params)
+data = response.json()</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-4 md:col-span-2">
+                        <h3 class="font-bold text-green-700">GET /reports/{filename}</h3>
+                        <p class="text-sm text-gray-600 mb-2">Download a generated PDF report</p>
+                        <p class="mt-2"><span class="font-medium">Parameters:</span> <span
+                                class="font-mono">filename</span> - The PDF report filename</p>
+                        <p class="mt-2 text-sm">This endpoint returns the PDF file directly. The filename is provided in
+                            the response from the <code>/classify</code> endpoint when
+                            <code>generate_report=true</code>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="model" class="mb-12">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-green-700 mb-4">Model Information</h2>
+
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Architecture</h3>
+                    <p>
+                        The system uses a fine-tuned VGG16 model that has been trained on the PlantVillage dataset.
+                        The model accepts 224x224 RGB images and classifies them into one of 38 classes representing
+                        different plant species and their diseases.
+                    </p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Classes</h3>
+                    <p class="mb-2">The model can identify the following plant-disease combinations:</p>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 max-h-60 overflow-y-auto">
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-1 text-sm">
+                            <li>• Apple - Apple scab</li>
+                            <li>• Apple - Black rot</li>
+                            <li>• Apple - Cedar apple rust</li>
+                            <li>• Apple - Healthy</li>
+                            <li>• Blueberry - Healthy</li>
+                            <li>• Cherry - Powdery mildew</li>
+                            <li>• Cherry - Healthy</li>
+                            <li>• Corn - Cercospora leaf spot</li>
+                            <li>• Corn - Common rust</li>
+                            <li>• Corn - Northern Leaf Blight</li>
+                            <li>• Corn - Healthy</li>
+                            <li>• Grape - Black rot</li>
+                            <li>• Grape - Esca (Black Measles)</li>
+                            <li>• Grape - Leaf blight</li>
+                            <li>• Grape - Healthy</li>
+                            <li>• Orange - Haunglongbing</li>
+                            <li>• Peach - Bacterial spot</li>
+                            <li>• Peach - Healthy</li>
+                            <li>• Pepper - Bacterial spot</li>
+                            <li>• Pepper - Healthy</li>
+                            <li>• Potato - Early blight</li>
+                            <li>• Potato - Late blight</li>
+                            <li>• Potato - Healthy</li>
+                            <li>• Raspberry - Healthy</li>
+                            <li>• Soybean - Healthy</li>
+                            <li>• Squash - Powdery mildew</li>
+                            <li>• Strawberry - Leaf scorch</li>
+                            <li>• Strawberry - Healthy</li>
+                            <li>• Tomato - Bacterial spot</li>
+                            <li>• Tomato - Early blight</li>
+                            <li>• Tomato - Late blight</li>
+                            <li>• Tomato - Leaf Mold</li>
+                            <li>• Tomato - Septoria leaf spot</li>
+                            <li>• Tomato - Spider mites</li>
+                            <li>• Tomato - Target Spot</li>
+                            <li>• Tomato - Yellow Leaf Curl Virus</li>
+                            <li>• Tomato - Mosaic virus</li>
+                            <li>• Tomato - Healthy</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                        <h3 class="font-bold text-yellow-800 mb-2">Performance</h3>
+                        <ul class="list-disc ml-5 space-y-1 text-sm">
+                            <li>Accuracy: 98.6%</li>
+                            <li>Precision: 97.3%</li>
+                            <li>Recall: 96.9%</li>
+                            <li>F1 Score: 97.1%</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                        <h3 class="font-bold text-purple-800 mb-2">Training</h3>
+                        <ul class="list-disc ml-5 space-y-1 text-sm">
+                            <li>Dataset: PlantVillage</li>
+                            <li>Images: 54,305</li>
+                            <li>Classes: 38</li>
+                            <li>Epochs: 50</li>
+                            <li>Augmentation: Yes</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                        <h3 class="font-bold text-red-800 mb-2">Limitations</h3>
+                        <ul class="list-disc ml-5 space-y-1 text-sm">
+                            <li>Only works with the 38 listed classes</li>
+                            <li>Expects clear, focused images of leaves</li>
+                            <li>May struggle with multiple diseases</li>
+                            <li>Low confidence predictions require expert review</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples" class="mb-12">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-green-700 mb-4">Usage Examples</h2>
+
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Example 1: Basic Image Classification</h3>
+                    <pre><code class="language-python">import requests
+import json
+
+# API endpoint and authentication
+url = "https://api.pestector.com/classify"
+headers = {"X-API-KEY": "your_api_key"}
+
+# Upload image for classification
+files = {"file": open("tomato_leaf.jpg", "rb")}
+params = {"use_gemini": False, "generate_report": False}
+
+# Send request
+response = requests.post(url, headers=headers, files=files, params=params)
+result = response.json()
+
+# Display results
+print(f"Plant: {result['prediction']['plant']}")
+print(f"Condition: {result['prediction']['condition']}")
+print(f"Confidence: {result['prediction']['confidence']}%")
+print(f"Severity: {result['prediction']['disease_info']['severity']}")
+print("\nTreatment recommendations:")
+print(result['prediction']['treatment_recommendations'])</code></pre>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Example 2: Generating a PDF Report</h3>
+                    <pre><code class="language-python">import requests
+import webbrowser
+import os
+
+# API endpoint and authentication
+url = "https://api.pestector.com/classify"
+headers = {"X-API-KEY": "your_api_key"}
+
+# Upload image for classification with report generation
+files = {"file": open("apple_leaf.jpg", "rb")}
+params = {"use_gemini": True, "generate_report": True}
+
+# Send request
+response = requests.post(url, headers=headers, files=files, params=params)
+result = response.json()
+
+# Check if report was generated
+if result.get('report', {}).get('available', False):
+    report_url = result['report']['download_url']
+    print(f"Report generated: {result['report']['filename']}")
+    print(f"Download URL: {report_url}")
+    
+    # Optionally download the report
+    report_response = requests.get(report_url)
+    with open(result['report']['filename'], 'wb') as f:
+        f.write(report_response.content)
+    print(f"Report downloaded to {os.path.abspath(result['report']['filename'])}")
+    
+    # Optionally open the report in browser
+    webbrowser.open(report_url)
+else:
+    print("Report generation failed")</code></pre>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Example 3: Building a Simple Monitoring System</h3>
+                    <pre><code class="language-python">import requests
+import time
+import os
+from datetime import datetime
+
+# API configuration
+API_URL = "https://api.pestector.com/classify"
+API_KEY = "your_api_key"
+HEADERS = {"X-API-KEY": API_KEY}
+
+# Monitoring configuration
+MONITOR_DIR = "plant_monitor"
+CHECK_INTERVAL = 3600  # Check every hour
+PLANTS_TO_MONITOR = ["tomato", "pepper", "potato"]  # Plant types to monitor
+
+# Create monitoring directory
+os.makedirs(MONITOR_DIR, exist_ok=True)
+
+def check_plants():
+    """Scan the monitor directory for new images and classify them"""
+    print(f"[{datetime.now()}] Checking for new plant images...")
+    
+    # Process each plant type directory
+    for plant in PLANTS_TO_MONITOR:
+        plant_dir = os.path.join(MONITOR_DIR, plant)
+        os.makedirs(plant_dir, exist_ok=True)
+        
+        # Process images in the plant directory
+        for filename in os.listdir(plant_dir):
+            if filename.lower().endswith(('.png', '.jpg', '.jpeg')) and not filename.startswith('processed_'):
+                image_path = os.path.join(plant_dir, filename)
+                
+                # Skip already processed images
+                if os.path.exists(os.path.join(plant_dir, f"processed_{filename}")):
+                    continue
+                    
+                print(f"Processing {image_path}...")
+                
+                # Send image for classification
+                try:
+                    with open(image_path, 'rb') as img:
+                        files = {"file": img}
+                        params = {"use_gemini": True, "generate_report": True}
+                        response = requests.post(API_URL, headers=HEADERS, files=files, params=params)
+                        
+                    if response.status_code == 200:
+                        result = response.json()
+                        
+                        # Save result to JSON file
+                        result_path = os.path.join(plant_dir, f"processed_{os.path.splitext(filename)[0]}.json")
+                        with open(result_path, 'w') as f:
+                            json.dump(result, f, indent=2)
+                            
+                        # Mark image as processed
+                        os.rename(image_path, os.path.join(plant_dir, f"processed_{filename}"))
+                        
+                        # Alert on severe issues
+                        if result['warnings']['severe_disease']:
+                            print(f"⚠️ ALERT: Severe disease detected in {filename}")
+                            print(f"Plant: {result['prediction']['plant']}")
+                            print(f"Disease: {result['prediction']['condition']}")
+                            print(f"Confidence: {result['prediction']['confidence']}%")
+                            print(f"Report: {result.get('report', {}).get('download_url', 'N/A')}")
+                            
+                except Exception as e:
+                    print(f"Error processing {filename}: {str(e)}")
+
+# Main monitoring loop
+print("Starting plant disease monitoring system...")
+while True:
+    try:
+        check_plants()
+    except Exception as e:
+        print(f"Error in monitoring cycle: {str(e)}")
+        
+    print(f"Next check in {CHECK_INTERVAL/60} minutes...")
+    time.sleep(CHECK_INTERVAL)</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="mb-12">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-green-700 mb-4">Frequently Asked Questions</h2>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-gray-800">How accurate is the plant disease classification?</h3>
+                        <p class="text-gray-700 mt-1">
+                            The model achieves 98.6% accuracy on the PlantVillage test dataset. However, real-world
+                            performance may vary depending on image quality,
+                            lighting conditions, and whether the disease matches one of our 38 trained classes. We
+                            recommend expert confirmation for critical decisions.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-gray-800">What image requirements should I follow?</h3>
+                        <p class="text-gray-700 mt-1">
+                            For best results, submit clear, well-lit images that focus on the affected plant parts
+                            (usually leaves). The system works best with:
+                        </p>
+                        <ul class="list-disc ml-5 mt-2 text-gray-700">
+                            <li>Close-up shots of affected areas</li>
+                            <li>Good lighting without harsh shadows</li>
+                            <li>Focused, non-blurry images</li>
+                            <li>Multiple images from different angles for complex cases</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-gray-800">What's the difference between using Gemini and not using it?
+                        </h3>
+                        <p class="text-gray-700 mt-1">
+                            When the <code>use_gemini</code> parameter is set to <code>true</code>, the system leverages
+                            Google's Gemini Pro AI to generate more detailed
+                            and customized treatment recommendations and disease explanations. Without Gemini, the
+                            system uses a pre-defined database of recommendations
+                            which may be less detailed but works offline.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-gray-800">How do I interpret the confidence score?</h3>
+                        <p class="text-gray-700 mt-1">
+                            The confidence score (0-100%) indicates how certain the model is about its prediction:
+                        </p>
+                        <ul class="list-disc ml-5 mt-2 text-gray-700">
+                            <li><span class="font-medium">High (&gt;85%):</span> The model is very confident in its
+                                prediction</li>
+                            <li><span class="font-medium">Medium (70-85%):</span> The model is moderately confident</li>
+                            <li><span class="font-medium">Low (&lt;70%):</span> The prediction is uncertain and requires
+                                expert verification
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-gray-800">Can I use the system offline?</h3>
+                        <p class="text-gray-700 mt-1">
+                            Yes, the core classification system works offline. However, the Gemini API integration for
+                            enhanced recommendations requires internet connectivity.
+                            For offline use, set <code>use_gemini=false</code> in your API requests.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-green-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h2 class="text-xl font-bold mb-2">Pestector</h2>
+                    <p class="text-green-200">Plant Disease Classification System v2.0</p>
+                    <p class="text-green-200 mt-2">© 2025 All Rights Reserved</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-bold mb-2">Resources</h3>
+                        <ul class="space-y-1">
+                            <li><a href="#" class="text-green-200 hover:text-white transition">Documentation</a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition">API Reference</a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition">GitHub Repository</a>
+                            </li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition">Release Notes</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold mb-2">Contact</h3>
+                        <ul class="space-y-1">
+                            <li><a href="#" class="text-green-200 hover:text-white transition">Support</a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition">Feature Requests</a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition">Bug Reports</a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition">Community</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize syntax highlighting
+            hljs.highlightAll();
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

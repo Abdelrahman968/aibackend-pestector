@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pestector - Pricing</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../static/img/icon.png" type="image/x-icon">
+    <style>
+        .bg-gradient-green {
+            background: linear-gradient(135deg, #1B5E20 0%, #4CAF50 100%);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .pricing-card {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gradient-green text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-white text-xl font-bold flex items-center">
+                        <i class="fas fa-leaf mr-2"></i><a href="/">Pestector</a>
+                    </span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="/" class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Home
+                    </a>
+                    <a href="#features"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Features
+                    </a>
+                    <a href="#how-it-works"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        How It Works
+                    </a>
+                    <div id="authButtons" class="guest-content">
+                        <a href="/changelog"
+                            class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                            <i class="fas fa-file-alt mr-1"></i> Changelog
+                        </a>
+                    </div>
+                    <div id="userMenu" class="user-content hidden">
+                        <a href="/scan"
+                            class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-camera mr-1"></i> Scan Now
+                        </a>
+                    </div>
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobileMenuButton" class="text-white">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-green-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#features"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    Features
+                </a>
+                <a href="#how-it-works"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    How It Works
+                </a>
+                <div id="authButtonss" class="guest-content">
+                    <a href="/changelog"
+                        class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                        <i class="fas fa-file-alt mr-1"></i> Changelog
+                    </a>
+                </div>
+                <div id="mobileUserMenu" class="user-content hidden">
+                    <a href="/scan"
+                        class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-camera mr-1"></i> Scan Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-green text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+                Choose the Right Plan for Your Needs
+            </h1>
+            <p class="mt-6 text-xl max-w-3xl mx-auto">
+                From hobbyist gardeners to large-scale agricultural operations, we have a plan that fits your
+                requirements.
+            </p>
+        </div>
+    </div>
+
+    <!-- Pricing Cards -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Basic Plan -->
+            <div class="pricing-card bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="px-6 py-8">
+                    <h3 class="text-2xl font-bold text-center text-gray-900">Basic</h3>
+                    <div class="mt-4 flex justify-center">
+                        <span class="px-3 flex items-start text-6xl tracking-tight text-gray-900">
+                            <span class="mt-2 mr-2 text-4xl font-medium">$</span>
+                            <span class="font-extrabold">0</span>
+                        </span>
+                        <span class="text-xl font-medium text-gray-500 mt-8">/month</span>
+                    </div>
+                    <p class="mt-4 text-center text-gray-500">Perfect for home gardeners</p>
+                </div>
+                <div class="px-6 pt-6 pb-8">
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">10 scans per month</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">Basic disease information</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">General treatment recommendations</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">Access to disease library</p>
+                        </li>
+                        <li class="flex items-start text-gray-400">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <p class="ml-3 text-base">PDF report generation</p>
+                        </li>
+                        <li class="flex items-start text-gray-400">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <p class="ml-3 text-base">AI-powered recommendations</p>
+                        </li>
+                    </ul>
+                    <div class="mt-8">
+                        <a href="/scan"
+                            class="block w-full bg-gray-200 border border-transparent rounded-md py-3 px-6 text-center font-medium text-gray-700 hover:bg-gray-300">
+                            Start Free
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pro Plan -->
+            <div
+                class="pricing-card bg-white rounded-lg shadow-xl overflow-hidden border-2 border-green-500 transform scale-105 z-10">
+                <div class="px-6 py-8 bg-green-50">
+                    <div
+                        class="inline-block bg-green-600 text-white text-xs px-3 py-1 rounded-full uppercase font-bold tracking-wide mb-2 mx-auto block text-center">
+                        Most Popular</div>
+                    <h3 class="text-2xl font-bold text-center text-gray-900">Pro</h3>
+                    <div class="mt-4 flex justify-center">
+                        <span class="px-3 flex items-start text-6xl tracking-tight text-gray-900">
+                            <span class="mt-2 mr-2 text-4xl font-medium">$</span>
+                            <span class="font-extrabold">9</span>
+                            <span class="mt-2 ml-2 text-4xl font-medium">99</span>
+                        </span>
+                        <span class="text-xl font-medium text-gray-500 mt-8">/month</span>
+                    </div>
+                    <p class="mt-4 text-center text-gray-500">Ideal for serious gardeners and small farms</p>
+                </div>
+                <div class="px-6 pt-6 pb-8">
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">100 scans per month</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">Detailed disease information</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">Personalized treatment plans</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">PDF report generation</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">AI-powered recommendations</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">Email support</p>
+                        </li>
+                    </ul>
+                    <div class="mt-8">
+                        <a href="/scan"
+                            class="block w-full bg-green-600 border border-transparent rounded-md py-3 px-6 text-center font-medium text-white hover:bg-green-700">
+                            Start Pro
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="pricing-card bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="px-6 py-8">
+                    <h3 class="text-2xl font-bold text-center text-gray-900">Enterprise</h3>
+                    <div class="mt-4 flex justify-center">
+                        <span class="px-3 flex items-start text-6xl tracking-tight text-gray-900">
+                            <span class="mt-2 mr-2 text-4xl font-medium">$</span>
+                            <span class="font-extrabold">49</span>
+                            <span class="mt-2 ml-2 text-4xl font-medium">99</span>
+                        </span>
+                        <span class="text-xl font-medium text-gray-500 mt-8">/month</span>
+                    </div>
+                    <p class="mt-4 text-center text-gray-500">For agriculture businesses and researchers</p>
+                </div>
+                <div class="px-6 pt-6 pb-8">
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">Unlimited scans</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">Advanced analytics dashboard</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">Custom PDF reports with branding</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">API access</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">Advanced AI recommendations</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <p class="ml-3 text-base text-gray-700">Priority support with dedicated manager</p>
+                        </li>
+                    </ul>
+                    <div class="mt-8">
+                        <a href="/contact"
+                            class="block w-full bg-gray-900 border border-transparent rounded-md py-3 px-6 text-center font-medium text-white hover:bg-gray-800">
+                            Contact Sales
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Comparison -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
+            Detailed Feature Comparison
+        </h2>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-3 px-6 text-left bg-gray-50 text-gray-500 uppercase tracking-wider border-b">
+                            Feature</th>
+                        <th class="py-3 px-6 text-center bg-gray-50 text-gray-500 uppercase tracking-wider border-b">
+                            Basic</th>
+                        <th
+                            class="py-3 px-6 text-center bg-green-50 text-green-800 uppercase tracking-wider border-b border-green-200">
+                            Pro</th>
+                        <th class="py-3 px-6 text-center bg-gray-50 text-gray-500 uppercase tracking-wider border-b">
+                            Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr>
+                        <td class="py-4 px-6 text-gray-900">Monthly scans</td>
+                        <td class="py-4 px-6 text-center text-gray-700">10</td>
+                        <td class="py-4 px-6 text-center bg-green-50 text-gray-700 font-medium">100</td>
+                        <td class="py-4 px-6 text-center text-gray-700">Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 text-gray-900">Disease identification</td>
+                        <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                        <td class="py-4 px-6 text-center bg-green-50"><i class="fas fa-check text-green-500"></i></td>
+                        <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 text-gray-900">Treatment recommendations</td>
+                        <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i> Basic</td>
+                        <td class="py-4 px-6 text-center bg-green-50"><i class="fas fa-check text-green-500"></i>
+                            Detailed</td>
+                        <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i> Advanced</td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 text-gray-900">PDF reports</td>
+                        <td class="py-4 px-6 text-center"><i class="fas fa-times text-gray-400"></i></td>
+                        <td class="py-4 px-6 text-center bg-green-50"><i class="fas fa-check text-green-500"></i></td>
+                        <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i> Customizable</td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 text-gray-900">AI-powered recommendations</td>
+                        <td class="py-4 px-6 text-center"><i class="fas fa-times text-gray-400"></i></td>
+                        <td class="py-4 px-6 text-center bg-green-50"><i class="fas fa-check text-green-500"></i></td>
+                        <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i> Advanced</td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 text-gray-900">API access</td>
+                        <td class="py-4 px-6 text-center"><i class="fas fa-times text-gray-400"></i></td>
+                        <td class="py-4 px-6 text-center bg-green-50"><i class="fas fa-times text-gray-400"></i></td>
+                        <td class="py-4 px-6 text-center"><i class="fas fa-check text-green-500"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 text-gray-900">Support</td>
+                        <td class="py-4 px-6 text-center">Community</td>
+                        <td class="py-4 px-6 text-center bg-green-50">Email</td>
+                        <td class="py-4 px-6 text-center">Dedicated Manager</td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 text-gray-900">Historical data storage</td>
+                        <td class="py-4 px-6 text-center">30 days</td>
+                        <td class="py-4 px-6 text-center bg-green-50">1 year</td>
+                        <td class="py-4 px-6 text-center">Unlimited</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FAQs -->
+    <div class="bg-gray-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
+                Frequently Asked Questions
+            </h2>
+
+            <div class="max-w-3xl mx-auto divide-y divide-gray-200">
+                <div class="py-6">
+                    <h3 class="text-lg font-medium text-gray-900">Can I change plans later?</h3>
+                    <div class="mt-2 text-base text-gray-500">
+                        Yes, you can upgrade or downgrade your plan at any time. Changes will take effect at the start
+                        of your next billing cycle.
+                    </div>
+                </div>
+                <div class="py-6">
+                    <h3 class="text-lg font-medium text-gray-900">How accurate is the plant disease detection?</h3>
+                    <div class="mt-2 text-base text-gray-500">
+                        Our VGG16-based model has been fine-tuned to achieve 98.6% accuracy on the PlantVillage dataset.
+                        However, for rare diseases or unusual presentations, we recommend consulting with an
+                        agricultural expert.
+                    </div>
+                </div>
+                <div class="py-6">
+                    <h3 class="text-lg font-medium text-gray-900">What plants do you support?</h3>
+                    <div class="mt-2 text-base text-gray-500">
+                        We currently support 14 plant species and can identify 38 different plant-disease combinations.
+                        These include tomato, potato, apple, corn, grape, and more. We're constantly expanding our
+                        database.
+                    </div>
+                </div>
+                <div class="py-6">
+                    <h3 class="text-lg font-medium text-gray-900">Do you offer refunds?</h3>
+                    <div class="mt-2 text-base text-gray-500">
+                        We offer a 14-day money-back guarantee if you're not satisfied with our service. Simply contact
+                        our support team.
+                    </div>
+                </div>
+                <div class="py-6">
+                    <h3 class="text-lg font-medium text-gray-900">How does the API work?</h3>
+                    <div class="mt-2 text-base text-gray-500">
+                        Our API allows you to integrate our plant disease detection capabilities into your own
+                        applications. It accepts image uploads and returns detailed analysis in JSON format. Full
+                        documentation is available for Enterprise customers.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
+            What Our Customers Say
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center mb-4">
+                    <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+                        <i class="fas fa-user text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="text-lg font-medium text-gray-900">Sarah Johnson</h4>
+                        <p class="text-gray-500">Home Gardener</p>
+                    </div>
+                </div>
+                <div class="text-yellow-400 mb-2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-600">
+                    "I saved my tomato plants from late blight thanks to early detection with Pestector. The basic plan
+                    is perfect for my small garden."
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center mb-4">
+                    <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+                        <i class="fas fa-user text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="text-lg font-medium text-gray-900">Michael Chen</h4>
+                        <p class="text-gray-500">Small Farm Owner</p>
+                    </div>
+                </div>
+                <div class="text-yellow-400 mb-2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-600">
+                    "The Pro plan has been a game-changer for our 5-acre farm. The detailed reports help us take
+                    immediate action and prevent disease spread."
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center mb-4">
+                    <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+                        <i class="fas fa-user text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="text-lg font-medium text-gray-900">Olivia Martinez</h4>
+                        <p class="text-gray-500">Agricultural Researcher</p>
+                    </div>
+                </div>
+                <div class="text-yellow-400 mb-2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="text-gray-600">
+                    "The Enterprise API has been invaluable for our research on disease resistance. We've integrated it
+                    with our field monitoring system."
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="bg-green-600 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                Ready to protect your plants?
+            </h2>
+            <p class="mt-4 text-lg leading-6 text-green-100">
+                Start with our free plan today or contact us for a custom enterprise solution.
+            </p>
+            <div class="mt-8 flex justify-center">
+                <div class="inline-flex rounded-md shadow">
+                    <a href="/scan"
+                        class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-green-700 bg-white hover:bg-green-50">
+                        Get Started for Free
+                    </a>
+                </div>
+                <div class="ml-3 inline-flex">
+                    <a href="/contact"
+                        class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-800 hover:bg-green-900">
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-leaf mr-2"></i> Pestector
+                    </h3>
+                    <p class="text-gray-400 mb-4">Helping you keep your plants healthy with AI-powered disease detection
+                        and treatment recommendations.</p>
+                    <div class="flex space-x-4 m-2">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-github text-xl"></i></a>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/scan" class="text-gray-400 hover:text-white">Scan Plant</a></li>
+                        <li><a href="/#features" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="/#how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact us</a></li>
+                        <li><a href="/library" class="text-gray-400 hover:text-white">Disease Library</a>
+                        </li>
+                        <li><a href="/faqs" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="/knowledge" class="text-gray-400 hover:text-white">Knowledge Base</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-green-400"></i>
+                            <a href="mailto:support@pestector.com"
+                                class="text-gray-400 hover:text-white">support@pestector.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-green-400"></i>
+                            <a href="tel:+18005551234" class="text-gray-400 hover:text-white">20-127-550-2636</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-green-400"></i>
+                            <span class="text-gray-400">El-Mansoura, Egypty</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 Pestector. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Auth status check (simplified for example)
+            const isAuthenticated = localStorage.getItem('authToken') ? true : false;
+
+            // Update UI based on auth status
+            function updateUIBasedOnAuth() {
+                const guestContent = document.querySelectorAll('.guest-content');
+                const userContent = document.querySelectorAll('.user-content');
+
+                if (isAuthenticated) {
+                    guestContent.forEach(el => el.classList.add('hidden'));
+                    userContent.forEach(el => el.classList.remove('hidden'));
+                } else {
+                    guestContent.forEach(el => el.classList.remove('hidden'));
+                    userContent.forEach(el => el.classList.add('hidden'));
+                }
+            }
+
+            // Logout functionality
+            function handleLogout() {
+                localStorage.removeItem('authToken');
+                window.location.reload();
+            }
+
+            // Add event listeners
+            const logoutButton = document.getElementById('logoutButton');
+            const mobileLogoutButton = document.getElementById('mobileLogoutButton');
+
+            if (logoutButton) {
+                logoutButton.addEventListener('click', handleLogout);
+            }
+
+            if (mobileLogoutButton) {
+                mobileLogoutButton.addEventListener('click', handleLogout);
+            }
+
+            // Initialize UI
+            updateUIBasedOnAuth();
+        });
+    </script>
+</body>
+
+</html>

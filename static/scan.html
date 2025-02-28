@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pestector - Scan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../static/img/icon.png" type="image/x-icon">
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-green-600 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-white text-xl font-bold flex items-center">
+                        <i class="fas fa-leaf mr-2"></i><a href="/">Pestector</a>
+                    </span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#features"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Features
+                    </a>
+                    <a href="#how-it-works"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        How It Works
+                    </a>
+                    <div id="authButtons" class="guest-content">
+                        <a href="/changelog"
+                            class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                            <i class="fas fa-file-alt mr-1"></i> Changelog
+                        </a>
+                    </div>
+                    <div id="userMenu" class="user-content hidden">
+                        <a href="/scan"
+                            class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-camera mr-1"></i> Scan Now
+                        </a>
+                    </div>
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobileMenuButton" class="text-white">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-green-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#features"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    Features
+                </a>
+                <a href="#how-it-works"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    How It Works
+                </a>
+                <div id="authButtonss" class="guest-content">
+                    <a href="/changelog"
+                        class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                        <i class="fas fa-file-alt mr-1"></i> Changelog
+                    </a>
+                </div>
+                <div id="mobileUserMenu" class="user-content hidden">
+                    <a href="/scan"
+                        class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-camera mr-1"></i> Scan Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
+            <!-- Left Column - Upload Section, Image Details & PDF Report -->
+            <div class="bg-white rounded-2xl shadow-xl p-6">
+                <!-- File Upload Area -->
+                <div
+                    class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-500 transition-colors mb-6">
+                    <input type="file" id="imageInput" accept="image/*" class="hidden">
+                    <label for="imageInput" class="cursor-pointer block">
+                        <div id="preview-container" class="mb-4 ">
+                            <img id="preview-image" class="max-h-64 mx-auto rounded-lg object-contain"
+                                src="../static/img/scanner.png" width="256" height="256" alt="Preview">
+                        </div>
+                        <div id="upload-prompt">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4 hidden"></i>
+                            <div class="text-gray-600">
+                                <p class="font-medium">Drop your image here or click to upload</p>
+                                <p class="text-sm text-gray-500 mt-1">Supports: JPG, PNG, WEBP</p>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- API Toggle -->
+                <div class="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm mb-6">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="useGemini"
+                            class="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                        <label for="useGemini" class="text-gray-700 font-medium">Enable AI Agent
+                            Analysis</label>
+                    </div>
+                </div>
+
+                <!-- Hidden input to always set generate_report to true -->
+                <input type="hidden" id="generatePDF" value="true">
+
+                <!-- Classify Button -->
+                <button onclick="classifyImage()" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-lg
+                               hover:from-blue-700 hover:to-blue-800 transition duration-300
+                               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
+                               flex items-center justify-center space-x-2 font-semibold mb-6">
+                    <i class="fas fa-search"></i>
+                    <span>Analyze Plant</span>
+                </button>
+
+                <!-- Image Details Section (Initially Hidden) -->
+                <div id="image-details" class="hidden mt-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center">
+                        <i class="fas fa-info-circle text-blue-500 mr-2"></i>Image Details
+                    </h3>
+                    <div id="metadata-content"></div>
+                </div>
+
+                <!-- PDF Report Section (Initially Hidden) -->
+                <div id="pdf-report-section" class="hidden mt-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center">
+                        <i class="fas fa-file-pdf text-red-500 mr-2"></i>PDF Report
+                    </h3>
+                    <div id="pdf-report-content"></div>
+                </div>
+            </div>
+
+            <!-- Right Column - Analysis Results -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 min-h-[600px] overflow-y-auto">
+                <div id="result-placeholder" class="flex items-center justify-center h-full text-gray-500">
+                    <div class="text-center">
+                        <i class="fas fa-microscope text-6xl mb-4"></i>
+                        <p>Upload an image to see detailed analysis results</p>
+                    </div>
+                </div>
+
+                <div id="result-content" class="hidden">
+                    <!-- Analysis Results Section -->
+                    <div id="analysis-results">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-chart-pie text-blue-500 mr-2"></i>Analysis Results
+                        </h2>
+                        <div id="results-content"></div>
+                    </div>
+
+                    <!-- Alternative Predictions Section -->
+                    <div id="alternative-predictions" class="mt-6"></div>
+
+                    <!-- Warnings Section -->
+                    <div id="warnings-section" class="mt-6"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-leaf mr-2"></i> Pestector
+                    </h3>
+                    <p class="text-gray-400 mb-4">Helping you keep your plants healthy with AI-powered disease detection
+                        and treatment recommendations.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/scan" class="text-gray-400 hover:text-white">Scan Plant</a></li>
+                        <li><a href="/#features" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="/#how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Plant Care Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Disease Library</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Video Tutorials</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-green-400"></i>
+                            <a href="mailto:support@pestector.com"
+                                class="text-gray-400 hover:text-white">support@pestector.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-green-400"></i>
+                            <a href="tel:+18005551234" class="text-gray-400 hover:text-white">20-127-550-2636</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-green-400"></i>
+                            <span class="text-gray-400">El-Mansoura, Egypty</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 Pestector. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        function format_text(raw_text) {
+            // Split the text into sections based on double newlines
+            const sections = raw_text.trim().split("\n\n");
+
+            let formatted_text = "";
+
+            for (const section of sections) {
+                // Check if the section is a header (ends with a colon)
+                if (section.trim().endsWith(":")) {
+                    formatted_text += `<p class="font-semibold text-gray-800">${section.trim()}</p>`;
+                } else {
+                    // Split the section into lines
+                    const lines = section.trim().split("\n");
+                    for (const line of lines) {
+                        // Check if the line is a bullet point (starts with '*')
+                        if (line.trim().startsWith("*")) {
+                            formatted_text += `<p class="text-gray-700 ml-4">• ${line.trim().substring(1).trim()}</p>`;
+                        } else {
+                            formatted_text += `<p class="text-gray-700">${line.trim()}</p>`;
+                        }
+                    }
+                }
+                formatted_text += "<br>"; // Add spacing between sections
+            }
+
+            return formatted_text;
+        }
+
+
+        // Image preview functionality
+        const imageInput = document.getElementById('imageInput');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+        const uploadPrompt = document.getElementById('upload-prompt');
+
+        function showPreview(file) {
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                    uploadPrompt.classList.add('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        imageInput.addEventListener('change', function (e) {
+            showPreview(this.files[0]);
+        });
+
+
+        async function classifyImage() {
+            const fileInput = document.getElementById('imageInput');
+            const useGemini = document.getElementById('useGemini').checked;
+            const generatePDF = true;
+            const resultPlaceholder = document.getElementById('result-placeholder');
+            const resultContent = document.getElementById('result-content');
+            const resultsContentDiv = document.getElementById('results-content');
+            const imageDetailsDiv = document.getElementById('image-details');
+            const metadataContentDiv = document.getElementById('metadata-content');
+            const pdfReportSection = document.getElementById('pdf-report-section');
+            const pdfReportContent = document.getElementById('pdf-report-content');
+            const alternativePredictions = document.getElementById('alternative-predictions');
+            const warningsSection = document.getElementById('warnings-section');
+
+            if (fileInput.files.length === 0) {
+                resultPlaceholder.innerHTML = `
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                    <p class="text-red-700">Please select an image file to analyze.</p>
+                </div>
+            </div>
+        `;
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // Reset all result divs
+            resultPlaceholder.innerHTML = `
+        <div class="flex items-center justify-center space-x-3 text-gray-600">
+            <div class="animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+            <span>Analyzing your plant image...</span>
+        </div>
+    `;
+            resultPlaceholder.classList.remove('hidden');
+            resultContent.classList.add('hidden');
+            imageDetailsDiv.classList.add('hidden');
+            pdfReportSection.classList.add('hidden');
+
+            try {
+                const response = await fetch(`/classify?use_gemini=${useGemini}&generate_report=${generatePDF}`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-API-KEY': '1122333',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Classification failed');
+                }
+
+                const data = await response.json();
+
+                // Hide placeholder once we have results
+                resultPlaceholder.classList.add('hidden');
+                resultContent.classList.remove('hidden');
+
+                // Populate analysis results in right column
+                let analysisHTML = `
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-lg font-semibold text-gray-800">${data.prediction.plant}</p>
+                            <p class="text-gray-600">${data.prediction.condition}</p>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <div class="h-2 bg-gray-200 rounded-full">
+                                    <div class="h-2 bg-blue-500 rounded-full" style="width: ${data.prediction.confidence}%"></div>
+                                </div>
+                            </div>
+                            <span class="ml-4 font-semibold text-gray-700">${data.prediction.confidence}%</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <p class="flex items-center text-gray-700">
+                            <i class="fas fa-exclamation-triangle w-6 text-yellow-500"></i>
+                            <span class="font-semibold mr-2">Severity:</span> ${data.prediction.disease_info.severity}
+                        </p>
+                        <p class="flex items-center text-gray-700">
+                            <i class="fas fa-calendar w-6 text-blue-500"></i>
+                            <span class="font-semibold mr-2">Source:</span> ${data.prediction.data_source}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        `;
+                resultsContentDiv.innerHTML = analysisHTML;
+
+                // Format treatment recommendations
+                const treatmentFormatted = format_text(data.prediction.treatment_recommendations);
+                const treatmentHTML = `
+            <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                <h3 class="font-semibold text-gray-800 mb-2">Treatment Recommendations</h3>
+                ${treatmentFormatted}
+            </div>
+        `;
+                resultsContentDiv.innerHTML += treatmentHTML;
+
+                // Format reason for disease
+                const reasonFormatted = format_text(data.prediction.reason_for_disease);
+                const reasonHTML = `
+            <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                <h3 class="font-semibold text-gray-800 mb-2">Reason for Disease</h3>
+                ${reasonFormatted}
+            </div>
+        `;
+                resultsContentDiv.innerHTML += reasonHTML;
+
+                // Alternative Predictions Section
+                if (data.top_3_predictions && data.top_3_predictions.length > 0) {
+                    let predictionHTML = `
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center">
+                        <i class="fas fa-list-ol text-green-500 mr-2"></i>Alternative Predictions
+                    </h3>
+                    <div class="grid gap-4">
+                        ${data.top_3_predictions.map((pred, index) => `
+                            <div class="p-4 rounded-lg ${index === 0 ? 'bg-green-50' : 'bg-gray-50'}">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-semibold text-gray-800">${pred.class}</span>
+                                    <span class="text-sm font-medium px-3 py-1 bg-white rounded-full">
+                                        ${(pred.confidence * 100).toFixed(1)}%
+                                    </span>
+                                </div>
+                                <p class="text-sm text-gray-600">
+                                    <span class="font-medium">Patterns:</span> ${pred.disease_info.patterns.join(', ')}
+                                </p>
+                                <p class="text-sm text-gray-600">
+                                    <span class="font-medium">Severity:</span> ${pred.disease_info.severity}
+                                </p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+                    alternativePredictions.innerHTML = predictionHTML;
+                }
+
+                // Warnings Section
+                if (data.warnings) {
+                    const hasWarnings = data.warnings.low_confidence || data.warnings.severe_disease || data.warnings.requires_expert_review;
+                    if (hasWarnings) {
+                        let warningsHTML = `
+                    <div class="bg-yellow-50 rounded-xl shadow-sm p-6 border border-yellow-100">
+                        <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center">
+                            <i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>Important Notices
+                        </h3>
+                        <div class="space-y-3">
+                            ${data.warnings.low_confidence ? `
+                                <div class="flex items-center text-yellow-700">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                                    Low confidence in prediction
+                                </div>
+                            ` : ''}
+                            ${data.warnings.severe_disease ? `
+                                <div class="flex items-center text-red-700">
+                                    <i class="fas fa-virus mr-2"></i>
+                                    Severe disease detected
+                                </div>
+                            ` : ''}
+                            ${data.warnings.requires_expert_review ? `
+                                <div class="flex items-center text-blue-700">
+                                    <i class="fas fa-user-md mr-2"></i>
+                                    Expert review recommended
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                        warningsSection.innerHTML = warningsHTML;
+                    }
+                }
+
+                // Populate enhanced image details in left column if available
+                if (data.metadata) {
+                    let metadataHTML = `
+                <div class="space-y-4">
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-500">Filename</p>
+                            <p class="font-medium text-gray-800">${data.metadata.filename}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-500">Save Location</p>
+                            <p class="font-medium text-gray-800">${data.metadata.save_path}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-500">Timestamp</p>
+                            <p class="font-medium text-gray-800">${data.metadata.timestamp}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-500">Image Resolution</p>
+                            <p class="font-medium text-gray-800">${data.metadata.resolution || 'N/A'}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-500">File Size</p>
+                            <p class="font-medium text-gray-800">${data.metadata.size || 'N/A'}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-500">EXIF Data</p>
+                            <p class="font-medium text-gray-800">${data.metadata.has_exif ? 'Available' : 'Not Available'}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-500">Location Data</p>
+                            <p class="font-medium text-gray-800">${data.metadata.has_geo ? 'Available' : 'Not Available'}</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <p class="text-sm text-gray-500">File Format</p>
+                            <p class="font-medium text-gray-800">${data.metadata.format || 'N/A'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+                    metadataContentDiv.innerHTML = metadataHTML;
+                    imageDetailsDiv.classList.remove('hidden');
+                }
+
+                // PDF Report Section in Left Column
+                if (data.report && data.report.available) {
+                    let pdfHTML = `
+                <div class="bg-green-50 rounded-xl shadow-sm p-6 border border-green-100">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+                        <div class="mb-4 sm:mb-0">
+                            <p class="text-gray-700 mb-2">A detailed report is ready.</p>
+                            <div class="flex items-center space-x-1 text-sm text-gray-600">
+                                <i class="fas fa-file-pdf text-red-400"></i>
+                                <span>${data.report.filename || 'report.pdf'}</span>
+                                <span class="px-2 py-1 bg-white rounded text-xs">${data.report.size || 'N/A'}</span>
+                            </div>
+                        </div>
+                        <a href="${data.report.download_url}" target="_blank" 
+                           class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg
+                                  transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500
+                                  flex items-center space-x-2">
+                            <i class="fas fa-download"></i>
+                            <span>Download PDF</span>
+                        </a>
+                    </div>
+                    <div class="mt-4 flex items-center space-x-4 text-sm">
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-clock mr-1"></i>
+                            <span>Generated: ${data.report.generated_at || 'Just now'}</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-eye mr-1"></i>
+                            <span>Pages: ${data.report.page_count || 'N/A'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+                    pdfReportContent.innerHTML = pdfHTML;
+                    pdfReportSection.classList.remove('hidden');
+                }
+
+            } catch (error) {
+                resultPlaceholder.innerHTML = `
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                    <p class="text-red-700">Error: ${error.message}</p>
+                </div>
+            </div>
+        `;
+                resultPlaceholder.classList.remove('hidden');
+                resultContent.classList.add('hidden');
+                imageDetailsDiv.classList.add('hidden');
+                pdfReportSection.classList.add('hidden');
+            }
+        }
+
+        // Drag and drop functionality
+        const dropZone = document.querySelector('.border-dashed');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            dropZone.classList.add('border-blue-500', 'bg-blue-50');
+        }
+
+        function unhighlight(e) {
+            dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+        }
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            fileInput.files = files;
+            showPreview(files[0]);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Auth status check (simplified for example)
+            const isAuthenticated = localStorage.getItem('authToken') ? true : false;
+
+            // Update UI based on auth status
+            function updateUIBasedOnAuth() {
+                const guestContent = document.querySelectorAll('.guest-content');
+                const userContent = document.querySelectorAll('.user-content');
+
+                if (isAuthenticated) {
+                    guestContent.forEach(el => el.classList.add('hidden'));
+                    userContent.forEach(el => el.classList.remove('hidden'));
+                } else {
+                    guestContent.forEach(el => el.classList.remove('hidden'));
+                    userContent.forEach(el => el.classList.add('hidden'));
+                }
+            }
+
+            // Logout functionality
+            function handleLogout() {
+                localStorage.removeItem('authToken');
+                window.location.reload();
+            }
+
+            // Add event listeners
+            const logoutButton = document.getElementById('logoutButton');
+            const mobileLogoutButton = document.getElementById('mobileLogoutButton');
+
+            if (logoutButton) {
+                logoutButton.addEventListener('click', handleLogout);
+            }
+
+            if (mobileLogoutButton) {
+                mobileLogoutButton.addEventListener('click', handleLogout);
+            }
+
+            // Initialize UI
+            updateUIBasedOnAuth();
+        });
+
+
+    </script>
+</body>
+
+</html>
