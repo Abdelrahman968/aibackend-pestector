@@ -15,6 +15,34 @@ This application uses a pre-trained deep learning model (VGG16) to classify plan
 *   Automatic cleanup of old files
 *   Integration with Gemini API for advanced recommendations
 
+## Requirements
+
+The `requirements.txt` file lists all the dependencies required to run the application. Below is the content of the file:
+
+```
+
+fastapi==0.95.2
+uvicorn==0.22.0
+tensorflow==2.12.0
+numpy==1.23.5
+Pillow==9.5.0
+requests==2.28.2
+exifread==3.0.0
+humanize==4.7.0
+reportlab==4.0.4
+apscheduler==3.10.1
+python-multipart==0.0.6
+            
+```
+
+To install these dependencies, run the following command in your terminal:
+
+```
+
+pip install -r requirements.txt
+            
+```
+
 ## Code Structure
 
 The code is organized into several sections, each handling a specific part of the application:
