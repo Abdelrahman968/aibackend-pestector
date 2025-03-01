@@ -1,51 +1,10 @@
-# FastAPI and related dependencies
-fastapi==0.95.2
-uvicorn==0.22.0
-python-multipart==0.0.6
-
-# TensorFlow for model inference
-tensorflow>=2.13.0
-
-# Image processing
-Pillow==10.0.0
-
-# Data manipulation and scientific computing
-numpy==1.24.3
-
-# Logging and file handling
-loguru==0.7.0
-
-# HTTP requests for Gemini API
-requests==2.31.0
-
-# PDF generation
-reportlab==4.0.4
-
-# Human-readable file sizes
-humanize==4.7.0
-
-# EXIF data extraction
-exifread==3.0.0
-
-# UUID generation
-uuid==1.30
-
-# Static file serving
-aiofiles==23.2.1
-
-
-# =========================================================
-
-# Explanation of Dependencies:
-# =================================
-# FastAPI and Uvicorn: Required for running the FastAPI application and serving it with Uvicorn.
-# TensorFlow: Used for loading and running the plant disease classification model.
-# Pillow: For image processing tasks like resizing and converting images.
-# NumPy: For numerical operations and handling image arrays.
-# Requests: For making HTTP requests to the Gemini API.
-# ReportLab: For generating professional PDF reports.
-# Humanize: For converting file sizes into human-readable formats.
-# ExifRead: For extracting metadata (EXIF data) from images.
-# UUID: For generating unique identifiers for reports.
-# CORS Middleware: For enabling Cross-Origin Resource Sharing (CORS) in the FastAPI app.
-# Aiofiles: For asynchronous file handling in FastAPI.
+fastapi
+uvicorn
+tensorflow
+numpy
+pillow
+requests
+exifread
+humanize
+reportlab
+apscheduler
