@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pestector - Research Papers</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" href="../static/img/icon.png" type="image/x-icon">
+
+    <style>
+        .bg-gradient {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+        }
+
+        .paper-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-green-600 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-white text-xl font-bold flex items-center">
+                        <i class="fas fa-leaf mr-2"></i><a href="/">Pestector</a>
+                    </span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="/" class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Home
+                    </a>
+                    <a href="#features"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Features
+                    </a>
+                    <a href="#how-it-works"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        How It Works
+                    </a>
+                    <div id="authButtons" class="guest-content">
+                        <a href="/changelog"
+                            class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                            <i class="fas fa-file-alt mr-1"></i> Changelog
+                        </a>
+                    </div>
+                    <div id="userMenu" class="user-content hidden">
+                        <a href="/scan"
+                            class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-camera mr-1"></i> Scan Now
+                        </a>
+                    </div>
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobileMenuButton" class="text-white">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-green-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#features"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    Features
+                </a>
+                <a href="#how-it-works"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    How It Works
+                </a>
+                <div id="authButtonss" class="guest-content">
+                    <a href="/changelog"
+                        class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                        <i class="fas fa-file-alt mr-1"></i> Changelog
+                    </a>
+                </div>
+                <div id="mobileUserMenu" class="user-content hidden">
+                    <a href="/scan"
+                        class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-camera mr-1"></i> Scan Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-green-700 text-white py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold mb-4">Scientific Research Collection</h1>
+            <p class="text-xl max-w-3xl mb-6">Access the latest peer-reviewed research on plant diseases, detection
+                methods, and sustainable agricultural practices.</p>
+            <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                <div class="flex flex-col md:flex-row">
+                    <input type="text" placeholder="Search papers by title, author, or keywords"
+                        class="flex-grow px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-800">
+                    <button
+                        class="bg-green-600 hover:bg-green-800 transition-colors px-6 py-2 rounded-r-lg mt-2 md:mt-0">
+                        <i class="fas fa-search mr-2"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Filter Bar -->
+        <div class="bg-white shadow rounded-lg p-4 mb-8">
+            <div class="flex flex-wrap items-center justify-between">
+                <div class="flex flex-wrap items-center space-x-4 mb-4 md:mb-0">
+                    <span class="font-semibold">Filter by:</span>
+                    <select class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option>All Categories</option>
+                        <option>Detection Methods</option>
+                        <option>Disease Biology</option>
+                        <option>Treatment Approaches</option>
+                        <option>Machine Learning</option>
+                        <option>Sustainable Agriculture</option>
+                    </select>
+                    <select class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option>All Years</option>
+                        <option>2024</option>
+                        <option>2023</option>
+                        <option>2022</option>
+                        <option>2021</option>
+                        <option>2020</option>
+                        <option>Before 2020</option>
+                    </select>
+                </div>
+                <div class="flex space-x-2">
+                    <button
+                        class="flex items-center px-3 py-2 bg-green-100 text-green-800 rounded-lg hover:bg-green-200">
+                        <i class="fas fa-sort-amount-down mr-2"></i> Sort by Date
+                    </button>
+                    <button class="flex items-center px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-th-list mr-2"></i> List View
+                    </button>
+                    <button class="flex items-center px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-th-large mr-2"></i> Grid View
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Papers -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Featured Research Papers</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Paper 1 -->
+                <div class="paper-card bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300">
+                    <div class="h-3 bg-blue-500"></div>
+                    <div class="p-6">
+                        <span
+                            class="inline-block px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded mb-2">Machine
+                            Learning</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Convolutional Neural Networks for Automated
+                            Detection of Plant Diseases</h3>
+                        <p class="text-gray-600 mb-4">This paper presents a novel CNN architecture that achieves 98.7%
+                            accuracy in identifying 38 different plant diseases across various crops.</p>
+                        <div class="text-sm text-gray-500 mb-4">
+                            <p><strong>Authors:</strong> Johnson, M., Zhang, L., et al.</p>
+                            <p><strong>Journal:</strong> IEEE Transactions on Agricultural AI</p>
+                            <p><strong>Published:</strong> February 2024</p>
+                            <p><strong>Citations:</strong> 86</p>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Read</a>
+                            <button class="flex items-center text-gray-500 hover:text-gray-700">
+                                <i class="far fa-bookmark mr-1"></i> Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300">
+                    <div class="h-3 bg-green-500"></div>
+                    <div class="p-6">
+                        <span
+                            class="inline-block px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded mb-2">Sustainable
+                            Agriculture</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Integrated Pest Management Strategies for
+                            Reducing Chemical Inputs</h3>
+                        <p class="text-gray-600 mb-4">A comprehensive review of biological control methods that can
+                            reduce pesticide use by up to 65% while maintaining crop yields.</p>
+                        <div class="text-sm text-gray-500 mb-4">
+                            <p><strong>Authors:</strong> Patel, S., Rodriguez, C., Williams, T.</p>
+                            <p><strong>Journal:</strong> Sustainable Agriculture Research</p>
+                            <p><strong>Published:</strong> October 2023</p>
+                            <p><strong>Citations:</strong> 52</p>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Read</a>
+                            <button class="flex items-center text-gray-500 hover:text-gray-700">
+                                <i class="far fa-bookmark mr-1"></i> Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="paper-card bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300">
+                    <div class="h-3 bg-red-500"></div>
+                    <div class="p-6">
+                        <span
+                            class="inline-block px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded mb-2">Disease
+                            Biology</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Climate Change and Emerging Plant Pathogen
+                            Threats</h3>
+                        <p class="text-gray-600 mb-4">Examines how climate change is altering the distribution and
+                            virulence of key plant pathogens, with case studies from five continents.</p>
+                        <div class="text-sm text-gray-500 mb-4">
+                            <p><strong>Authors:</strong> Garcia, A., Smith, J., et al.</p>
+                            <p><strong>Journal:</strong> Plant Pathology</p>
+                            <p><strong>Published:</strong> January 2024</p>
+                            <p><strong>Citations:</strong> 27</p>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Read</a>
+                            <button class="flex items-center text-gray-500 hover:text-gray-700">
+                                <i class="far fa-bookmark mr-1"></i> Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <a href="#" class="text-green-600 hover:text-green-800 font-medium">View All Featured Papers <i
+                        class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+        </section>
+
+        <!-- Recent Papers -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Recent Publications</h2>
+            <div class="space-y-4">
+                <!-- Paper 1 -->
+                <div class="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow">
+                    <div class="flex flex-col md:flex-row md:items-start">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap gap-2 mb-2">
+                                <span
+                                    class="px-2 py-1 text-xs font-semibold bg-purple-100 text-purple-800 rounded">Detection
+                                    Methods</span>
+                                <span
+                                    class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded">New</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Smartphone-Based Detection of Tomato Leaf
+                                Diseases Using Transfer Learning</h3>
+                            <p class="text-gray-600 mb-3">A lightweight mobile application that can detect and classify
+                                tomato leaf diseases with 94.2% accuracy using MobileNetV3 and transfer learning
+                                techniques.</p>
+                            <div class="text-sm text-gray-500 mb-4">
+                                <p><strong>Authors:</strong> Lee, K., Nguyen, V., Thompson, B.</p>
+                                <p><strong>Journal:</strong> Computers and Electronics in Agriculture</p>
+                                <p><strong>Published:</strong> February 15, 2024 (2 weeks ago)</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 md:mt-0 md:ml-6 flex flex-col items-end justify-between">
+                            <div class="flex space-x-2 mb-4">
+                                <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Read</a>
+                                <a href="#" class="text-green-600 hover:text-green-800 font-medium">Download</a>
+                            </div>
+                            <div class="flex items-center text-gray-500">
+                                <i class="fas fa-eye mr-1"></i> 187
+                                <span class="mx-2">|</span>
+                                <i class="fas fa-download mr-1"></i> 42
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow">
+                    <div class="flex flex-col md:flex-row md:items-start">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap gap-2 mb-2">
+                                <span
+                                    class="px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded">Treatment
+                                    Approaches</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Biocontrol of Apple Scab Using Novel
+                                Bacillus Strains</h3>
+                            <p class="text-gray-600 mb-3">Identification of three Bacillus strains with strong
+                                antagonistic activity against Venturia inaequalis, offering an eco-friendly alternative
+                                to chemical fungicides.</p>
+                            <div class="text-sm text-gray-500 mb-4">
+                                <p><strong>Authors:</strong> Chen, W., Ivanova, E., Patel, R.</p>
+                                <p><strong>Journal:</strong> Biological Control</p>
+                                <p><strong>Published:</strong> January 20, 2024 (1 month ago)</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 md:mt-0 md:ml-6 flex flex-col items-end justify-between">
+                            <div class="flex space-x-2 mb-4">
+                                <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Read</a>
+                                <a href="#" class="text-green-600 hover:text-green-800 font-medium">Download</a>
+                            </div>
+                            <div class="flex items-center text-gray-500">
+                                <i class="fas fa-eye mr-1"></i> 145
+                                <span class="mx-2">|</span>
+                                <i class="fas fa-download mr-1"></i> 36
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paper 3 -->
+                <div class="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow">
+                    <div class="flex flex-col md:flex-row md:items-start">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap gap-2 mb-2">
+                                <span
+                                    class="px-2 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded">Machine
+                                    Learning</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Explainable AI for Plant Disease
+                                Classification: Beyond Black Box Predictions</h3>
+                            <p class="text-gray-600 mb-3">Implementation of LIME and SHAP methods to provide visual
+                                explanations for CNN-based plant disease classification, improving trust and adoption
+                                among agricultural experts.</p>
+                            <div class="text-sm text-gray-500 mb-4">
+                                <p><strong>Authors:</strong> Martínez, J., Kim, D., Ali, F.</p>
+                                <p><strong>Journal:</strong> AI in Agriculture</p>
+                                <p><strong>Published:</strong> January 5, 2024 (1.5 months ago)</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 md:mt-0 md:ml-6 flex flex-col items-end justify-between">
+                            <div class="flex space-x-2 mb-4">
+                                <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Read</a>
+                                <a href="#" class="text-green-600 hover:text-green-800 font-medium">Download</a>
+                            </div>
+                            <div class="flex items-center text-gray-500">
+                                <i class="fas fa-eye mr-1"></i> 203
+                                <span class="mx-2">|</span>
+                                <i class="fas fa-download mr-1"></i> 58
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-center">
+                <nav class="inline-flex rounded-md shadow">
+                    <a href="#"
+                        class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-l-md hover:bg-gray-50">Previous</a>
+                    <a href="#" class="px-4 py-2 bg-green-500 text-white border border-green-500">1</a>
+                    <a href="#" class="px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50">2</a>
+                    <a href="#" class="px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50">3</a>
+                    <a href="#"
+                        class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-r-md hover:bg-gray-50">Next</a>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Research Topics -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Popular Research Topics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <a href="#"
+                    class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Machine Learning &amp; AI</h3>
+                    <p class="text-gray-600">120 papers on neural networks, computer vision, and transfer learning for
+                        plant disease detection</p>
+                </a>
+
+                <a href="#"
+                    class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-leaf text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Sustainable Control</h3>
+                    <p class="text-gray-600">85 papers on biocontrol, integrated pest management, and organic disease
+                        treatments</p>
+                </a>
+
+                <a href="#"
+                    class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-microscope text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Pathogen Biology</h3>
+                    <p class="text-gray-600">96 papers exploring pathogen life cycles, mutation, and evolutionary
+                        adaptations</p>
+                </a>
+
+                <a href="#"
+                    class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-cloud-sun-rain text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Climate Impacts</h3>
+                    <p class="text-gray-600">72 papers on how changing climate conditions affect disease prevalence and
+                        severity</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Research Partners -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Our Research Partners</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8">
+                <div class="flex items-center justify-center p-4">
+                    <img src="../static/img/soon.png" alt="University Partner"
+                        class="grayscale hover:grayscale-0 transition-all">
+                </div>
+                <div class="flex items-center justify-center p-4">
+                    <img src="../static/img/soon.png" alt="Research Institute"
+                        class="grayscale hover:grayscale-0 transition-all">
+                </div>
+                <div class="flex items-center justify-center p-4">
+                    <img src="../static/img/soon.png" alt="Agriculture Department"
+                        class="grayscale hover:grayscale-0 transition-all">
+                </div>
+                <div class="flex items-center justify-center p-4">
+                    <img src="../static/img/soon.png" alt="Tech Company"
+                        class="grayscale hover:grayscale-0 transition-all">
+                </div>
+                <div class="flex items-center justify-center p-4">
+                    <img src="../static/img/soon.png" alt="Foundation"
+                        class="grayscale hover:grayscale-0 transition-all">
+                </div>
+                <div class="flex items-center justify-center p-4">
+                    <img src="../static/img/soon.png" alt="Farming Association"
+                        class="grayscale hover:grayscale-0 transition-all">
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="#"
+                    class="inline-block px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors">
+                    Become a Research Partner
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Newsletter -->
+    <section class="bg-green-50 py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Stay Updated with Research Alerts</h2>
+                <p class="text-gray-600 mb-6">Subscribe to receive notifications when new research papers in your area
+                    of interest are published.</p>
+                <div class="flex flex-col md:flex-row gap-2">
+                    <input type="email" placeholder="Your email address"
+                        class="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <button
+                        class="bg-green-600 hover:bg-green-700 transition-colors text-white px-6 py-3 rounded-lg font-medium">
+                        Subscribe
+                    </button>
+                </div>
+                <p class="text-sm text-gray-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">About Pestector</h3>
+                    <p class="text-gray-400">An AI-powered plant disease detection system helping farmers identify and
+                        treat crop diseases quickly and effectively.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/" class="hover:text-white">Home</a></li>
+                        <li><a href="/scan" class="hover:text-white">Scan Plant</a></li>
+                        <li><a href="/library" class="hover:text-white">Disease Library</a></li>
+                        <li><a href="/research-papers" class="hover:text-white">Research Papers</a></li>
+                        <li><a href="/changelog" class="hover:text-white">Changelog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/doc" class="hover:text-white">API Documentation</a></li>
+                        <li><a href="#" class="hover:text-white">Tutorial Videos</a></li>
+                        <li><a href="#" class="hover:text-white">Research Collaborations</a></li>
+                        <li><a href="#" class="hover:text-white">Mobile App</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <a href="mailto:info@pestector.com" class="hover:text-white">info@pestector.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2"></i>
+                            <a href="tel:+1234567890" class="hover:text-white">+1 (234) 567-890</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>123 AgTech Street, San Francisco, CA</span>
+                        </li>
+                    </ul>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-6 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 Pestector. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple script to toggle between list and grid 
+        document.addEventListener('DOMContentLoaded', function () {
+            // Placeholder for view toggle functionality
+            const gridViewBtn = document.querySelector('button:has(.fa-th-large)');
+            const listViewBtn = document.querySelector('button:has(.fa-th-list)');
+
+            if (gridViewBtn && listViewBtn) {
+                gridViewBtn.addEventListener('click', function () {
+                    alert('Grid view selected');
+                    // Implementation would go here
+                });
+
+                listViewBtn.addEventListener('click', function () {
+                    alert('List view selected');
+                    // Implementation would go here
+                });
+            }
+
+            // Search functionality placeholder
+            const searchInput = document.querySelector('input[type="text"][placeholder*="Search papers"]');
+            const searchButton = searchInput?.nextElementSibling;
+
+            if (searchInput && searchButton) {
+                searchButton.addEventListener('click', function () {
+                    const searchTerm = searchInput.value.trim();
+                    if (searchTerm) {
+                        alert(`Searching for: ${searchTerm}`);
+                        // Actual implementation would go here
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

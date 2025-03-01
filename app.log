@@ -1,0 +1,694 @@
+2025-02-23 13:31:55,491 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-23 13:31:55,491 - __main__ - INFO - Model initialized successfully
+2025-02-23 13:31:55,491 - __main__ - INFO - Application initialized successfully
+2025-02-23 13:32:13,904 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-23 13:32:13,910 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-23 13:32:14,440 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-23 13:32:14,441 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-23 13:32:14,490 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_8a9fdbb4_20250223_133214.pdf
+2025-02-23 13:32:14,490 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-23 13:33:15,086 - __main__ - INFO - Received file: TomatoYellowCurlVirus5.JPG, content type: image/jpeg
+2025-02-23 13:33:15,086 - __main__ - INFO - Uploaded file size: 7561 bytes
+2025-02-23 13:33:15,364 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-23 13:33:15,364 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-23 13:33:15,412 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_74a2ca1b_20250223_133315.pdf
+2025-02-23 13:33:15,412 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus5.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 99.99% confidence
+2025-02-23 17:46:22,153 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-23 17:46:22,159 - __main__ - INFO - Model initialized successfully
+2025-02-23 17:46:22,159 - __main__ - INFO - Application initialized successfully
+2025-02-23 17:55:01,347 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-23 17:55:01,353 - __main__ - INFO - Model initialized successfully
+2025-02-23 17:55:01,353 - __main__ - INFO - Application initialized successfully
+2025-02-23 18:49:58,725 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-23 18:49:58,731 - __main__ - INFO - Model initialized successfully
+2025-02-23 18:49:58,731 - __main__ - INFO - Application initialized successfully
+2025-02-23 18:51:36,300 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-23 18:51:36,300 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-23 18:51:37,461 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-23 18:51:37,470 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-23 18:51:37,495 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-24 14:47:22,557 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 14:47:22,564 - __main__ - INFO - Model initialized successfully
+2025-02-24 14:47:22,565 - __main__ - INFO - Application initialized successfully
+2025-02-24 14:57:21,288 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 14:57:21,300 - __main__ - INFO - cnn model initialized successfully
+2025-02-24 14:57:21,300 - __main__ - ERROR - Failed to load vgg16 model: Model file not found: model/vgg16_model.h5
+2025-02-24 14:57:43,863 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 14:57:43,863 - __main__ - INFO - cnn model initialized successfully
+2025-02-24 14:57:44,042 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 14:57:44,042 - __main__ - INFO - vgg16 model initialized successfully
+2025-02-24 14:57:44,174 - __main__ - ERROR - Failed to load inception model: Unknown layer: 'CustomScaleLayer'. Please ensure you are using a `keras.utils.custom_object_scope` and that this object is included in the scope. See https://www.tensorflow.org/guide/keras/save_and_serialize#registering_the_custom_object for details.
+2025-02-24 15:05:11,029 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 15:05:11,029 - __main__ - INFO - Model initialized successfully
+2025-02-24 15:05:11,029 - __main__ - INFO - Application initialized successfully
+2025-02-24 15:07:23,203 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 15:07:23,203 - __main__ - INFO - Model initialized successfully
+2025-02-24 15:07:23,203 - __main__ - INFO - Application initialized successfully
+2025-02-24 15:09:04,242 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 15:09:04,251 - __main__ - INFO - Model initialized successfully
+2025-02-24 15:09:04,251 - __main__ - INFO - Application initialized successfully
+2025-02-24 15:13:02,699 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-24 15:13:02,699 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-24 15:13:03,539 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-24 15:13:03,539 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-24 15:13:03,629 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_0b86221e_20250224_151303.pdf
+2025-02-24 15:13:03,629 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-24 15:14:09,350 - __main__ - INFO - Received file: AppleScab2.JPG, content type: image/jpeg
+2025-02-24 15:14:09,351 - __main__ - INFO - Uploaded file size: 8051 bytes
+2025-02-24 15:14:09,691 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-24 15:14:09,691 - __main__ - INFO - Predicted index: 0, Confidence: 1.00
+2025-02-24 15:14:09,746 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_4118e2c1_20250224_151409.pdf
+2025-02-24 15:14:09,747 - __main__ - INFO - Successfully classified image: AppleScab2.JPG as Apple - Apple scab with 99.98% confidence
+2025-02-24 15:15:45,997 - __main__ - INFO - Received file: AppleScab3.JPG, content type: image/jpeg
+2025-02-24 15:15:45,997 - __main__ - INFO - Uploaded file size: 21538 bytes
+2025-02-24 15:15:46,299 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-24 15:15:46,299 - __main__ - INFO - Predicted index: 30, Confidence: 0.20
+2025-02-24 15:15:46,356 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_f3a5df65_20250224_151546.pdf
+2025-02-24 15:15:46,361 - __main__ - INFO - Successfully classified image: AppleScab3.JPG as Tomato - Late blight with 19.94% confidence
+2025-02-24 15:36:21,663 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 15:36:21,667 - __main__ - INFO - Model initialized successfully
+2025-02-24 15:36:21,668 - __main__ - INFO - Application initialized successfully
+2025-02-24 15:45:01,974 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 15:45:01,974 - __main__ - INFO - Model initialized successfully
+2025-02-24 15:45:01,974 - __main__ - INFO - Application initialized successfully
+2025-02-24 16:03:46,870 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-24 16:03:46,870 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-24 16:03:47,487 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-24 16:03:47,487 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-24 16:03:47,550 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_4efdd78d_20250224_160347.pdf
+2025-02-24 16:03:47,550 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-24 16:05:26,956 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-24 16:05:26,956 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-24 16:05:27,272 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-24 16:05:27,272 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-24 16:05:27,328 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_1bd8b48b_20250224_160527.pdf
+2025-02-24 16:05:27,328 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-25 10:07:53,408 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-25 10:07:53,408 - __main__ - INFO - Model initialized successfully
+2025-02-25 10:07:53,408 - __main__ - INFO - Application initialized successfully
+2025-02-25 10:09:11,248 - __main__ - INFO - Received file: AppleCedarRust2.JPG, content type: image/jpeg
+2025-02-25 10:09:11,248 - __main__ - INFO - Uploaded file size: 11974 bytes
+2025-02-25 10:09:12,807 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-25 10:09:12,822 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-25 10:09:12,998 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_60bb9ef1_20250225_100912.pdf
+2025-02-25 10:09:12,998 - __main__ - INFO - Successfully classified image: AppleCedarRust2.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-25 10:10:36,310 - __main__ - INFO - Received file: AppleCedarRust2.JPG, content type: image/jpeg
+2025-02-25 10:10:36,310 - __main__ - INFO - Uploaded file size: 11974 bytes
+2025-02-25 10:10:37,152 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-25 10:10:37,152 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-25 10:10:47,890 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_3c6eaea1_20250225_101047.pdf
+2025-02-25 10:10:47,890 - __main__ - INFO - Successfully classified image: AppleCedarRust2.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-25 10:16:06,004 - __main__ - INFO - Received file: PotatoHealthy2.JPG, content type: image/jpeg
+2025-02-25 10:16:06,004 - __main__ - INFO - Uploaded file size: 16103 bytes
+2025-02-25 10:16:06,391 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-25 10:16:06,391 - __main__ - INFO - Predicted index: 22, Confidence: 1.00
+2025-02-25 10:16:06,474 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_da37efba_20250225_101606.pdf
+2025-02-25 10:16:06,477 - __main__ - INFO - Successfully classified image: PotatoHealthy2.JPG as Potato - healthy with 100.00% confidence
+2025-02-25 10:16:19,031 - __main__ - INFO - Received file: PotatoHealthy2.JPG, content type: image/jpeg
+2025-02-25 10:16:19,031 - __main__ - INFO - Uploaded file size: 16103 bytes
+2025-02-25 10:16:19,383 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-25 10:16:19,383 - __main__ - INFO - Predicted index: 22, Confidence: 1.00
+2025-02-25 10:16:30,528 - __main__ - ERROR - Error processing image: HTTPSConnectionPool(host='generativelanguage.googleapis.com', port=443): Max retries exceeded with url: /v1beta/models/gemini-pro:generateContent?key=AIzaSyDxqEMB8Qoq84jn_uSDepoKYnsbwvB5jdc (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000022AE92FCA90>: Failed to resolve 'generativelanguage.googleapis.com' ([Errno 11001] getaddrinfo failed)"))
+2025-02-25 10:27:48,171 - __main__ - INFO - Received file: PotatoHealthy2.JPG, content type: image/jpeg
+2025-02-25 10:27:48,173 - __main__ - INFO - Uploaded file size: 16103 bytes
+2025-02-25 10:27:48,367 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-25 10:27:48,367 - __main__ - INFO - Predicted index: 22, Confidence: 1.00
+2025-02-25 10:28:02,664 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_02268126_20250225_102802.pdf
+2025-02-25 10:28:02,666 - __main__ - INFO - Successfully classified image: PotatoHealthy2.JPG as Potato - healthy with 100.00% confidence
+2025-02-25 10:35:17,810 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-25 10:35:17,826 - __main__ - INFO - Model initialized successfully
+2025-02-25 10:35:17,826 - __main__ - INFO - Application initialized successfully
+2025-02-25 12:32:59,737 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-25 12:32:59,758 - __main__ - INFO - Model initialized successfully
+2025-02-25 12:32:59,762 - __main__ - INFO - Application initialized successfully
+2025-02-25 12:39:09,068 - __main__ - INFO - Received file: AppleCedarRust3.JPG, content type: image/jpeg
+2025-02-25 12:39:09,068 - __main__ - INFO - Uploaded file size: 11061 bytes
+2025-02-25 12:39:10,269 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-25 12:39:10,269 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-25 12:39:10,435 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_fd7b7d44_20250225_123910.pdf
+2025-02-25 12:39:10,437 - __main__ - INFO - Successfully classified image: AppleCedarRust3.JPG as Apple - Cedar apple rust with 99.96% confidence
+2025-02-26 12:20:07,914 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 12:20:07,922 - __main__ - INFO - Model initialized successfully
+2025-02-26 12:20:07,922 - __main__ - INFO - Application initialized successfully
+2025-02-26 12:21:30,300 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 12:21:30,305 - __main__ - INFO - Model initialized successfully
+2025-02-26 12:21:30,306 - __main__ - INFO - Application initialized successfully
+2025-02-26 12:23:30,919 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 12:23:30,925 - __main__ - INFO - Model initialized successfully
+2025-02-26 12:23:30,925 - __main__ - INFO - Application initialized successfully
+2025-02-26 12:33:43,203 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 12:33:43,203 - __main__ - INFO - Model initialized successfully
+2025-02-26 12:33:43,203 - __main__ - INFO - Application initialized successfully
+2025-02-26 12:50:20,840 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 12:50:20,840 - __main__ - INFO - Model initialized successfully
+2025-02-26 12:50:20,840 - __main__ - INFO - Application initialized successfully
+2025-02-26 12:53:58,737 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 12:53:58,737 - __main__ - INFO - Model initialized successfully
+2025-02-26 12:53:58,737 - __main__ - INFO - Application initialized successfully
+2025-02-26 12:54:09,362 - __main__ - ERROR - Model initialization error: name 'load_model' is not defined
+2025-02-26 12:54:09,362 - __main__ - ERROR - Startup error: Failed to initialize model: name 'load_model' is not defined
+2025-02-26 12:54:45,051 - __main__ - ERROR - Model initialization error: name 'load_model' is not defined
+2025-02-26 12:54:45,051 - __main__ - ERROR - Startup error: Failed to initialize model: name 'load_model' is not defined
+2025-02-26 12:54:53,091 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 12:54:53,111 - __main__ - INFO - Model initialized successfully
+2025-02-26 12:54:53,111 - __main__ - INFO - Application initialized successfully
+2025-02-26 12:59:52,997 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 12:59:52,999 - __main__ - INFO - Model initialized successfully
+2025-02-26 12:59:52,999 - __main__ - INFO - Application initialized successfully
+2025-02-26 13:01:50,237 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 13:01:50,244 - __main__ - INFO - Model initialized successfully
+2025-02-26 13:01:50,245 - __main__ - INFO - Application initialized successfully
+2025-02-26 13:08:33,890 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 13:08:33,896 - __main__ - INFO - Model initialized successfully
+2025-02-26 13:08:33,896 - __main__ - INFO - Application initialized successfully
+2025-02-26 13:16:31,584 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 13:16:31,599 - __main__ - INFO - Model initialized successfully
+2025-02-26 13:16:31,599 - __main__ - INFO - Application initialized successfully
+2025-02-26 14:09:43,209 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 14:09:43,209 - __main__ - INFO - Model initialized successfully
+2025-02-26 14:09:43,209 - __main__ - INFO - Application initialized successfully
+2025-02-26 21:34:09,517 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 21:34:09,526 - __main__ - INFO - Model initialized successfully
+2025-02-26 21:34:09,526 - __main__ - INFO - Application initialized successfully
+2025-02-26 21:41:34,535 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 21:41:34,536 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 21:41:35,376 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 21:41:35,379 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 21:41:35,403 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 21:42:52,682 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 21:42:52,683 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 21:42:52,831 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 21:42:52,831 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 21:42:52,832 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 21:44:06,873 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 21:44:06,875 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 21:44:07,170 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 21:44:07,171 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 21:44:07,172 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 21:48:42,813 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-26 21:48:42,817 - __main__ - INFO - Model initialized successfully
+2025-02-26 21:48:42,818 - __main__ - INFO - Application initialized successfully
+2025-02-26 21:49:02,166 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 21:49:02,167 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 21:49:02,478 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 21:49:02,478 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 21:49:02,479 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 21:49:20,235 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 21:49:20,235 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 21:49:20,379 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 21:49:20,379 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 21:49:20,379 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:02:21,965 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:02:21,965 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:02:22,119 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:02:22,120 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:02:22,121 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:03:07,924 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:03:07,924 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:03:08,064 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:03:08,065 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:03:08,066 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:03:11,273 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:03:11,274 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:03:11,414 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:03:11,415 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:03:11,415 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:14:43,954 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:14:43,954 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:14:44,103 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:14:44,104 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:14:44,104 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:15:00,095 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:15:00,095 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:15:00,234 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:15:00,235 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:15:00,236 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:15:02,093 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:15:02,093 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:15:02,238 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:15:02,238 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:15:02,239 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:15:03,738 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:15:03,738 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:15:03,883 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:15:03,883 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:15:03,884 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:15:06,486 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:15:06,486 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:15:06,625 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:15:06,626 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:15:06,626 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:20:36,220 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:20:36,221 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:20:36,365 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:20:36,366 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:20:36,366 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:20:40,693 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:20:40,693 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:20:40,834 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:20:40,834 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:20:40,835 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:20:44,951 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 22:20:44,951 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 22:20:45,100 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:20:45,101 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 22:20:45,101 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 22:20:58,279 - __main__ - INFO - Received file: Squash___Powdery_mildew.webp, content type: image/webp
+2025-02-26 22:20:58,279 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-26 22:20:58,422 - exifread - WARNING - Webp file does not have exif data.
+2025-02-26 22:20:58,580 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:20:58,580 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-26 22:20:58,581 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-26 22:21:10,443 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 22:21:10,444 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 22:21:10,583 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:21:10,583 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 22:21:10,584 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 22:24:21,180 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 22:24:21,180 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 22:24:21,372 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:24:21,372 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 22:24:21,372 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 22:35:17,883 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 22:35:17,883 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 22:35:18,027 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:35:18,028 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 22:35:18,028 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 22:36:26,988 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 22:36:26,988 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 22:36:27,133 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:36:27,133 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 22:36:27,133 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 22:37:35,243 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 22:37:35,243 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 22:37:35,396 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:37:35,396 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 22:37:35,396 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 22:42:05,979 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 22:42:05,979 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 22:42:06,277 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:42:06,279 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 22:42:06,279 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 22:44:59,484 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 22:44:59,484 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 22:44:59,624 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:44:59,625 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 22:44:59,626 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 22:54:59,311 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 22:54:59,312 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 22:54:59,606 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:54:59,607 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 22:54:59,608 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 22:58:32,024 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 22:58:32,025 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 22:58:32,162 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:58:32,162 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 22:58:32,163 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 22:58:48,440 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 22:58:48,441 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 22:58:48,582 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 22:58:48,583 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 22:58:48,583 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 23:00:14,344 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 23:00:14,344 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 23:00:14,764 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 23:00:14,764 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 23:00:14,764 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 23:00:20,226 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 23:00:20,227 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 23:00:20,361 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 23:00:20,361 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 23:00:20,362 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 23:09:46,604 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 23:09:46,605 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 23:09:46,897 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 23:09:46,898 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 23:09:46,899 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 23:11:34,501 - __main__ - INFO - Received file: TomatoYellowCurlVirus6.JPG, content type: image/jpeg
+2025-02-26 23:11:34,502 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-26 23:11:34,644 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 23:11:34,645 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-26 23:11:34,645 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-26 23:26:26,103 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 23:26:26,104 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 23:26:26,247 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 23:26:26,247 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 23:26:26,248 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-26 23:29:14,134 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-26 23:29:14,135 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-26 23:29:14,281 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-26 23:29:14,281 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-26 23:29:14,282 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 00:27:08,779 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-27 00:27:08,780 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 00:27:09,085 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 00:27:09,085 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 00:27:09,086 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 01:32:01,273 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-27 01:32:01,275 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 01:32:01,557 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 01:32:01,558 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 01:32:01,559 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 01:32:28,724 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-27 01:32:28,724 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 01:32:29,074 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 01:32:29,084 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 01:32:29,084 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 01:34:06,867 - __main__ - INFO - Received file: AppleCedarRust1-1740612846848.JPG, content type: image/jpeg
+2025-02-27 01:34:06,867 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 01:34:07,006 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 01:34:07,006 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 01:34:07,006 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740612846848.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 01:37:12,230 - __main__ - INFO - Received file: AppleCedarRust1-1740613032208.JPG, content type: image/jpeg
+2025-02-27 01:37:12,231 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 01:37:12,503 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 01:37:12,503 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 01:37:12,504 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740613032208.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 01:38:50,959 - __main__ - INFO - Received file: AppleCedarRust1-1740613130938.JPG, content type: image/jpeg
+2025-02-27 01:38:50,960 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 01:38:51,100 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 01:38:51,101 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 01:38:51,101 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740613130938.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 01:43:17,642 - __main__ - INFO - Received file: AppleCedarRust1-1740613397623.JPG, content type: image/jpeg
+2025-02-27 01:43:17,643 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 01:43:17,949 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 01:43:17,950 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 01:43:17,951 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740613397623.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 01:46:32,728 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740613592709.JPG, content type: image/jpeg
+2025-02-27 01:46:32,729 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 01:46:33,016 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 01:46:33,016 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 01:46:33,017 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740613592709.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 01:51:31,119 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740613891107.JPG, content type: image/jpeg
+2025-02-27 01:51:31,119 - __main__ - INFO - Uploaded file size: 0 bytes
+2025-02-27 01:52:03,003 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740613922997.JPG, content type: image/jpeg
+2025-02-27 01:52:03,003 - __main__ - INFO - Uploaded file size: 0 bytes
+2025-02-27 01:53:01,949 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740613981922.JPG, content type: image/jpeg
+2025-02-27 01:53:01,949 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 01:53:02,086 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 01:53:02,086 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 01:53:02,086 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740613981922.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 01:54:02,253 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740614042236.JPG, content type: image/jpeg
+2025-02-27 01:54:02,253 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 01:54:02,394 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 01:54:02,394 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 01:54:02,394 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740614042236.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 02:01:08,110 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740614468074.JPG, content type: image/jpeg
+2025-02-27 02:01:08,111 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 02:01:08,406 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 02:01:08,406 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 02:01:08,407 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740614468074.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 02:01:10,524 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740614470512.JPG, content type: image/jpeg
+2025-02-27 02:01:10,525 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 02:01:10,814 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 02:01:10,815 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 02:01:10,816 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740614470512.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 02:01:12,128 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740614472111.JPG, content type: image/jpeg
+2025-02-27 02:01:12,129 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 02:01:12,447 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 02:01:12,448 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 02:01:12,448 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740614472111.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 02:01:13,765 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740614473747.JPG, content type: image/jpeg
+2025-02-27 02:01:13,767 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 02:01:14,085 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 02:01:14,085 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 02:01:14,086 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740614473747.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 02:01:15,359 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740614475340.JPG, content type: image/jpeg
+2025-02-27 02:01:15,360 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 02:01:15,702 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 02:01:15,702 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 02:01:15,703 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740614475340.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 02:01:16,967 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740614476953.JPG, content type: image/jpeg
+2025-02-27 02:01:16,968 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 02:01:17,269 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 02:01:17,270 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 02:01:17,271 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740614476953.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 02:01:18,568 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740614478555.JPG, content type: image/jpeg
+2025-02-27 02:01:18,569 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 02:01:18,901 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 02:01:18,902 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 02:01:18,903 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740614478555.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 14:26:04,638 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-27 14:26:04,643 - __main__ - INFO - Model initialized successfully
+2025-02-27 14:26:04,643 - __main__ - INFO - Application initialized successfully
+2025-02-27 15:16:57,395 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740662217331.JPG, content type: image/jpeg
+2025-02-27 15:16:57,396 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 15:16:58,579 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 15:16:58,583 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 15:16:58,607 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740662217331.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 17:04:55,410 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740668695375.JPG, content type: image/jpeg
+2025-02-27 17:04:55,412 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 17:04:55,752 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 17:04:55,753 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 17:04:55,756 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740668695375.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 17:05:21,564 - __main__ - INFO - Received file: AppleCedarRust1-1740668721552.JPG, content type: image/jpeg
+2025-02-27 17:05:21,564 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 17:05:21,740 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 17:05:21,740 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 17:05:21,741 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740668721552.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 19:18:28,893 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-27 19:18:28,900 - __main__ - INFO - Model initialized successfully
+2025-02-27 19:18:28,900 - __main__ - INFO - Application initialized successfully
+2025-02-27 19:19:27,958 - __main__ - INFO - Received file: AppleCedarRust1-1740676767934.JPG, content type: image/jpeg
+2025-02-27 19:19:27,958 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 19:19:28,942 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 19:19:28,950 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 19:19:28,977 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740676767934.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 19:20:14,746 - __main__ - INFO - Received file: AppleCedarRust1-1740676814732.JPG, content type: image/jpeg
+2025-02-27 19:20:14,746 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 19:20:14,885 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 19:20:14,885 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 19:20:14,901 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740676814732.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 19:20:16,561 - __main__ - INFO - Received file: AppleCedarRust1-1740676816546.JPG, content type: image/jpeg
+2025-02-27 19:20:16,562 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 19:20:16,700 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 19:20:16,700 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 19:20:16,700 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740676816546.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 19:20:38,823 - __main__ - INFO - Received file: AppleCedarRust1-1740676838802.JPG, content type: image/jpeg
+2025-02-27 19:20:38,823 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 19:20:38,973 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 19:20:38,973 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 19:20:38,973 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740676838802.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 19:22:56,932 - __main__ - INFO - Received file: AppleCedarRust1-1740676976914.JPG, content type: image/jpeg
+2025-02-27 19:22:56,933 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 19:22:57,085 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 19:22:57,085 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 19:22:57,086 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740676976914.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 19:23:39,908 - __main__ - INFO - Received file: AppleCedarRust1-1740677019887.JPG, content type: image/jpeg
+2025-02-27 19:23:39,908 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 19:23:40,039 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 19:23:40,039 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 19:23:40,039 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740677019887.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 19:23:52,409 - __main__ - INFO - Received file: AppleCedarRust1-1740677032401.JPG, content type: image/jpeg
+2025-02-27 19:23:52,409 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 19:23:52,847 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 19:23:52,847 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 19:23:52,847 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740677032401.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 19:24:08,034 - __main__ - INFO - Received file: AppleCedarRust1-1740677048016.JPG, content type: image/jpeg
+2025-02-27 19:24:08,035 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 19:24:08,183 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 19:24:08,183 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 19:24:08,184 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740677048016.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 19:24:24,563 - __main__ - INFO - Received file: AppleCedarRust1-1740677064545.JPG, content type: image/jpeg
+2025-02-27 19:24:24,564 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 19:24:24,966 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 19:24:24,967 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 19:24:24,968 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740677064545.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 19:28:04,205 - __main__ - INFO - Received file: AppleCedarRust1-1740677284178.JPG, content type: image/jpeg
+2025-02-27 19:28:04,206 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-27 19:28:04,526 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 19:28:04,526 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-27 19:28:04,527 - __main__ - INFO - Successfully classified image: AppleCedarRust1-1740677284178.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-27 21:50:26,636 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740685826596.JPG, content type: image/jpeg
+2025-02-27 21:50:26,638 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 21:50:26,910 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 21:50:26,910 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 21:50:26,911 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740685826596.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 21:52:27,626 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740685947429.JPG, content type: image/jpeg
+2025-02-27 21:52:27,626 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 21:52:27,772 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 21:52:27,772 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 21:52:27,772 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740685947429.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 21:52:36,996 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740685956826.JPG, content type: image/jpeg
+2025-02-27 21:52:36,998 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 21:52:37,277 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 21:52:37,278 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 21:52:37,279 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740685956826.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 21:54:12,577 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740686052553.JPG, content type: image/jpeg
+2025-02-27 21:54:12,577 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 21:54:12,721 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 21:54:12,721 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 21:54:12,722 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740686052553.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 21:54:30,029 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740686070011.JPG, content type: image/jpeg
+2025-02-27 21:54:30,030 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-27 21:54:30,167 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 21:54:30,168 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-27 21:54:30,168 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740686070011.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-27 21:54:38,507 - __main__ - INFO - Received file: Squash___Powdery_mildew-1740686078492.webp, content type: image/webp
+2025-02-27 21:54:38,507 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-27 21:54:38,608 - exifread - WARNING - Webp file does not have exif data.
+2025-02-27 21:54:38,757 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 21:54:38,757 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-27 21:54:38,758 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew-1740686078492.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-27 21:56:34,024 - __main__ - INFO - Received file: Squash___Powdery_mildew-1740686194008.webp, content type: image/webp
+2025-02-27 21:56:34,024 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-27 21:56:34,025 - exifread - WARNING - Webp file does not have exif data.
+2025-02-27 21:56:34,188 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 21:56:34,188 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-27 21:56:34,189 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew-1740686194008.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-27 22:02:05,555 - __main__ - INFO - Received file: Squash___Powdery_mildew-1740686525531.webp, content type: image/webp
+2025-02-27 22:02:05,556 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-27 22:02:05,557 - exifread - WARNING - Webp file does not have exif data.
+2025-02-27 22:02:05,724 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 22:02:05,724 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-27 22:02:05,725 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew-1740686525531.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-27 22:03:04,306 - __main__ - INFO - Received file: Squash___Powdery_mildew-1740686584267.webp, content type: image/webp
+2025-02-27 22:03:04,307 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-27 22:03:04,309 - exifread - WARNING - Webp file does not have exif data.
+2025-02-27 22:03:04,741 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-27 22:03:04,742 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-27 22:03:04,743 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew-1740686584267.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-28 13:10:54,301 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-28 13:10:54,307 - __main__ - INFO - Model initialized successfully
+2025-02-28 13:10:54,307 - __main__ - INFO - Application initialized successfully
+2025-02-28 13:11:00,399 - __main__ - INFO - Received file: Squash___Powdery_mildew-1740741060340.webp, content type: image/webp
+2025-02-28 13:11:00,405 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-28 13:11:00,613 - exifread - WARNING - Webp file does not have exif data.
+2025-02-28 13:11:01,710 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-28 13:11:01,710 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-28 13:11:01,786 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew-1740741060340.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-28 13:11:52,683 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-28 13:11:52,683 - __main__ - INFO - Model initialized successfully
+2025-02-28 13:11:52,683 - __main__ - INFO - Application initialized successfully
+2025-02-28 13:12:10,241 - __main__ - INFO - Received file: Squash___Powdery_mildew-1740741130222.webp, content type: image/webp
+2025-02-28 13:12:10,241 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-28 13:12:10,413 - exifread - WARNING - Webp file does not have exif data.
+2025-02-28 13:12:11,207 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-28 13:12:11,207 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-28 13:12:12,299 - __main__ - ERROR - Gemini API error: 404, {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+2025-02-28 13:12:12,915 - __main__ - ERROR - Gemini API error: 404, {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+2025-02-28 13:12:13,324 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_abdf36e7_20250228_131212.pdf
+2025-02-28 13:12:13,324 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew-1740741130222.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-28 13:19:30,764 - __main__ - INFO - Received file: Squash___Powdery_mildew-1740741570744.webp, content type: image/webp
+2025-02-28 13:19:30,764 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-28 13:19:30,772 - exifread - WARNING - Webp file does not have exif data.
+2025-02-28 13:19:31,156 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-28 13:19:31,156 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-28 13:19:31,746 - __main__ - ERROR - Gemini API error: 404, {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+2025-02-28 13:19:32,182 - __main__ - ERROR - Gemini API error: 404, {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+2025-02-28 13:19:33,163 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_1e340569_20250228_131932.pdf
+2025-02-28 13:19:33,165 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew-1740741570744.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-28 13:22:59,464 - __main__ - INFO - Received file: Squash___Powdery_mildew-1740741779417.webp, content type: image/webp
+2025-02-28 13:22:59,464 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-28 13:22:59,464 - exifread - WARNING - Webp file does not have exif data.
+2025-02-28 13:22:59,849 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-28 13:22:59,849 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-28 13:23:00,783 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_3ad553d8_20250228_132259.pdf
+2025-02-28 13:23:00,783 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew-1740741779417.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-28 13:27:18,832 - __main__ - INFO - Received file: Squash___Powdery_mildew-1740742038779.webp, content type: image/webp
+2025-02-28 13:27:18,832 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-28 13:27:18,834 - exifread - WARNING - Webp file does not have exif data.
+2025-02-28 13:27:19,224 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-28 13:27:19,224 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-28 13:27:20,027 - __main__ - ERROR - Gemini API error: 404, {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+2025-02-28 13:27:20,641 - __main__ - ERROR - Gemini API error: 404, {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+2025-02-28 13:27:21,528 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_54256dfa_20250228_132720.pdf
+2025-02-28 13:27:21,528 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew-1740742038779.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-28 14:05:09,160 - __main__ - INFO - Received file: Squash___Powdery_mildew-1740744309121.webp, content type: image/webp
+2025-02-28 14:05:09,162 - __main__ - INFO - Uploaded file size: 111208 bytes
+2025-02-28 14:05:09,164 - exifread - WARNING - Webp file does not have exif data.
+2025-02-28 14:05:09,583 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-28 14:05:09,584 - __main__ - INFO - Predicted index: 19, Confidence: 0.63
+2025-02-28 14:05:09,584 - __main__ - INFO - Successfully classified image: Squash___Powdery_mildew-1740744309121.webp as Pepper, bell - healthy with 62.79% confidence
+2025-02-28 14:12:44,558 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-28 14:12:44,558 - apscheduler.scheduler - INFO - Added job "cleanup_old_files" to job store "default"
+2025-02-28 14:12:44,558 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-28 14:13:08,071 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-28 14:13:08,071 - apscheduler.scheduler - INFO - Added job "cleanup_old_files" to job store "default"
+2025-02-28 14:13:08,071 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-28 14:14:13,490 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-28 14:14:13,490 - apscheduler.scheduler - INFO - Added job "cleanup_old_files" to job store "default"
+2025-02-28 14:14:13,490 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-28 14:14:13,738 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-28 14:14:13,743 - __main__ - INFO - Model initialized successfully
+2025-02-28 14:14:13,743 - __main__ - INFO - Application initialized successfully
+2025-02-28 14:15:41,935 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-28 14:15:51,447 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-28 14:15:51,448 - apscheduler.scheduler - INFO - Added job "cleanup_old_files" to job store "default"
+2025-02-28 14:15:51,448 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-28 14:15:51,693 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-28 14:15:51,697 - __main__ - INFO - Model initialized successfully
+2025-02-28 14:15:51,697 - __main__ - INFO - Application initialized successfully
+2025-02-28 14:54:47,676 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-28 15:40:36,850 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-28 15:40:36,851 - apscheduler.scheduler - INFO - Added job "cleanup_old_files" to job store "default"
+2025-02-28 15:40:36,851 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-28 15:40:37,222 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-28 15:40:37,229 - __main__ - INFO - Model initialized successfully
+2025-02-28 15:40:37,229 - __main__ - INFO - Application initialized successfully
+2025-02-28 15:44:58,726 - __main__ - INFO - Received file: AppleCedarRust1.JPG, content type: image/jpeg
+2025-02-28 15:44:58,727 - __main__ - INFO - Uploaded file size: 8421 bytes
+2025-02-28 15:44:59,210 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-28 15:44:59,210 - __main__ - INFO - Predicted index: 2, Confidence: 1.00
+2025-02-28 15:44:59,248 - __main__ - INFO - Enhanced PDF report generated successfully: reports\plant_report_8cdb72bc_20250228_154459.pdf
+2025-02-28 15:44:59,249 - __main__ - INFO - Successfully classified image: AppleCedarRust1.JPG as Apple - Cedar apple rust with 100.00% confidence
+2025-02-28 15:49:15,833 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-28 16:02:49,854 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-28 16:02:49,854 - apscheduler.scheduler - INFO - Added job "cleanup_old_files" to job store "default"
+2025-02-28 16:02:49,854 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-28 16:02:50,151 - absl - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-28 16:02:50,155 - __main__ - INFO - Model initialized successfully
+2025-02-28 16:02:50,155 - __main__ - INFO - Application initialized successfully
+2025-02-28 16:18:01,933 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740752281918.JPG, content type: image/jpeg
+2025-02-28 16:18:01,934 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-28 16:18:02,239 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-28 16:18:02,239 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-28 16:18:02,240 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740752281918.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-28 16:26:51,276 - __main__ - INFO - Received file: TomatoYellowCurlVirus6-1740752811241.JPG, content type: image/jpeg
+2025-02-28 16:26:51,277 - __main__ - INFO - Uploaded file size: 10130 bytes
+2025-02-28 16:26:51,643 - __main__ - INFO - Raw predictions shape: (1, 38)
+2025-02-28 16:26:51,644 - __main__ - INFO - Predicted index: 35, Confidence: 1.00
+2025-02-28 16:26:51,645 - __main__ - INFO - Successfully classified image: TomatoYellowCurlVirus6-1740752811241.JPG as Tomato - Tomato Yellow Leaf Curl Virus with 100.00% confidence
+2025-02-28 16:50:12,285 - apscheduler.scheduler - INFO - Scheduler has been shut down

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treatment Guides | Pestector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../static/img/icon.png" type="image/x-icon">
+    <style>
+        .bg-gradient-plant {
+            background: linear-gradient(135deg, #1B5E20 0%, #388E3C 100%);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-green-600 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-white text-xl font-bold flex items-center">
+                        <i class="fas fa-leaf mr-2"></i><a href="/">Pestector</a>
+                    </span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="/" class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Home
+                    </a>
+                    <a href="#features"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Features
+                    </a>
+                    <a href="#how-it-works"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        How It Works
+                    </a>
+                    <div id="authButtons" class="guest-content">
+                        <a href="/changelog"
+                            class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                            <i class="fas fa-file-alt mr-1"></i> Changelog
+                        </a>
+                    </div>
+                    <div id="userMenu" class="user-content hidden">
+                        <a href="/scan"
+                            class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-camera mr-1"></i> Scan Now
+                        </a>
+                    </div>
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobileMenuButton" class="text-white">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-green-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#features"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    Features
+                </a>
+                <a href="#how-it-works"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    How It Works
+                </a>
+                <div id="authButtonss" class="guest-content">
+                    <a href="/changelog"
+                        class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
+                        <i class="fas fa-file-alt mr-1"></i> Changelog
+                    </a>
+                </div>
+                <div id="mobileUserMenu" class="user-content hidden">
+                    <a href="/scan"
+                        class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                        <i class="fas fa-camera mr-1"></i> Scan Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-plant py-16 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold mb-4">Plant Treatment Guides</h1>
+            <p class="text-xl max-w-3xl mx-auto">Comprehensive guides for treating common plant diseases and conditions.
+                Learn effective methods to keep your plants healthy and thriving.</p>
+        </div>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-grow">
+                    <div class="relative">
+                        <input type="text" placeholder="Search treatments..."
+                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        <div class="absolute left-3 top-2.5 text-gray-400">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <select
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        <option value="">All Plants</option>
+                        <option value="tomato">Tomato</option>
+                        <option value="apple">Apple</option>
+                        <option value="grape">Grape</option>
+                        <option value="potato">Potato</option>
+                        <option value="corn">Corn</option>
+                    </select>
+                    <select
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        <option value="">All Treatment Types</option>
+                        <option value="chemical">Chemical</option>
+                        <option value="organic">Organic</option>
+                        <option value="biological">Biological</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Treatment Categories -->
+    <div class="container mx-auto px-4 py-4">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Treatment Categories</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Chemical Treatments -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition-all duration-300">
+                <div class="bg-blue-600 text-white p-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-flask text-3xl mr-4"></i>
+                        <h3 class="text-xl font-semibold">Chemical Treatments</h3>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">Synthetic chemicals designed to eliminate diseases and pests.
+                        Effective but should be used with care.</p>
+                    <ul class="space-y-2 mb-4">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-600 mr-2"></i>
+                            <span>Fungicides</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-600 mr-2"></i>
+                            <span>Bactericides</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-600 mr-2"></i>
+                            <span>Insecticides</span>
+                        </li>
+                    </ul>
+                    <a href="#chemical"
+                        class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">View
+                        Guides</a>
+                </div>
+            </div>
+
+            <!-- Organic Treatments -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition-all duration-300">
+                <div class="bg-green-600 text-white p-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-leaf text-3xl mr-4"></i>
+                        <h3 class="text-xl font-semibold">Organic Treatments</h3>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">Natural solutions that are environmentally friendly and safe for
+                        beneficial organisms.</p>
+                    <ul class="space-y-2 mb-4">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                            <span>Neem Oil</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                            <span>Compost Tea</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                            <span>Baking Soda Sprays</span>
+                        </li>
+                    </ul>
+                    <a href="#organic"
+                        class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">View
+                        Guides</a>
+                </div>
+            </div>
+
+            <!-- Biological Controls -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition-all duration-300">
+                <div class="bg-amber-600 text-white p-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-bug text-3xl mr-4"></i>
+                        <h3 class="text-xl font-semibold">Biological Controls</h3>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4">Using beneficial organisms to control pests and diseases through
+                        natural predator-prey relationships.</p>
+                    <ul class="space-y-2 mb-4">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-amber-600 mr-2"></i>
+                            <span>Beneficial Insects</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-amber-600 mr-2"></i>
+                            <span>Beneficial Microbes</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-amber-600 mr-2"></i>
+                            <span>Companion Planting</span>
+                        </li>
+                    </ul>
+                    <a href="#biological"
+                        class="inline-block bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors">View
+                        Guides</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chemical Treatment Guides -->
+    <div id="chemical" class="container mx-auto px-4 py-12">
+        <div class="flex items-center mb-6">
+            <div class="bg-blue-600 h-8 w-1 mr-3 rounded"></div>
+            <h2 class="text-2xl font-bold text-gray-800">Chemical Treatment Guides</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Fungicide Guide -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/api/placeholder/400/200" alt="Fungicide Application" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-2">Fungicide Application Guide</h3>
+                    <p class="text-gray-600 mb-4">Learn how to properly apply fungicides to prevent and treat fungal
+                        diseases in plants.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Chemical</span>
+                        <button class="text-blue-600 hover:text-blue-800 font-medium">Read More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copper Spray Guide -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/api/placeholder/400/200" alt="Copper Spray" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-2">Copper-based Spray Guide</h3>
+                    <p class="text-gray-600 mb-4">How to use copper-based sprays to control bacterial and fungal
+                        diseases in plants.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Chemical</span>
+                        <button class="text-blue-600 hover:text-blue-800 font-medium">Read More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Systemic Fungicide Guide -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/api/placeholder/400/200" alt="Systemic Fungicide" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-2">Systemic Fungicide Guide</h3>
+                    <p class="text-gray-600 mb-4">How to effectively use systemic fungicides for internal plant
+                        protection.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Chemical</span>
+                        <button class="text-blue-600 hover:text-blue-800 font-medium">Read More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Organic Treatment Guides -->
+    <div id="organic" class="container mx-auto px-4 py-12 bg-gray-50">
+        <div class="flex items-center mb-6">
+            <div class="bg-green-600 h-8 w-1 mr-3 rounded"></div>
+            <h2 class="text-2xl font-bold text-gray-800">Organic Treatment Guides</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Neem Oil Guide -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/api/placeholder/400/200" alt="Neem Oil Application" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-2">Neem Oil Application Guide</h3>
+                    <p class="text-gray-600 mb-4">How to properly prepare and apply neem oil for pest and disease
+                        control.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Organic</span>
+                        <button class="text-green-600 hover:text-green-800 font-medium">Read More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compost Tea Guide -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/api/placeholder/400/200" alt="Compost Tea" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-2">Compost Tea Brewing Guide</h3>
+                    <p class="text-gray-600 mb-4">Learn how to brew and apply compost tea to boost plant immunity and
+                        control diseases.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Organic</span>
+                        <button class="text-green-600 hover:text-green-800 font-medium">Read More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Baking Soda Spray Guide -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/api/placeholder/400/200" alt="Baking Soda Spray" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-2">Baking Soda Spray Guide</h3>
+                    <p class="text-gray-600 mb-4">How to prepare and use baking soda sprays to prevent powdery mildew
+                        and other fungal diseases.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Organic</span>
+                        <button class="text-green-600 hover:text-green-800 font-medium">Read More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Biological Treatment Guides -->
+    <div id="biological" class="container mx-auto px-4 py-12">
+        <div class="flex items-center mb-6">
+            <div class="bg-amber-600 h-8 w-1 mr-3 rounded"></div>
+            <h2 class="text-2xl font-bold text-gray-800">Biological Control Guides</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Ladybugs Guide -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/api/placeholder/400/200" alt="Ladybugs" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-2">Using Ladybugs for Aphid Control</h3>
+                    <p class="text-gray-600 mb-4">How to attract and use ladybugs as natural predators for aphid control
+                        in your garden.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded text-sm">Biological</span>
+                        <button class="text-amber-600 hover:text-amber-800 font-medium">Read More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beneficial Bacteria Guide -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/api/placeholder/400/200" alt="Beneficial Bacteria" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-2">Beneficial Bacteria Application</h3>
+                    <p class="text-gray-600 mb-4">Using beneficial bacteria to suppress soil-borne pathogens and promote
+                        plant health.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded text-sm">Biological</span>
+                        <button class="text-amber-600 hover:text-amber-800 font-medium">Read More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Companion Planting Guide -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/api/placeholder/400/200" alt="Companion Planting" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-2">Companion Planting Guide</h3>
+                    <p class="text-gray-600 mb-4">Strategic planting combinations to naturally repel pests and reduce
+                        disease pressure.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-amber-100 text-amber-800 px-2 py-1 rounded text-sm">Biological</span>
+                        <button class="text-amber-600 hover:text-amber-800 font-medium">Read More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Treatment Selection Guide -->
+    <div class="container mx-auto px-4 py-12 bg-gray-50">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">How to Choose the Right Treatment</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="border-l-4 border-blue-600 pl-4">
+                    <h3 class="text-lg font-semibold mb-2">Identify the Problem</h3>
+                    <p class="text-gray-600">First, accurately identify the disease or pest affecting your plant. Use
+                        our AI scan tool for precise identification.</p>
+                </div>
+                <div class="border-l-4 border-green-600 pl-4">
+                    <h3 class="text-lg font-semibold mb-2">Consider the Environment</h3>
+                    <p class="text-gray-600">Think about the impact of treatments on beneficial organisms, wildlife, and
+                        water resources.</p>
+                </div>
+                <div class="border-l-4 border-amber-600 pl-4">
+                    <h3 class="text-lg font-semibold mb-2">Integrated Approach</h3>
+                    <p class="text-gray-600">Often, combining multiple treatment strategies creates the most effective
+                        and sustainable solution.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips & Tricks Section -->
+    <div class="container mx-auto px-4 py-12">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Expert Tips &amp; Tricks</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex mb-4">
+                    <div class="bg-green-100 text-green-800 p-3 rounded-full mr-4">
+                        <i class="fas fa-clock text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold">Timing is Everything</h3>
+                        <p class="text-gray-600">Apply treatments early in the morning or late evening to maximize
+                            effectiveness and minimize damage to beneficial insects.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex mb-4">
+                    <div class="bg-blue-100 text-blue-800 p-3 rounded-full mr-4">
+                        <i class="fas fa-tint text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold">Water Management</h3>
+                        <p class="text-gray-600">Proper watering practices can prevent many plant diseases. Water at the
+                            base of plants and avoid wetting foliage.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex mb-4">
+                    <div class="bg-amber-100 text-amber-800 p-3 rounded-full mr-4">
+                        <i class="fas fa-sync-alt text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold">Rotate Treatments</h3>
+                        <p class="text-gray-600">To prevent resistance, rotate between different treatment methods and
+                            chemicals with different modes of action.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex mb-4">
+                    <div class="bg-red-100 text-red-800 p-3 rounded-full mr-4">
+                        <i class="fas fa-shield-alt text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold">Safety First</h3>
+                        <p class="text-gray-600">Always wear protective equipment when applying treatments and follow
+                            label instructions carefully.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div class="bg-green-50 py-12">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-lg shadow-md p-8 max-w-4xl mx-auto">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Stay Updated with Latest Treatment Methods</h2>
+                    <p class="text-gray-600">Sign up for our newsletter to receive the latest plant treatment guides and
+                        tips directly in your inbox.</p>
+                </div>
+                <form class="flex flex-col md:flex-row gap-4">
+                    <input type="email" placeholder="Your email address"
+                        class="flex-grow px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                    <button type="submit"
+                        class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors">Subscribe</button>
+                </form>
+                <p class="text-gray-500 text-sm mt-4 text-center">We respect your privacy and will never share your
+                    information.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-leaf mr-2"></i> Pestector
+                    </h3>
+                    <p class="text-gray-400 mb-4">Helping you keep your plants healthy with AI-powered disease detection
+                        and treatment recommendations.</p>
+                    <div class="flex space-x-4 m-2">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-github text-xl"></i></a>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/scan" class="text-gray-400 hover:text-white">Scan Plant</a></li>
+                        <li><a href="/#features" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="/#how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact us</a></li>
+                        <li><a href="/library" class="text-gray-400 hover:text-white">Disease Library</a>
+                        </li>
+                        <li><a href="/faqs" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="/knowledge" class="text-gray-400 hover:text-white">Knowledge Base</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-green-400"></i>
+                            <a href="mailto:support@pestector.com"
+                                class="text-gray-400 hover:text-white">support@pestector.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-green-400"></i>
+                            <a href="tel:+18005551234" class="text-gray-400 hover:text-white">20-127-550-2636</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-green-400"></i>
+                            <span class="text-gray-400">El-Mansoura, Egypty</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 Pestector. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

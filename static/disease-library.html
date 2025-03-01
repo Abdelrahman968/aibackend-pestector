@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pestector - Plant Disease Library</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .disease-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-green-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <img src="/static/logo.png" alt="Pestector Logo" class="h-10">
+                    <span class="text-xl font-bold">Pestector</span>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="/" class="hover:text-green-200 transition">Home</a>
+                    <a href="/scan" class="hover:text-green-200 transition">Scan Plant</a>
+                    <a href="/disease-library"
+                        class="text-green-200 font-semibold border-b-2 border-green-200 pb-1">Disease Library</a>
+                    <a href="/doc" class="hover:text-green-200 transition">Documentation</a>
+                    <a href="/changelog" class="hover:text-green-200 transition">Changelog</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="focus:outline-none">
+                        <i class="fas fa-bars text-white text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-green-700 pb-4">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="/" class="text-white hover:bg-green-600 px-3 py-2 rounded">Home</a>
+                <a href="/scan" class="text-white hover:bg-green-600 px-3 py-2 rounded">Scan Plant</a>
+                <a href="/disease-library" class="bg-green-600 text-white px-3 py-2 rounded">Disease Library</a>
+                <a href="/doc" class="text-white hover:bg-green-600 px-3 py-2 rounded">Documentation</a>
+                <a href="/changelog" class="text-white hover:bg-green-600 px-3 py-2 rounded">Changelog</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-green-600 to-green-800 text-white py-10">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold mb-3">Plant Disease Library</h1>
+            <p class="text-lg max-w-3xl">Comprehensive information about common plant diseases, their symptoms, causes,
+                and treatments. Use this knowledge to identify and manage plant health issues effectively.</p>
+        </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="container mx-auto px-4 py-6">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="relative flex-grow">
+                    <input type="text" id="search-input" placeholder="Search diseases by name or plant..."
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <button class="absolute right-3 top-2 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <select id="plant-filter"
+                        class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="">All Plants</option>
+                        <option value="apple">Apple</option>
+                        <option value="tomato">Tomato</option>
+                        <option value="potato">Potato</option>
+                        <option value="grape">Grape</option>
+                        <option value="corn">Corn</option>
+                        <option value="strawberry">Strawberry</option>
+                        <option value="pepper">Pepper</option>
+                        <option value="peach">Peach</option>
+                    </select>
+                    <select id="severity-filter"
+                        class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="">All Severity Levels</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disease Categories -->
+    <div class="container mx-auto px-4 pb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Apple Diseases -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 disease-card">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="/api/placeholder/400/320" alt="Apple Scab" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-red-500 text-white py-1 px-3 rounded-full text-xs">High
+                        Severity</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-medium px-2 py-1 bg-green-100 text-green-800 rounded">Apple</span>
+                        <span class="text-gray-500 text-sm"><i class="fas fa-eye mr-1"></i> 1,245 views</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Apple Scab</h3>
+                    <p class="text-gray-600 mb-4">A fungal disease causing dark, scabby lesions on leaves and fruit.
+                        Severe infections can defoliate trees and render fruit unmarketable.</p>
+                    <div class="flex justify-between items-center">
+                        <button class="text-green-600 hover:text-green-800 font-medium">Learn More</button>
+                        <div class="flex items-center">
+                            <span class="text-amber-500 mr-1"><i class="fas fa-bookmark"></i></span>
+                            <span class="text-gray-500 text-sm">Save</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tomato Diseases -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 disease-card">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="/api/placeholder/400/320" alt="Tomato Late Blight" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-red-500 text-white py-1 px-3 rounded-full text-xs">High
+                        Severity</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-medium px-2 py-1 bg-green-100 text-green-800 rounded">Tomato</span>
+                        <span class="text-gray-500 text-sm"><i class="fas fa-eye mr-1"></i> 1,879 views</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Late Blight</h3>
+                    <p class="text-gray-600 mb-4">A devastating disease caused by water mold that can destroy entire
+                        crops in days. Causes dark lesions on leaves, stems, and fruit.</p>
+                    <div class="flex justify-between items-center">
+                        <button class="text-green-600 hover:text-green-800 font-medium">Learn More</button>
+                        <div class="flex items-center">
+                            <span class="text-amber-500 mr-1"><i class="fas fa-bookmark"></i></span>
+                            <span class="text-gray-500 text-sm">Save</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Potato Diseases -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 disease-card">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="/api/placeholder/400/320" alt="Potato Early Blight" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-yellow-500 text-white py-1 px-3 rounded-full text-xs">Medium
+                        Severity</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-medium px-2 py-1 bg-green-100 text-green-800 rounded">Potato</span>
+                        <span class="text-gray-500 text-sm"><i class="fas fa-eye mr-1"></i> 954 views</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Early Blight</h3>
+                    <p class="text-gray-600 mb-4">Fungal disease characterized by dark, concentric rings on lower
+                        leaves. Progresses upward on the plant and can reduce crop yield significantly.</p>
+                    <div class="flex justify-between items-center">
+                        <button class="text-green-600 hover:text-green-800 font-medium">Learn More</button>
+                        <div class="flex items-center">
+                            <span class="text-amber-500 mr-1"><i class="fas fa-bookmark"></i></span>
+                            <span class="text-gray-500 text-sm">Save</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grape Diseases -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 disease-card">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="/api/placeholder/400/320" alt="Grape Black Rot" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-yellow-500 text-white py-1 px-3 rounded-full text-xs">Medium
+                        Severity</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-medium px-2 py-1 bg-green-100 text-green-800 rounded">Grape</span>
+                        <span class="text-gray-500 text-sm"><i class="fas fa-eye mr-1"></i> 765 views</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Black Rot</h3>
+                    <p class="text-gray-600 mb-4">Fungal disease that affects all green parts of the vine. Causes
+                        circular lesions on leaves and shriveled, mummified fruits.</p>
+                    <div class="flex justify-between items-center">
+                        <button class="text-green-600 hover:text-green-800 font-medium">Learn More</button>
+                        <div class="flex items-center">
+                            <span class="text-amber-500 mr-1"><i class="fas fa-bookmark"></i></span>
+                            <span class="text-gray-500 text-sm">Save</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Corn Diseases -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 disease-card">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="/api/placeholder/400/320" alt="Corn Common Rust" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-yellow-500 text-white py-1 px-3 rounded-full text-xs">Medium
+                        Severity</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-medium px-2 py-1 bg-green-100 text-green-800 rounded">Corn</span>
+                        <span class="text-gray-500 text-sm"><i class="fas fa-eye mr-1"></i> 1,053 views</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Common Rust</h3>
+                    <p class="text-gray-600 mb-4">Characterized by small, rust-colored pustules on both sides of leaves.
+                        Under favorable conditions, infection can spread rapidly throughout the field.</p>
+                    <div class="flex justify-between items-center">
+                        <button class="text-green-600 hover:text-green-800 font-medium">Learn More</button>
+                        <div class="flex items-center">
+                            <span class="text-amber-500 mr-1"><i class="fas fa-bookmark"></i></span>
+                            <span class="text-gray-500 text-sm">Save</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strawberry Diseases -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 disease-card">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="/api/placeholder/400/320" alt="Strawberry Leaf Scorch" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-blue-500 text-white py-1 px-3 rounded-full text-xs">Low
+                        Severity</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <span
+                            class="text-sm font-medium px-2 py-1 bg-green-100 text-green-800 rounded">Strawberry</span>
+                        <span class="text-gray-500 text-sm"><i class="fas fa-eye mr-1"></i> 842 views</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Leaf Scorch</h3>
+                    <p class="text-gray-600 mb-4">Fungal disease that causes purple to brown spots on leaves, which
+                        later develop tan centers with purple borders. Can reduce plant vigor and yield.</p>
+                    <div class="flex justify-between items-center">
+                        <button class="text-green-600 hover:text-green-800 font-medium">Learn More</button>
+                        <div class="flex items-center">
+                            <span class="text-amber-500 mr-1"><i class="fas fa-bookmark"></i></span>
+                            <span class="text-gray-500 text-sm">Save</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-10 flex justify-center">
+            <nav class="flex items-center">
+                <button
+                    class="px-3 py-2 text-gray-500 hover:text-green-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="px-3 py-2 mx-1 bg-green-600 text-white rounded-lg">1</button>
+                <button class="px-3 py-2 mx-1 text-gray-700 hover:bg-green-100 rounded-lg">2</button>
+                <button class="px-3 py-2 mx-1 text-gray-700 hover:bg-green-100 rounded-lg">3</button>
+                <span class="px-3 py-2">...</span>
+                <button class="px-3 py-2 mx-1 text-gray-700 hover:bg-green-100 rounded-lg">8</button>
+                <button class="px-3 py-2 text-gray-500 hover:text-green-600">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Disease Treatment Guide Banner -->
+    <div class="bg-green-50 py-10">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-2/3 p-8">
+                        <h3 class="text-2xl font-bold text-green-800 mb-3">Complete Plant Disease Treatment Guide</h3>
+                        <p class="text-gray-600 mb-4">Access our comprehensive guide containing detailed treatment
+                            protocols for over 100 plant diseases. Includes organic and chemical solutions, application
+                            methods, and prevention strategies.</p>
+                        <button
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition">Download
+                            Guide</button>
+                    </div>
+                    <div class="md:w-1/3 bg-green-600 p-8 text-white flex flex-col justify-center">
+                        <div class="text-4xl font-bold mb-2">Free</div>
+                        <p class="mb-4">For registered Pestector users</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check mr-2"></i> Regular updates</li>
+                            <li class="flex items-center"><i class="fas fa-check mr-2"></i> Expert advice</li>
+                            <li class="flex items-center"><i class="fas fa-check mr-2"></i> Treatment calculators</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disease Comparison and Statistics -->
+    <div class="container mx-auto px-4 py-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Disease Comparison</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200">
+                <thead>
+                    <tr>
+                        <th
+                            class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                            Disease</th>
+                        <th
+                            class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                            Plants Affected</th>
+                        <th
+                            class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                            Symptoms</th>
+                        <th
+                            class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                            Severity</th>
+                        <th
+                            class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                            Treatment Difficulty</th>
+                        <th
+                            class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+                            Prevention</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Late Blight</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Tomato, Potato</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">Dark lesions, white mold, rotting</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">High</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Difficult</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Moderate</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Powdery Mildew</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Squash, Cherry, Apple</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">White powdery spots on leaves and stems</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Medium</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Moderate</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Easy</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Black Rot</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Grape, Apple</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">Circular lesions, fruit rotting</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Medium</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Moderate</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Moderate</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Leaf Scorch</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Strawberry</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">Purple spots with tan centers</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Low</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Easy</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Easy</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="bg-gray-50 py-12">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Frequently Asked Questions</h2>
+
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <h3 class="text-lg font-semibold text-gray-800">How can I prevent plant diseases in my garden?
+                        </h3>
+                        <i class="fas fa-chevron-down text-green-600"></i>
+                    </button>
+                    <div class="mt-4 text-gray-600">
+                        <p>Preventing plant diseases involves several practices: choose disease-resistant varieties,
+                            ensure proper spacing for air circulation, water at the base of plants rather than overhead,
+                            practice crop rotation, remove and dispose of infected plant material, and maintain good
+                            garden hygiene. Regular monitoring helps catch problems early.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <h3 class="text-lg font-semibold text-gray-800">What's the difference between bacterial and
+                            fungal diseases?</h3>
+                        <i class="fas fa-chevron-down text-green-600"></i>
+                    </button>
+                    <div class="mt-4 text-gray-600">
+                        <p>Bacterial diseases often appear as water-soaked lesions that may ooze or have a yellow halo.
+                            They commonly occur during warm, wet weather. Fungal diseases typically show powdery or
+                            fuzzy growth, distinct spot patterns, or visible spore structures. Treatment methods differ,
+                            with bacterial diseases requiring copper-based products and fungal diseases responding to
+                            specific fungicides.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <h3 class="text-lg font-semibold text-gray-800">Are organic treatments effective for plant
+                            diseases?</h3>
+                        <i class="fas fa-chevron-down text-green-600"></i>
+                    </button>
+                    <div class="mt-4 text-gray-600">
+                        <p>Organic treatments can be effective, especially when applied preventatively or at the first
+                            sign of disease. Options include neem oil, copper and sulfur-based products, potassium
+                            bicarbonate, and biological controls. Their effectiveness depends on timing, coverage,
+                            disease pressure, and consistent application. Integrating cultural practices with organic
+                            treatments usually yields the best results.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <h3 class="text-lg font-semibold text-gray-800">Can plant diseases spread to humans?</h3>
+                        <i class="fas fa-chevron-down text-green-600"></i>
+                    </button>
+                    <div class="mt-4 text-gray-600">
+                        <p>Plant pathogens generally don't infect humans. The organisms that cause plant diseases have
+                            evolved to specifically infect plant cells, which are structurally different from human
+                            cells. However, some fungi that grow on plants can produce toxins (mycotoxins) that are
+                            harmful if consumed, and some people may develop allergic reactions to plant molds and
+                            spores.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">About Pestector</h3>
+                    <p class="text-green-200">AI-powered plant disease classification system helping farmers and
+                        gardeners identify and treat plant diseases efficiently.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-green-200 hover:text-white">Home</a></li>
+                        <li><a href="/scan" class="text-green-200 hover:text-white">Scan Plant</a></li>
+                        <li><a href="/disease-library" class="text-green-200 hover:text-white">Disease Library</a></li>
+                        <li><a href="/doc" class="text-green-200 hover:text-white">Documentation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-green-200 hover:text-white">Treatment Guides</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-white">Plant Health Blog</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-white">Research Papers</a></li>
+                        <li><a href="#" class="text-green-200 hover:text-white">Video Tutorials</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <!-- Completing the footer content -->
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-green-200"><i class="fas fa-envelope mr-2"></i>
+                            support@pestector.com</li>
+                        <li class="flex items-center text-green-200"><i class="fas fa-phone mr-2"></i> +1 (555) 123-4567
+                        </li>
+                        <li class="flex items-center text-green-200"><i class="fas fa-map-marker-alt mr-2"></i> 123
+                            Plant Health Ave,
+                            Gardenia, CA 94025</li>
+                        <li class="flex items-center text-green-200"><i class="fas fa-clock mr-2"></i> Mon-Fri: 9AM-5PM
+                            PST</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-green-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-green-200 mb-4 md:mb-0">© 2025 Pestector. All rights reserved.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-green-200 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-green-200 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-green-200 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-green-200 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="text-green-200 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // FAQ accordions
+        document.querySelectorAll('.bg-white.rounded-lg.shadow-md button').forEach(button => {
+            button.addEventListener('click', function () {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+
+                // Toggle content visibility
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                }
+            });
+        });
+
+        // Search functionality
+        document.getElementById('search-input').addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            const diseaseCards = document.querySelectorAll('.disease-card');
+
+            diseaseCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                const plant = card.querySelector('.text-sm.font-medium').textContent.toLowerCase();
+
+                if (title.includes(searchTerm) || description.includes(searchTerm) || plant.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Plant filter
+        document.getElementById('plant-filter').addEventListener('change', function () {
+            filterDiseases();
+        });
+
+        // Severity filter
+        document.getElementById('severity-filter').addEventListener('change', function () {
+            filterDiseases();
+        });
+
+        // Combined filter function
+        function filterDiseases() {
+            const plantFilter = document.getElementById('plant-filter').value.toLowerCase();
+            const severityFilter = document.getElementById('severity-filter').value.toLowerCase();
+            const diseaseCards = document.querySelectorAll('.disease-card');
+
+            diseaseCards.forEach(card => {
+                const plant = card.querySelector('.text-sm.font-medium').textContent.toLowerCase();
+                const severityElement = card.querySelector('.absolute.top-3.right-3');
+                const severity = severityElement ? severityElement.textContent.toLowerCase() : '';
+
+                let plantMatch = plantFilter === '' || plant.includes(plantFilter);
+                let severityMatch = severityFilter === '' || severity.includes(severityFilter);
+
+                if (plantMatch && severityMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Bookmark functionality
+        document.querySelectorAll('.flex.items-center:has(.fa-bookmark)').forEach(bookmark => {
+            bookmark.addEventListener('click', function () {
+                const icon = this.querySelector('.fa-bookmark');
+                const text = this.querySelector('.text-sm');
+
+                if (icon.classList.contains('text-amber-500')) {
+                    icon.classList.remove('text-amber-500');
+                    icon.classList.add('text-gray-400');
+                    text.textContent = 'Save';
+                } else {
+                    icon.classList.remove('text-gray-400');
+                    icon.classList.add('text-amber-500');
+                    text.textContent = 'Saved';
+
+                    // Show notification
+                    const notification = document.createElement('div');
+                    notification.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg';
+                    notification.innerHTML = 'Disease saved to your bookmarks!';
+                    document.body.appendChild(notification);
+
+                    // Remove notification after 3 seconds
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
