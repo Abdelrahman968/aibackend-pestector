@@ -4,171 +4,363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pestector - Scan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../static/img/icon.png" type="image/x-icon">
+    <title>Pestector - Comparison</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #10b981;
+            --primary-dark: #059669;
+            --secondary-color: #4f46e5;
+            --secondary-dark: #4338ca;
+            --text-color: #1f2937;
+            --light-text: #6b7280;
+            --bg-color: #f9fafb;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .loader {
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .file-input-hidden {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .file-input-label {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .file-input-label:hover {
+            transform: translateY(-1px);
+        }
+
+        .file-input-label:active {
+            transform: translateY(1px);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+            pointer-events: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .input-field {
+            transition: all 0.2s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Custom accordion styling */
+        details.accordion {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        details.accordion summary {
+            cursor: pointer;
+            padding: 12px;
+            position: relative;
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        details.accordion summary::-webkit-details-marker {
+            display: none;
+        }
+
+
+
+
+        details.accordion .content {
+            padding: 0 12px 12px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Results cards */
+        .result-card {
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .result-card.winner {
+            border-left-color: var(--primary-color);
+        }
+
+        /* Progress bar for confidence */
+        .confidence-bar {
+            height: 6px;
+            background-color: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .confidence-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+
+        /* Image preview enhancements */
+        .image-preview {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .image-preview img {
+            transition: transform 0.3s ease;
+        }
+
+        .image-preview:hover img {
+            transform: scale(1.03);
+        }
+    </style>
 </head>
 
-<body class="bg-gray-50 font-sans">
+<body class="bg-gray-50 font-sans antialiased">
+    <div class="container mx-auto p-4 md:p-8 max-w-8xl">
+        <a href="/" rel="noopener noreferrer">
+            <h1 class="text-4xl font-extrabold mb-8 text-center header-gradient">Pestector</h1>
+        </a>
 
-    <!-- Navigation -->
-    <nav class="bg-green-600 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-white text-xl font-bold flex items-center">
-                        <i class="fas fa-leaf mr-2"></i><a href="/">Pestector</a>
-                    </span>
-                </div>
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="#features"
-                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                        Features
-                    </a>
-                    <a href="#how-it-works"
-                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                        How It Works
-                    </a>
-                    <div id="authButtons" class="guest-content">
-                        <a href="/changelog"
-                            class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
-                            <i class="fas fa-file-alt mr-1"></i> Changelog
-                        </a>
-                    </div>
-                    <div id="userMenu" class="user-content hidden">
-                        <a href="/scan"
-                            class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                            <i class="fas fa-camera mr-1"></i> Scan Now
-                        </a>
-                    </div>
-                </div>
-                <div class="flex md:hidden items-center">
-                    <button id="mobileMenuButton" class="text-white">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-green-700">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#features"
-                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    Features
-                </a>
-                <a href="#how-it-works"
-                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    How It Works
-                </a>
-                <div id="authButtonss" class="guest-content">
-                    <a href="/changelog"
-                        class="bg-white text-green-600 hover:bg-green-50 px-3 py-2 rounded-md text-sm font-medium ml-2">
-                        <i class="fas fa-file-alt mr-1"></i> Changelog
-                    </a>
-                </div>
-                <div id="mobileUserMenu" class="user-content hidden">
-                    <a href="/scan"
-                        class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                        <i class="fas fa-camera mr-1"></i> Scan Now
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <br>
-    <!-- Main Container -->
-    <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
-            <!-- Left Column - Upload Section, Image Details & PDF Report -->
-            <div class="bg-white rounded-2xl shadow-xl p-6">
-                <!-- File Upload Area -->
-                <div
-                    class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-500 transition-colors mb-6">
-                    <input type="file" id="imageInput" accept="image/*" class="hidden">
-                    <label for="imageInput" class="cursor-pointer block">
-                        <div id="preview-container" class="mb-4 ">
-                            <img id="preview-image" class="max-h-64 mx-auto rounded-lg object-contain"
-                                src="../static/img/scanner.png" width="256" height="256" alt="Preview">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Input Section -->
+            <div class="lg:col-span-1 card p-6">
+                <h2 class="text-xl font-semibold mb-6 text-gray-800 border-b border-gray-200 pb-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Scan Options
+                </h2>
+                <form id="upload-form" class="space-y-5">
+                    <div>
+                        <label for="image-file"
+                            class="file-input-label btn bg-secondary-color hover:bg-secondary-dark text-white font-medium py-2.5 px-4 rounded-lg flex items-center w-full justify-center"
+                            style="background-color: var(--secondary-color);">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Choose Image
+                        </label>
+                        <input type="file" id="image-file" name="file" class="file-input-hidden"
+                            accept="image/png, image/jpeg" required>
+                        <div class="mt-2 text-sm text-gray-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span id="file-name">No file chosen</span>
                         </div>
-                        <div id="upload-prompt">
-                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4 hidden"></i>
-                            <div class="text-gray-600">
-                                <p class="font-medium">Drop your image here or click to upload</p>
-                                <p class="text-sm text-gray-500 mt-1">Supports: JPG, PNG, WEBP</p>
+                    </div>
+                    <div id="image-preview" class="mt-3 hidden image-preview">
+                        <img id="preview-img" src="#" alt="Preview" class="w-full h-auto rounded-lg shadow-md" />
+                    </div>
+
+                    <div>
+                        <label for="model-choice" class="block text-sm font-medium text-gray-700 mb-1">Analysis
+                            Model</label>
+                        <div class="relative">
+                            <select id="model-choice" name="model_choice"
+                                class="w-full p-3 input-field rounded-lg appearance-none bg-white pr-10 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                <option value="best" selected>Compare & Choose Best</option>
+                                <option value="vit">ViT (PyTorch) Only</option>
+                                <option value="vgg">VGG (TensorFlow) Only</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
+                                </svg>
                             </div>
                         </div>
-                    </label>
-                </div>
-
-                <!-- API Toggle -->
-                <div class="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm mb-6">
-                    <div class="flex items-center space-x-3">
-                        <input type="checkbox" id="useGemini"
-                            class="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
-                        <label for="useGemini" class="text-gray-700 font-medium">Enable AI Agent
-                            Analysis</label>
                     </div>
+
+                    <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                        <input type="checkbox" id="use-gemini" name="use_gemini"
+                            class="h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                        <label for="use-gemini" class="ml-2 text-sm text-gray-700 flex items-center">
+                            <span>Use Expert System for Summary</span>
+                            <span
+                                class="ml-1 px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">Optional</span>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label for="api-key" class="block text-sm font-medium text-gray-700 mb-1">API Key</label>
+                        <div class="relative">
+                            <input type="password" id="api-key" name="api_key" value="1122333"
+                                class="w-full p-3 input-field rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 pr-10"
+                                required placeholder="Your API Key">
+                            <div class="absolute inset-y-0 right-0 flex items-center px-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Test keys: 1122333 or 445566
+                        </p>
+                    </div>
+
+                    <button type="submit" id="scan-button"
+                        class="w-full btn bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                        style="background-color: var(--primary-color);">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Scan Plant
+                    </button>
+                </form>
+
+                <div id="loading-spinner"
+                    class="mt-6 flex justify-center items-center hidden p-4 bg-gray-50 rounded-lg">
+                    <div class="loader"></div>
+                    <span class="ml-3 text-gray-700 font-medium">Analyzing plant...</span>
                 </div>
 
-                <!-- Hidden input to always set generate_report to true -->
-                <input type="hidden" id="generatePDF" value="true">
-
-                <!-- Classify Button -->
-                <button onclick="classifyImage()" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-lg
-                               hover:from-blue-700 hover:to-blue-800 transition duration-300
-                               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
-                               flex items-center justify-center space-x-2 font-semibold mb-6">
-                    <i class="fas fa-search"></i>
-                    <span>Analyze Plant</span>
-                </button>
-
-                <!-- Image Details Section (Initially Hidden) -->
-                <div id="image-details" class="hidden mt-6">
-                    <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center">
-                        <i class="fas fa-info-circle text-blue-500 mr-2"></i>Image Details
-                    </h3>
-                    <div id="metadata-content"></div>
-                </div>
-
-                <!-- PDF Report Section (Initially Hidden) -->
-                <div id="pdf-report-section" class="hidden mt-6">
-                    <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center">
-                        <i class="fas fa-file-pdf text-red-500 mr-2"></i>PDF Report
-                    </h3>
-                    <div id="pdf-report-content"></div>
+                <div id="error-message" class="mt-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-md hidden">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-red-700" id="error-message-text"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Right Column - Analysis Results -->
-            <div class="bg-white rounded-2xl shadow-xl p-6 min-h-[600px] overflow-y-auto">
-                <div id="result-placeholder" class="flex items-center justify-center h-full text-gray-500">
-                    <div class="text-center">
-                        <i class="fas fa-microscope text-6xl mb-4"></i>
-                        <p>Upload an image to see detailed analysis results</p>
+            <!-- Results Section -->
+            <div class="lg:col-span-2">
+                <h2 class="text-xl font-semibold mb-6 text-gray-800 border-b border-gray-200 pb-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Analysis Results
+                </h2>
+                <div id="results-area" class="space-y-5">
+                    <div class="card p-6 text-center flex flex-col items-center justify-center"
+                        style="min-height: 200px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-300 mb-4" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <p class="text-gray-500">Upload an image and scan to see results.</p>
+                        <p class="text-gray-400 text-sm mt-2">Supported formats: JPG, PNG</p>
                     </div>
-                </div>
-
-                <div id="result-content" class="hidden">
-                    <!-- Analysis Results Section -->
-                    <div id="analysis-results">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                            <i class="fas fa-chart-pie text-blue-500 mr-2"></i>Analysis Results
-                        </h2>
-                        <div id="results-content"></div>
-                    </div>
-
-                    <!-- Alternative Predictions Section -->
-                    <div id="alternative-predictions" class="mt-6"></div>
-
-                    <!-- Warnings Section -->
-                    <div id="warnings-section" class="mt-6"></div>
                 </div>
             </div>
         </div>
     </div>
-    <br>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
@@ -181,19 +373,15 @@
                     </h3>
                     <p class="text-gray-400 mb-4">Helping you keep your plants healthy with AI-powered disease detection
                         and treatment recommendations.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-youtube"></i>
-                        </a>
+                    <div class="flex space-x-4 m-2">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-github text-xl"></i></a>
                     </div>
                 </div>
 
@@ -204,7 +392,7 @@
                         <li><a href="/scan" class="text-gray-400 hover:text-white">Scan Plant</a></li>
                         <li><a href="/#features" class="text-gray-400 hover:text-white">Features</a></li>
                         <li><a href="/#how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+                        <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
                     </ul>
                 </div>
 
@@ -212,11 +400,11 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Resources</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Plant Care Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Disease Library</a>
+                        <li><a href="/contact" class="text-gray-400 hover:text-white">Contact us</a></li>
+                        <li><a href="/library" class="text-gray-400 hover:text-white">Disease Library</a>
                         </li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">FAQs</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Video Tutorials</a></li>
+                        <li><a href="/faqs" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="/knowledge" class="text-gray-400 hover:text-white">Knowledge Base</a></li>
                     </ul>
                 </div>
 
@@ -253,431 +441,321 @@
     </footer>
 
     <script>
+        const form = document.getElementById('upload-form');
+        const imageFile = document.getElementById('image-file');
+        const fileNameSpan = document.getElementById('file-name');
+        const modelChoiceSelect = document.getElementById('model-choice');
+        const useGeminiCheckbox = document.getElementById('use-gemini');
+        const apiKeyInput = document.getElementById('api-key');
+        const resultsArea = document.getElementById('results-area');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const errorMessage = document.getElementById('error-message');
+        const errorMessageText = document.getElementById('error-message-text');
+        const imagePreviewDiv = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+        const scanButton = document.getElementById('scan-button');
 
-        function format_text(raw_text) {
-            // Split the text into sections based on double newlines
-            const sections = raw_text.trim().split("\n\n");
+        imageFile.addEventListener('change', handleFileSelect);
+        form.addEventListener('submit', handleFormSubmit);
 
-            let formatted_text = "";
-
-            for (const section of sections) {
-                // Check if the section is a header (ends with a colon)
-                if (section.trim().endsWith(":")) {
-                    formatted_text += `<p class="font-semibold text-gray-800">${section.trim()}</p>`;
-                } else {
-                    // Split the section into lines
-                    const lines = section.trim().split("\n");
-                    for (const line of lines) {
-                        // Check if the line is a bullet point (starts with '*')
-                        if (line.trim().startsWith("*")) {
-                            formatted_text += `<p class="text-gray-700 ml-4">• ${line.trim().substring(1).trim()}</p>`;
-                        } else {
-                            formatted_text += `<p class="text-gray-700">${line.trim()}</p>`;
-                        }
-                    }
-                }
-                formatted_text += "<br>"; // Add spacing between sections
-            }
-
-            return formatted_text;
-        }
-
-
-        // Image preview functionality
-        const imageInput = document.getElementById('imageInput');
-        const previewContainer = document.getElementById('preview-container');
-        const previewImage = document.getElementById('preview-image');
-        const uploadPrompt = document.getElementById('upload-prompt');
-
-        function showPreview(file) {
-            if (file) {
+        function handleFileSelect() {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                fileNameSpan.textContent = file.name.length > 25 ? file.name.substring(0, 22) + '...' : file.name;
                 const reader = new FileReader();
-                reader.onload = function (e) {
-                    previewImage.src = e.target.result;
-                    previewContainer.classList.remove('hidden');
-                    uploadPrompt.classList.add('hidden');
-                }
+                reader.onload = (e) => {
+                    previewImg.src = e.target.result;
+                    imagePreviewDiv.classList.remove('hidden');
+                };
                 reader.readAsDataURL(file);
+            } else {
+                fileNameSpan.textContent = 'No file chosen';
+                previewImg.src = '#';
+                imagePreviewDiv.classList.add('hidden');
             }
         }
 
-        imageInput.addEventListener('change', function (e) {
-            showPreview(this.files[0]);
-        });
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            const file = imageFile.files[0];
+            const apiKey = apiKeyInput.value.trim();
+            if (!file) return displayError('Please select an image.');
+            if (!apiKey) return displayError('Please enter an API Key.');
 
+            resultsArea.innerHTML = `
+                <div class="card p-6 text-center">
+                    <div class="loader mx-auto mb-4"></div>
+                    <p class="text-gray-600">Processing your plant image...</p>
+                </div>`;
+            errorMessage.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+            scanButton.disabled = true;
+            scanButton.innerHTML = `
+                <div class="loader mr-3" style="width: 20px; height: 20px;"></div>
+                <span>Scanning...</span>`;
 
-        async function classifyImage() {
-            const fileInput = document.getElementById('imageInput');
-            const useGemini = document.getElementById('useGemini').checked;
-            const generatePDF = true;
-            const resultPlaceholder = document.getElementById('result-placeholder');
-            const resultContent = document.getElementById('result-content');
-            const resultsContentDiv = document.getElementById('results-content');
-            const imageDetailsDiv = document.getElementById('image-details');
-            const metadataContentDiv = document.getElementById('metadata-content');
-            const pdfReportSection = document.getElementById('pdf-report-section');
-            const pdfReportContent = document.getElementById('pdf-report-content');
-            const alternativePredictions = document.getElementById('alternative-predictions');
-            const warningsSection = document.getElementById('warnings-section');
-
-            if (fileInput.files.length === 0) {
-                resultPlaceholder.innerHTML = `
-            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
-                <div class="flex items-center">
-                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
-                    <p class="text-red-700">Please select an image file to analyze.</p>
-                </div>
-            </div>
-        `;
-                return;
-            }
-
-            const file = fileInput.files[0];
             const formData = new FormData();
             formData.append('file', file);
-
-            // Reset all result divs
-            resultPlaceholder.innerHTML = `
-        <div class="flex items-center justify-center space-x-3 text-gray-600">
-            <div class="animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
-            <span>Analyzing your plant image...</span>
-        </div>
-    `;
-            resultPlaceholder.classList.remove('hidden');
-            resultContent.classList.add('hidden');
-            imageDetailsDiv.classList.add('hidden');
-            pdfReportSection.classList.add('hidden');
+            const params = new URLSearchParams({ model_choice: modelChoiceSelect.value, use_gemini: useGeminiCheckbox.checked });
+            const apiUrl = `/classify?${params.toString()}`;
 
             try {
-                const response = await fetch(`/classify?use_gemini=${useGemini}&generate_report=${generatePDF}`, {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-API-KEY': '1122333',
-                    },
+                    headers: { 'X-API-KEY': apiKey },
+                    body: formData
                 });
 
                 if (!response.ok) {
-                    throw new Error('Classification failed');
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || `Request failed: ${response.status}`);
                 }
 
                 const data = await response.json();
-
-                // Hide placeholder once we have results
-                resultPlaceholder.classList.add('hidden');
-                resultContent.classList.remove('hidden');
-
-                // Populate analysis results in right column
-                let analysisHTML = `
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <p class="text-lg font-semibold text-gray-800">${data.prediction.plant}</p>
-                            <p class="text-gray-600">${data.prediction.condition}</p>
-                        </div>
-                        
-                        <div class="flex items-center">
-                            <div class="flex-1">
-                                <div class="h-2 bg-gray-200 rounded-full">
-                                    <div class="h-2 bg-blue-500 rounded-full" style="width: ${data.prediction.confidence}%"></div>
-                                </div>
-                            </div>
-                            <span class="ml-4 font-semibold text-gray-700">${data.prediction.confidence}%</span>
-                        </div>
-                    </div>
-
-                    <div class="space-y-3">
-                        <p class="flex items-center text-gray-700">
-                            <i class="fas fa-exclamation-triangle w-6 text-yellow-500"></i>
-                            <span class="font-semibold mr-2">Severity:</span> ${data.prediction.disease_info.severity}
-                        </p>
-                        <p class="flex items-center text-gray-700">
-                            <i class="fas fa-calendar w-6 text-blue-500"></i>
-                            <span class="font-semibold mr-2">Source:</span> ${data.prediction.data_source}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        `;
-                resultsContentDiv.innerHTML = analysisHTML;
-
-                // Format treatment recommendations
-                const treatmentFormatted = format_text(data.prediction.treatment_recommendations);
-                const treatmentHTML = `
-            <div class="mt-6 p-4 bg-blue-50 rounded-lg">
-                <h3 class="font-semibold text-gray-800 mb-2">Treatment Recommendations</h3>
-                ${treatmentFormatted}
-            </div>
-        `;
-                resultsContentDiv.innerHTML += treatmentHTML;
-
-                // Format reason for disease
-                const reasonFormatted = format_text(data.prediction.reason_for_disease);
-                const reasonHTML = `
-            <div class="mt-6 p-4 bg-blue-50 rounded-lg">
-                <h3 class="font-semibold text-gray-800 mb-2">Reason for Disease</h3>
-                ${reasonFormatted}
-            </div>
-        `;
-                resultsContentDiv.innerHTML += reasonHTML;
-
-                // Alternative Predictions Section
-                if (data.top_3_predictions && data.top_3_predictions.length > 0) {
-                    let predictionHTML = `
-                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                    <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center">
-                        <i class="fas fa-list-ol text-green-500 mr-2"></i>Alternative Predictions
-                    </h3>
-                    <div class="grid gap-4">
-                        ${data.top_3_predictions.map((pred, index) => `
-                            <div class="p-4 rounded-lg ${index === 0 ? 'bg-green-50' : 'bg-gray-50'}">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="font-semibold text-gray-800">${pred.class}</span>
-                                    <span class="text-sm font-medium px-3 py-1 bg-white rounded-full">
-                                        ${(pred.confidence * 100).toFixed(1)}%
-                                    </span>
-                                </div>
-                                <p class="text-sm text-gray-600">
-                                    <span class="font-medium">Patterns:</span> ${pred.disease_info.patterns.join(', ')}
-                                </p>
-                                <p class="text-sm text-gray-600">
-                                    <span class="font-medium">Severity:</span> ${pred.disease_info.severity}
-                                </p>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-                    alternativePredictions.innerHTML = predictionHTML;
-                }
-
-                // Warnings Section
-                if (data.warnings) {
-                    const hasWarnings = data.warnings.low_confidence || data.warnings.severe_disease || data.warnings.requires_expert_review;
-                    if (hasWarnings) {
-                        let warningsHTML = `
-                    <div class="bg-yellow-50 rounded-xl shadow-sm p-6 border border-yellow-100">
-                        <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center">
-                            <i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>Important Notices
-                        </h3>
-                        <div class="space-y-3">
-                            ${data.warnings.low_confidence ? `
-                                <div class="flex items-center text-yellow-700">
-                                    <i class="fas fa-exclamation-triangle mr-2"></i>
-                                    Low confidence in prediction
-                                </div>
-                            ` : ''}
-                            ${data.warnings.severe_disease ? `
-                                <div class="flex items-center text-red-700">
-                                    <i class="fas fa-virus mr-2"></i>
-                                    Severe disease detected
-                                </div>
-                            ` : ''}
-                            ${data.warnings.requires_expert_review ? `
-                                <div class="flex items-center text-blue-700">
-                                    <i class="fas fa-user-md mr-2"></i>
-                                    Expert review recommended
-                                </div>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-                        warningsSection.innerHTML = warningsHTML;
-                    }
-                }
-
-                // Populate enhanced image details in left column if available
-                if (data.metadata) {
-                    let metadataHTML = `
-                <div class="space-y-4">
-                    <div class="grid md:grid-cols-3 gap-4">
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-500">Filename</p>
-                            <p class="font-medium text-gray-800">${data.metadata.filename}</p>
-                        </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-500">Save Location</p>
-                            <p class="font-medium text-gray-800">${data.metadata.save_path}</p>
-                        </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-500">Timestamp</p>
-                            <p class="font-medium text-gray-800">${data.metadata.timestamp}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-500">Image Resolution</p>
-                            <p class="font-medium text-gray-800">${data.metadata.resolution || 'N/A'}</p>
-                        </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-500">File Size</p>
-                            <p class="font-medium text-gray-800">${data.metadata.size || 'N/A'}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="grid md:grid-cols-3 gap-4">
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-500">EXIF Data</p>
-                            <p class="font-medium text-gray-800">${data.metadata.has_exif ? 'Available' : 'Not Available'}</p>
-                        </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-500">Location Data</p>
-                            <p class="font-medium text-gray-800">${data.metadata.has_geo ? 'Available' : 'Not Available'}</p>
-                        </div>
-                        <div class="p-3 bg-gray-50 rounded-lg">
-                            <p class="text-sm text-gray-500">File Format</p>
-                            <p class="font-medium text-gray-800">${data.metadata.format || 'N/A'}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-                    metadataContentDiv.innerHTML = metadataHTML;
-                    imageDetailsDiv.classList.remove('hidden');
-                }
-
-                // PDF Report Section in Left Column
-                if (data.report && data.report.available) {
-                    let pdfHTML = `
-                <div class="bg-green-50 rounded-xl shadow-sm p-6 border border-green-100">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between">
-                        <div class="mb-4 sm:mb-0">
-                            <p class="text-gray-700 mb-2">A detailed report is ready.</p>
-                            <div class="flex items-center space-x-1 text-sm text-gray-600">
-                                <i class="fas fa-file-pdf text-red-400"></i>
-                                <span>${data.report.filename || 'report.pdf'}</span>
-                                <span class="px-2 py-1 bg-white rounded text-xs">${data.report.size || 'N/A'}</span>
-                            </div>
-                        </div>
-                        <a href="${data.report.download_url}" target="_blank" 
-                           class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg
-                                  transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500
-                                  flex items-center space-x-2">
-                            <i class="fas fa-download"></i>
-                            <span>Download PDF</span>
-                        </a>
-                    </div>
-                    <div class="mt-4 flex items-center space-x-4 text-sm">
-                        <div class="flex items-center text-gray-600">
-                            <i class="fas fa-clock mr-1"></i>
-                            <span>Generated: ${data.report.generated_at || 'Just now'}</span>
-                        </div>
-                        <div class="flex items-center text-gray-600">
-                            <i class="fas fa-eye mr-1"></i>
-                            <span>Pages: ${data.report.page_count || 'N/A'}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-                    pdfReportContent.innerHTML = pdfHTML;
-                    pdfReportSection.classList.remove('hidden');
-                }
-
+                displayResults(data);
             } catch (error) {
-                resultPlaceholder.innerHTML = `
-            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
-                <div class="flex items-center">
-                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
-                    <p class="text-red-700">Error: ${error.message}</p>
+                displayError(`Analysis failed: ${error.message}`);
+                resultsArea.innerHTML = '';
+            } finally {
+                loadingSpinner.classList.add('hidden');
+                scanButton.disabled = false;
+                scanButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Scan Plant`;
+            }
+        }
+
+        function displayError(message) {
+            errorMessageText.textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        const get = (obj, path, def = undefined) => {
+            const travel = r => (path + '').split(r).filter(Boolean).reduce((res, k) => (res != null ? res[k] : res), obj);
+            const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/);
+            return result === undefined || result === obj ? def : result;
+        };
+
+        function displayResults(data) {
+            resultsArea.innerHTML = '';
+            errorMessage.classList.add('hidden');
+
+            // Validate essential data
+            const overallBest = get(data, 'overall_best_prediction');
+            if (!overallBest || !overallBest.plant || !overallBest.condition || !overallBest.confidence) {
+                resultsArea.innerHTML = `
+                    <div class="card p-6 text-center text-red-600 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        Error: Invalid or incomplete result data received.
+                    </div>`;
+                return;
+            }
+
+            const vitPredictions = get(data, 'vit_predictions', []);
+            const tfPredictions = get(data, 'tf_predictions', []);
+            const metadata = get(data, 'metadata', {});
+            const imageDetails = get(metadata, 'image_details', {});
+            const lowConfThreshold = get(data, 'low_confidence_threshold', 0.7);
+            const modelChoiceUsed = get(data, 'model_choice_used', 'best');
+            const processingTime = get(data, 'processing_time_seconds', 'N/A');
+
+            // Low Confidence Warning
+            if (overallBest.confidence < lowConfThreshold) {
+                resultsArea.innerHTML += `
+                    <div class="bg-yellow-50 p-4 rounded-xl border-l-4 border-yellow-400 flex items-start">
+                        <div class="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="font-semibold text-yellow-800">Low Confidence Alert</h3>
+                            <p class="text-yellow-700 text-sm mt-1">Confidence (${(overallBest.confidence * 100).toFixed(2)}%) is below ${lowConfThreshold * 100}%. Results may be unreliable.</p>
+                        </div>
+                    </div>`;
+            }
+
+            // Main Result
+            resultsArea.innerHTML += `
+                <div class="card p-5 bg-white shadow-md border-l-4 border-green-500">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-800">Diagnosis Result</h3>
+                            <div class="mt-2">
+                                <div class="text-sm text-gray-500">Detected</div>
+                                <div class="text-xl font-semibold text-gray-900">${overallBest.plant}</div>
+                                <div class="flex items-center mt-1">
+                                    <span class="px-2 py-1 bg-red-100 text-red-800 text-sm rounded-md">${overallBest.condition}</span>
+                                    <span class="ml-2 text-sm text-gray-500">via ${overallBest.model_source}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm text-gray-500">Confidence</div>
+                            <div class="text-2xl font-bold text-green-600">${overallBest.confidence_percent}%</div>
+                            <div class="confidence-bar mt-2 w-28">
+                                <div class="confidence-bar-fill" style="width: ${overallBest.confidence * 100}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+
+
+            // Model Comparison
+            const winningModel = overallBest.model_source.includes('ViT') ? 'ViT' : 'VGG';
+            let comparisonHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">';
+
+            function createModelCard(title, predictions, isWinner) {
+                if (!predictions.length) {
+                    return `
+            <div class="card p-4 bg-gray-50">
+                <h3 class="font-semibold text-gray-600 flex items-center">
+                    ${title}
+                    ${modelChoiceUsed !== 'best' && modelChoiceUsed !== title.toLowerCase().split(' ')[0] ?
+                            `<span class="ml-2 text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full">Not Selected</span>` : ''}
+                </h3>
+                <p class="text-gray-500 italic mt-2">No predictions available</p>
+            </div>`;
+                }
+
+                const topPred = predictions[0];
+                const [plant, cond] = topPred.class.includes('___') ? topPred.class.split('___') : ['Unknown', topPred.class];
+
+                return `
+        <div class="card p-4 result-card ${isWinner ? 'winner' : ''}">
+            <div class="flex justify-between items-center">
+                <h3 class="font-semibold text-gray-800">
+                    ${title}
+                    ${isWinner ?
+                        `<span class="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Best</span>` : ''}
+                </h3>
+                <div class="text-xs text-gray-500 ml-2">
+                    ${modelChoiceUsed === 'best' ? 'Compared' : modelChoiceUsed === title.toLowerCase().split(' ')[0] ? 'Selected Model' : ''}
                 </div>
             </div>
-        `;
-                resultPlaceholder.classList.remove('hidden');
-                resultContent.classList.add('hidden');
-                imageDetailsDiv.classList.add('hidden');
-                pdfReportSection.classList.add('hidden');
+            <div class="mt-3">
+                <p class="flex justify-between items-center">
+                    <span class="font-medium text-gray-700">Plant:</span>
+                    <span class="text-gray-800">${plant.replace(/_/g, ' ')}</span>
+                </p>
+                <p class="flex justify-between items-center mt-1">
+                    <span class="font-medium text-gray-700">Condition:</span>
+                    <span class="text-gray-800">${cond.replace(/_/g, ' ')}</span>
+                </p>
+                <p class="flex justify-between items-center mt-1">
+                    <span class="font-medium text-gray-700">Confidence:</span>
+                    <span class="text-green-600 font-semibold">${(topPred.confidence * 100).toFixed(2)}%</span>
+                </p>
+                <div class="confidence-bar mt-2">
+                    <div class="confidence-bar-fill" style="width: ${topPred.confidence * 100}%"></div>
+                </div>
+            </div>
+            
+            <details class="accordion mt-3 border-t border-gray-100 pt-2">
+                <summary class="cursor-pointer text-sm text-gray-600 hover:text-gray-800">
+                    Additional predictions
+                </summary>
+                <div class="content">
+                    <ul class="mt-2 text-xs space-y-1">
+                        ${predictions.slice(1, 5).map(p => {
+                            const [plt, condition] = p.class.includes('___') ?
+                                p.class.split('___') : ['Unknown', p.class];
+                            return `<li class="flex justify-between">
+                                <span>${plt.replace(/_/g, ' ')} - ${condition.replace(/_/g, ' ')}:</span>
+                                <span class="font-medium">${(p.confidence * 100).toFixed(2)}%</span>
+                            </li>`;
+                        }).join('')}
+                    </ul>
+                </div>
+            </details>
+        </div>`;
             }
+
+            if (modelChoiceUsed === 'vit' || modelChoiceUsed === 'best') comparisonHTML += createModelCard('ViT', vitPredictions, winningModel === 'ViT');
+            if (modelChoiceUsed === 'vgg' || modelChoiceUsed === 'best') comparisonHTML += createModelCard('VGG', tfPredictions, winningModel === 'VGG');
+            comparisonHTML += '</div>';
+            resultsArea.innerHTML += comparisonHTML;
+
+            // Treatment & Reason
+            const searchLink = `https://www.google.com/search?q=${encodeURIComponent(overallBest.plant)}+${encodeURIComponent(overallBest.condition)}+disease`;
+            resultsArea.innerHTML += `
+    <div class="card p-5 result-card winner bg-white shadow-md mt-5">
+        <h3 class="font-semibold text-lg text-gray-800 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+            Diagnosis & Treatment
+        </h3>
+        <div class="mt-4 space-y-3">
+            <div>
+                <p class="text-sm text-gray-500">Detected</p>
+                <p class="text-lg font-medium text-gray-900">${overallBest.plant} - <span class="text-red-600">${overallBest.condition}</span></p>
+                <p class="text-sm text-gray-600">Confidence: <span class="text-green-600 font-semibold">${overallBest.confidence_percent}%</span> (via ${overallBest.model_source})</p>
+                <div class="confidence-bar mt-2 w-full max-w-xs">
+                    <div class="confidence-bar-fill" style="width: ${overallBest.confidence * 100}%"></div>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-sm font-medium text-gray-700">Treatment Recommendation</p>
+                <p class="text-gray-800 mt-1">${overallBest.treatment_recommendations || 'Not available'}</p>
+            </div>
+            <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-sm font-medium text-gray-700">Possible Cause</p>
+                <p class="text-gray-800 mt-1">${overallBest.reason_for_disease || 'Not available'}</p>
+            </div>
+            <a href="${searchLink}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm text-blue-500 hover:text-blue-700 underline transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                Learn More
+            </a>
+        </div>
+    </div>`;
+
+            // Metadata
+            resultsArea.innerHTML += `
+    <div class="card p-5 bg-white shadow-md mt-5">
+        <details class="accordion">
+            <summary class="font-semibold text-gray-800 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Technical Details
+            </summary>
+            <div class="content mt-3 text-sm text-gray-600 space-y-2">
+                <div class="flex justify-between items-center">
+                    <span class="font-medium">Processing Time:</span>
+                    <span>${processingTime} seconds</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-medium">Model Used:</span>
+                    <span class="capitalize">${modelChoiceUsed}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-medium">File Name:</span>
+                    <span>${metadata.filename || 'N/A'}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-medium">Resolution:</span>
+                    <span>${imageDetails.resolution || 'N/A'}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-medium">File Size:</span>
+                    <span>${imageDetails.size || 'N/A'}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-medium">Format:</span>
+                    <span>${imageDetails.format || 'N/A'}</span>
+                </div>
+            </div>
+        </details>
+    </div>`;
         }
-
-        // Drag and drop functionality
-        const dropZone = document.querySelector('.border-dashed');
-
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, preventDefaults, false);
-        });
-
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, highlight, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, unhighlight, false);
-        });
-
-        function highlight(e) {
-            dropZone.classList.add('border-blue-500', 'bg-blue-50');
-        }
-
-        function unhighlight(e) {
-            dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-        }
-
-        dropZone.addEventListener('drop', handleDrop, false);
-
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            fileInput.files = files;
-            showPreview(files[0]);
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // Mobile menu toggle
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenu = document.getElementById('mobileMenu');
-
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function () {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-
-            // Auth status check (simplified for example)
-            const isAuthenticated = localStorage.getItem('authToken') ? true : false;
-
-            // Update UI based on auth status
-            function updateUIBasedOnAuth() {
-                const guestContent = document.querySelectorAll('.guest-content');
-                const userContent = document.querySelectorAll('.user-content');
-
-                if (isAuthenticated) {
-                    guestContent.forEach(el => el.classList.add('hidden'));
-                    userContent.forEach(el => el.classList.remove('hidden'));
-                } else {
-                    guestContent.forEach(el => el.classList.remove('hidden'));
-                    userContent.forEach(el => el.classList.add('hidden'));
-                }
-            }
-
-            // Logout functionality
-            function handleLogout() {
-                localStorage.removeItem('authToken');
-                window.location.reload();
-            }
-
-            // Add event listeners
-            const logoutButton = document.getElementById('logoutButton');
-            const mobileLogoutButton = document.getElementById('mobileLogoutButton');
-
-            if (logoutButton) {
-                logoutButton.addEventListener('click', handleLogout);
-            }
-
-            if (mobileLogoutButton) {
-                mobileLogoutButton.addEventListener('click', handleLogout);
-            }
-
-            // Initialize UI
-            updateUIBasedOnAuth();
-        });
-
-
     </script>
 </body>
 

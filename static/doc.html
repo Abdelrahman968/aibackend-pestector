@@ -36,6 +36,7 @@
                 <nav class="mt-4 md:mt-0">
                     <ul class="flex space-x-6">
                         <li><a href="#overview" class="hover:text-green-200 transition">Overview</a></li>
+                        <li><a href="#patterns" class="hover:text-green-200 transition">Design Patterns</a></li>
                         <li><a href="#api" class="hover:text-green-200 transition">API</a></li>
                         <li><a href="#model" class="hover:text-green-200 transition">Model</a></li>
                         <li><a href="#examples" class="hover:text-green-200 transition">Examples</a></li>
@@ -80,6 +81,121 @@
                             <li>Responsive front-end interface</li>
                         </ul>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add new section after Overview -->
+        <section id="patterns" class="mb-12">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-green-700 mb-4">Design Patterns</h2>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Singleton Pattern -->
+                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                        <h3 class="font-bold text-purple-800 mb-2">Singleton Pattern</h3>
+                        <p class="text-sm text-gray-600 mb-2">
+                            <strong>Purpose:</strong> Ensure single instance of classifier/model<br>
+                            <strong>Implementation:</strong> PlantDiseaseClassifier class
+                        </p>
+                        <pre class="text-xs"><code class="language-python">class PlantDiseaseClassifier:
+            _instance = None
+            
+            def __new__(cls):
+                if cls._instance is None:
+                    cls._instance = super().__new__(cls)
+                    cls._instance._initialize()
+                return cls._instance</code></pre>
+                        <p class="text-sm mt-2">Prevents multiple model loads, reduces memory usage</p>
+                    </div>
+
+                    <!-- Dependency Injection -->
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h3 class="font-bold text-blue-800 mb-2">Dependency Injection</h3>
+                        <p class="text-sm text-gray-600 mb-2">
+                            <strong>Purpose:</strong> Manage authentication dependencies<br>
+                            <strong>Implementation:</strong> FastAPI's Depends()
+                        </p>
+                        <pre class="text-xs"><code class="language-python">@app.post("/classify")
+        async def get_api_key(api_key: str = Depends(api_key_header)):
+            if api_key not in VALID_API_KEYS:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Invalid API Key"
+                )
+            return api_key
+        # Endpoint logic</code></pre>
+                        <p class="text-sm mt-2">Decouples auth logic from business logic</p>
+                    </div>
+
+                    <!-- Template Method -->
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <h3 class="font-bold text-green-800 mb-2">Template Method</h3>
+                        <p class="text-sm text-gray-600 mb-2">
+                            <strong>Purpose:</strong> PDF report structure<br>
+                            <strong>Implementation:</strong> generate_pdf_report()
+                        </p>
+                        <pre class="text-xs"><code class="language-python">def generate_pdf_report():
+            # Standard report sections
+            add_cover_page()
+            add_classification_results()
+            add_treatment_recommendations()</code></pre>
+                        <p class="text-sm mt-2">Ensures consistent report format</p>
+                    </div>
+
+                    <!-- Observer Pattern -->
+                    <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                        <h3 class="font-bold text-yellow-800 mb-2">Observer Pattern</h3>
+                        <p class="text-sm text-gray-600 mb-2">
+                            <strong>Purpose:</strong> Scheduled file cleanup<br>
+                            <strong>Implementation:</strong> BackgroundScheduler
+                        </p>
+                        <pre class="text-xs"><code class="language-python">scheduler = BackgroundScheduler()
+        scheduler.add_job(cleanup_old_files, 'interval', days=1)
+        scheduler.start()</code></pre>
+                        <p class="text-sm mt-2">Automates maintenance tasks</p>
+                    </div>
+
+                    <!-- Factory Method -->
+                    <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                        <h3 class="font-bold text-red-800 mb-2">Factory Method</h3>
+                        <p class="text-sm text-gray-600 mb-2">
+                            <strong>Purpose:</strong> Create preprocessing pipelines<br>
+                            <strong>Implementation:</strong> preprocess_image()
+                        </p>
+                        <pre class="text-xs"><code class="language-python">def preprocess_image(image_bytes):
+            img = Image.open(BytesIO(image_bytes))
+            # Resize, normalize, convert
+            return img_array</code></pre>
+                        <p class="text-sm mt-2">Standardizes image processing</p>
+                    </div>
+
+                    <!-- Middleware Pattern -->
+                    <div class="bg-teal-50 p-4 rounded-lg border border-teal-200">
+                        <h3 class="font-bold text-teal-800 mb-2">Middleware Pattern</h3>
+                        <p class="text-sm text-gray-600 mb-2">
+                            <strong>Purpose:</strong> Cross-cutting concerns<br>
+                            <strong>Implementation:</strong> CORSMiddleware
+                        </p>
+                        <pre class="text-xs"><code class="language-python">app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],
+            allow_methods=["*"]
+        )</code></pre>
+                        <p class="text-sm mt-2">Handles CORS and security globally</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-gray-700 mb-2">Pattern Benefits</h3>
+                    <ul class="list-disc ml-5 space-y-2 text-sm">
+                        <li>Improved performance through Singleton model access</li>
+                        <li>Flexible authentication via Dependency Injection</li>
+                        <li>Consistent outputs using Template Method reports</li>
+                        <li>Automatic maintenance with Observer scheduling</li>
+                        <li>Standardized processing via Factory Methods</li>
+                        <li>Centralized security through Middleware</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -267,6 +383,57 @@ data = response.json()</code></pre>
                         </ul>
                     </div>
                 </div>
+            </div>
+            <br>
+            <div class="bg-teal-50 p-4 rounded-lg border border-teal-200">
+                <h3 class="font-bold text-teal-800 mb-2">Disease Patterns</h3>
+                <p class="text-sm text-gray-600 mb-3">The system recognizes these disease patterns to enhance diagnosis:
+                </p>
+                <ul class="list-disc ml-5 space-y-3 text-sm">
+                    <li>
+                        <span class="font-medium">Blight</span>
+                        <ul class="list-circle ml-3">
+                            <li>Keywords: blight, brown, lesions</li>
+                            <li>Severity: High</li>
+                            <li>Characteristics: Causes tissue death and brown lesions</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="font-medium">Leaf Spot</span>
+                        <ul class="list-circle ml-3">
+                            <li>Keywords: spot, leaf spot, lesions</li>
+                            <li>Severity: Medium</li>
+                            <li>Characteristics: Creates distinct spotted patterns</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="font-medium">Rust</span>
+                        <ul class="list-circle ml-3">
+                            <li>Keywords: rust, brown spots, orange</li>
+                            <li>Severity: Medium</li>
+                            <li>Characteristics: Produces rusty-colored pustules</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="font-medium">Virus</span>
+                        <ul class="list-circle ml-3">
+                            <li>Keywords: virus, mosaic, curl, yellow</li>
+                            <li>Severity: High</li>
+                            <li>Characteristics: Causes deformation and discoloration</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="font-medium">Mold</span>
+                        <ul class="list-circle ml-3">
+                            <li>Keywords: mold, fuzzy, growth</li>
+                            <li>Severity: Medium</li>
+                            <li>Characteristics: Fuzzy fungal growth on surfaces</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p class="text-xs text-gray-500 mt-3">Pattern matching enhances severity assessment and helps group
+                    similar
+                    diseases.</p>
             </div>
         </section>
 

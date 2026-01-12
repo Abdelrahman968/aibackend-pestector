@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pestector - Scan Plant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Make sure the path to your icon is correct -->
+    <link rel="shortcut icon" href="/static/logo.png" type="image/png">
+    <style>
+        /* Spinner Animation */
+        .spinner {
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Metadata List Styles */
+        #metadata-content dl {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        #metadata-content dt {
+            font-size: 0.875rem;
+            /* text-sm */
+            color: #6b7280;
+            /* text-gray-500 */
+            margin-bottom: 0.25rem;
+        }
+
+        #metadata-content dd {
+            font-weight: 500;
+            /* font-medium */
+            color: #1f2937;
+            /* text-gray-800 */
+            word-break: break-word;
+        }
+
+        /* Basic Prose Styles for API Text */
+        .prose {
+            color: #374151;
+            /* text-gray-700 */
+            line-height: 1.65;
+        }
+
+        .prose p {
+            margin-top: 0.8em;
+            margin-bottom: 0.8em;
+        }
+
+        .prose ul {
+            margin-top: 0.8em;
+            margin-bottom: 0.8em;
+            padding-left: 1.625em;
+            list-style-type: disc;
+        }
+
+        .prose li {
+            margin-top: 0.3em;
+            margin-bottom: 0.3em;
+        }
+
+        .prose strong,
+        .prose b {
+            font-weight: 600;
+            color: #111827;
+            /* text-gray-900 */
+        }
+
+        .prose h3 {
+            font-size: 1.125rem;
+            /* text-lg */
+            font-weight: 600;
+            margin-bottom: 0.5em;
+            margin-top: 1em;
+        }
+
+        /* Gemini Label Style */
+        .gemini-label {
+            display: inline-flex;
+            /* Use inline-flex for icon alignment */
+            align-items: center;
+            margin-left: 8px;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            /* text-xs */
+            font-weight: 500;
+            background-color: #E0E7FF;
+            /* bg-indigo-100 */
+            color: #4338CA;
+            /* text-indigo-700 */
+            border-radius: 9999px;
+            /* rounded-full */
+            vertical-align: middle;
+        }
+
+        /* Placeholder Section Style */
+        .result-placeholder-section {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            background-color: #f9fafb;
+            opacity: 0.6;
+        }
+
+        .result-placeholder-section h3 {
+            color: #6b7280;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-placeholder-section p {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        /* Toggle Switch Style */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #2563EB;
+            /* Tailwind blue-600 */
+        }
+
+        .toggle-checkbox:checked+.toggle-label {
+            background-color: #2563EB;
+            /* Tailwind blue-600 */
+        }
+
+        .toggle-checkbox {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .toggle-label {
+            transition: background-color 0.2s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-green-600 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <!-- Ensure logo path is correct -->
+                    <a href="/" class="flex items-center text-white text-xl font-bold">
+                        <img src="/static/logo.png" alt="Pestector Logo" class="h-8 w-8 mr-2">
+                        Pestector
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="/"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="/scan" class="bg-green-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                        aria-current="page">Scan Plant</a>
+                    <a href="/library"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Disease
+                        Library</a>
+                    <a href="/knowledge"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Knowledge
+                        Base</a>
+                    <a href="/faqs"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">FAQs</a>
+                    <a href="/changelog"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Changelog</a>
+                    <a href="/doc"
+                        class="text-green-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Documentation</a>
+
+                </div>
+                <div class="flex md:hidden items-center">
+                    <button id="mobileMenuButton" type="button"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-green-200 hover:text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i id="menuIcon" class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-green-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="/scan" class="bg-green-800 text-white block px-3 py-2 rounded-md text-base font-medium"
+                    aria-current="page">Scan Plant</a>
+                <a href="/library"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Disease
+                    Library</a>
+                <a href="/knowledge"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Knowledge
+                    Base</a>
+                <a href="/faqs"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">FAQs</a>
+                <a href="/changelog"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Changelog</a>
+                <a href="/doc"
+                    class="text-green-100 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Documentation</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-8 md:mb-12">Analyze Your Plant</h1>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+
+                <!-- Left Column: Upload & Options -->
+                <div class="bg-white rounded-xl shadow-lg p-6 space-y-6">
+                    <!-- File Upload Area -->
+                    <div id="dropZone"
+                        class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-500 transition-colors duration-200 cursor-pointer bg-gray-50">
+                        <input type="file" id="imageInput" accept="image/*" class="hidden">
+                        <label for="imageInput" class="cursor-pointer block">
+                            <div id="preview-container" class="mb-4 hidden">
+                                <img id="preview-image"
+                                    class="max-h-60 mx-auto rounded-lg object-contain shadow-sm border border-gray-200"
+                                    src="#" alt="Image Preview">
+                            </div>
+                            <div id="upload-prompt">
+                                <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-4"></i>
+                                <p class="font-medium text-gray-700">Drop image here or click to upload</p>
+                                <p class="text-sm text-gray-500 mt-1">Supports: JPG, PNG, WEBP, HEIC, etc.</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- AI Agent Toggle -->
+                    <div
+                        class="flex items-center justify-between p-4 bg-blue-50 rounded-lg shadow-sm border border-blue-200">
+                        <label for="useGemini"
+                            class="text-gray-700 font-medium flex items-center space-x-2 cursor-pointer">
+                            <i class="fas fa-robot text-blue-600 text-lg"></i>
+                            <span>Enable Expert System Analysis</span>
+                        </label>
+                        <div
+                            class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" id="useGemini" name="toggle"
+                                class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
+                            <label for="useGemini"
+                                class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 text-center -mt-4">Uses advanced AI for more detailed treatment &
+                        cause analysis (may take longer).</p>
+
+                    <!-- Action Buttons -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button id="classifyButton"
+                            class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-lg hover:from-blue-700 hover:to-blue-800 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center space-x-2 font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i id="buttonIcon" class="fas fa-search"></i>
+                            <span id="buttonText">Analyze Plant</span>
+                        </button>
+                        <button id="resetButton"
+                            class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 px-6 rounded-lg transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 flex items-center justify-center space-x-2 font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-undo"></i>
+                            <span>New Analysis</span>
+                        </button>
+                    </div>
+
+                    <!-- Image Details Section -->
+                    <div id="image-details" class="hidden pt-4 border-t border-gray-200">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800 flex items-center"><i
+                                class="fas fa-image text-purple-500 mr-2"></i>Image Details</h3>
+                        <div id="metadata-content" class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <p class="text-gray-500 text-center">Metadata will appear here after analysis.</p>
+                        </div>
+                    </div>
+
+                    <!-- Download Options Section -->
+                    <div id="download-options" class="hidden pt-4 border-t border-gray-200 space-y-4">
+                        <h3 class="text-xl font-semibold text-gray-800 flex items-center"><i
+                                class="fas fa-download text-blue-500 mr-2"></i>Download Results</h3>
+                        <!-- PDF Download Area -->
+                        <div id="pdf-report-section" class="hidden">
+                            <div id="pdf-report-content">
+                                <!-- PDF link/status appears here -->
+                            </div>
+                        </div>
+                        <!-- TXT Download Area -->
+                        <div id="txt-download-section" class="hidden">
+                            <button id="downloadTxtButton"
+                                class="w-full bg-gray-600 hover:bg-gray-700 text-white text-sm py-2 px-4 rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 flex items-center justify-center space-x-1.5">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Download Full Results (.txt)</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Results -->
+                <div class="bg-white rounded-xl shadow-lg p-6 min-h-[600px] flex flex-col">
+                    <!-- Placeholder/Loading Area -->
+                    <div id="result-placeholder"
+                        class="flex-grow flex flex-col items-center justify-center text-gray-500 text-center space-y-6">
+                        <!-- Initial Placeholder State -->
+                        <div class="flex flex-col items-center justify-center text-gray-400 p-6">
+                            <i class="fas fa-seedling text-6xl mb-4"></i>
+                            <p class="text-lg font-medium text-gray-600">Ready for Analysis</p>
+                            <p class="text-sm">Upload an image and click "Analyze Plant".</p>
+                        </div>
+                        <div class="w-full space-y-4 opacity-50">
+                            <div class="result-placeholder-section">
+                                <h3 class="flex items-center"><i class="fas fa-chart-pie mr-2"></i>Primary Diagnosis
+                                </h3>
+                                <p>Results will appear here...</p>
+                            </div>
+                            <div class="result-placeholder-section">
+                                <h3 class="flex items-center"><i class="fas fa-pills mr-2"></i>Treatment Recommendations
+                                </h3>
+                                <p>Suggestions will appear here...</p>
+                            </div>
+                            <div class="result-placeholder-section">
+                                <h3 class="flex items-center"><i class="fas fa-lightbulb mr-2"></i>Possible Causes</h3>
+                                <p>Insights will appear here...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Display Area (Initially Hidden) -->
+                    <div id="result-content" class="hidden space-y-6">
+                        <!-- Warnings Section (Moved to top for visibility) -->
+                        <div id="warnings-section"
+                            class="hidden bg-red-50 p-4 rounded-lg border border-red-200 shadow-sm">
+                            <h3 class="text-lg font-semibold text-red-800 mb-2 flex items-center"><i
+                                    class="fas fa-exclamation-triangle text-red-500 mr-2"></i>Important Notices</h3>
+                            <div id="warnings-content" class="space-y-1 text-sm"></div>
+                        </div>
+
+                        <!-- Primary Diagnosis -->
+                        <div id="analysis-results" class="bg-blue-50 p-5 rounded-lg border border-blue-200 shadow-sm">
+                            <h2 class="text-xl font-bold text-gray-800 mb-3 flex items-center"><i
+                                    class="fas fa-stethoscope text-blue-500 mr-2"></i>Primary Diagnosis (ViT Model)</h2>
+                            <div id="results-summary"></div>
+                        </div>
+
+                        <!-- Treatment Recommendations -->
+                        <div id="treatment-section"
+                            class="hidden bg-green-50 p-5 rounded-lg border border-green-200 shadow-sm">
+                            <h3 id="treatment-title" class="text-lg font-semibold text-gray-800 mb-2 flex items-center">
+                                <i class="fas fa-pills text-green-500 mr-2"></i>Treatment Recommendations
+                            </h3>
+                            <div id="treatment-content" class="prose prose-sm max-w-none text-gray-700"></div>
+                        </div>
+
+                        <!-- Reason/Cause -->
+                        <div id="reason-section"
+                            class="hidden bg-yellow-50 p-5 rounded-lg border border-yellow-200 shadow-sm">
+                            <h3 id="reason-title" class="text-lg font-semibold text-gray-800 mb-2 flex items-center"><i
+                                    class="fas fa-lightbulb text-yellow-500 mr-2"></i>Possible Causes</h3>
+                            <div id="reason-content" class="prose prose-sm max-w-none text-gray-700"></div>
+                        </div>
+
+                        <!-- Alternative Predictions (VGG) -->
+                        <div id="alternative-predictions"
+                            class="hidden bg-gray-50 p-5 rounded-lg border border-gray-200 shadow-sm">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center"><i
+                                    class="fas fa-list-ol text-purple-500 mr-2"></i>Other Possibilities (VGG Model)</h3>
+                            <div id="alternative-content" class="space-y-3"></div>
+                        </div>
+                    </div>
+
+                    <!-- Error Display Area -->
+                    <div id="error-display"
+                        class="hidden mt-4 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md"
+                        role="alert">
+                        <div class="flex items-center">
+                            <i class="fas fa-times-circle mr-2"></i>
+                            <p id="error-message"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <img src="/static/logo.png" alt="Pestector Logo"
+                            class="h-6 w-6 mr-2 filter brightness-0 invert"> Pestector
+                    </h3>
+                    <p class="text-gray-400 mb-4 text-sm">AI-powered plant disease detection and treatment
+                        recommendations.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i
+                                class="fab fa-github text-xl"></i></a>
+                    </div>
+                </div>
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="/scan" class="text-gray-400 hover:text-white">Scan Plant</a></li>
+                        <li><a href="/library" class="text-gray-400 hover:text-white">Disease Library</a></li>
+                        <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+
+                    </ul>
+                </div>
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/knowledge" class="text-gray-400 hover:text-white">Knowledge Base</a></li>
+                        <li><a href="/faqs" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="/doc" class="text-gray-400 hover:text-white">Documentation</a></li>
+                        <li><a href="/changelog" class="text-gray-400 hover:text-white">Changelog</a></li>
+
+                    </ul>
+                </div>
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2 text-green-400"></i>
+                            <a href="mailto:support@pestector.com"
+                                class="text-gray-400 hover:text-white">support@pestector.com</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-2 text-green-400"></i>
+                            <a href="tel:+18005551234" class="text-gray-400 hover:text-white">20-127-550-2636</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-green-400"></i>
+                            <span class="text-gray-400">El-Mansoura, Egypt</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2024 Pestector. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- DOM Element References ---
+        const imageInput = document.getElementById('imageInput');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+        const uploadPrompt = document.getElementById('upload-prompt');
+        const dropZone = document.getElementById('dropZone');
+        const useGeminiCheckbox = document.getElementById('useGemini');
+        const classifyButton = document.getElementById('classifyButton');
+        const buttonIcon = document.getElementById('buttonIcon');
+        const buttonText = document.getElementById('buttonText');
+        const resetButton = document.getElementById('resetButton');
+        const resultPlaceholder = document.getElementById('result-placeholder');
+        const resultContent = document.getElementById('result-content');
+        const analysisResultsDiv = document.getElementById('analysis-results');
+        const resultsSummaryDiv = document.getElementById('results-summary');
+        const treatmentSection = document.getElementById('treatment-section');
+        const treatmentTitle = document.getElementById('treatment-title');
+        const treatmentContentDiv = document.getElementById('treatment-content');
+        const reasonSection = document.getElementById('reason-section');
+        const reasonTitle = document.getElementById('reason-title');
+        const reasonContentDiv = document.getElementById('reason-content');
+        const alternativePredictionsDiv = document.getElementById('alternative-predictions');
+        const alternativeContentDiv = document.getElementById('alternative-content');
+        const warningsSection = document.getElementById('warnings-section');
+        const warningsContentDiv = document.getElementById('warnings-content');
+        const imageDetailsDiv = document.getElementById('image-details');
+        const metadataContentDiv = document.getElementById('metadata-content');
+        const downloadOptionsDiv = document.getElementById('download-options');
+        const pdfReportSection = document.getElementById('pdf-report-section');
+        const pdfReportContent = document.getElementById('pdf-report-content');
+        const txtDownloadSection = document.getElementById('txt-download-section');
+        const downloadTxtButton = document.getElementById('downloadTxtButton');
+        const errorDisplayDiv = document.getElementById('error-display');
+        const errorMessageP = document.getElementById('error-message');
+
+        let currentAnalysisData = null; // Store latest results
+
+        // --- Locale Options & Helper ---
+        const locale = navigator.language || 'en-US'; // Use browser locale
+        const dateOptions = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true };
+
+        function formatTimestamp(isoString) {
+            if (!isoString) return 'N/A';
+            try {
+                return new Date(isoString).toLocaleString(locale, dateOptions);
+            } catch (e) {
+                console.warn("Could not format date:", isoString, e);
+                return isoString; // Fallback to original string
+            }
+        }
+
+        // --- UI Helper Functions ---
+        function showPreview(file) {
+            hideError(); // Hide error when new file is selected/dropped
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                    uploadPrompt.classList.add('hidden');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.src = '#';
+                previewContainer.classList.add('hidden');
+                uploadPrompt.classList.remove('hidden');
+                if (file) { // Only show error if a file was selected but wasn't an image
+                    showError("Please select a valid image file (e.g., JPG, PNG, WEBP).");
+                }
+            }
+        }
+
+        function hideError() {
+            errorDisplayDiv.classList.add('hidden');
+            errorMessageP.textContent = '';
+        }
+
+        function formatApiResponseText(rawText) {
+            if (!rawText || typeof rawText !== 'string') {
+                return '<p class="text-gray-500 italic">No information provided.</p>';
+            }
+            // Basic Markdown-like formatting for lists and bold text
+            let html = rawText.trim()
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold: **text**
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')     // Italics: *text* (less common from API but maybe)
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line)
+                .map(line => {
+                    if (line.startsWith('* ') || line.startsWith('- ') || line.startsWith('• ')) {
+                        return `<li class="ml-4">${line.substring(2)}</li>`;
+                    } else if (line.match(/^\d+\.\s/)) { // Numbered lists: 1. text
+                        return `<li class="ml-4">${line.replace(/^\d+\.\s/, '')}</li>`;
+                    } else if (line.endsWith(':') && line.length < 100) { // Treat short lines ending in ':' as subheadings
+                        return `<p class="font-semibold mt-2 mb-1">${line}</p>`;
+                    } else {
+                        return `<p>${line}</p>`;
+                    }
+                })
+                .join('');
+
+            // Wrap list items in <ul> or <ol>
+            html = html.replace(/(<li>.*?<\/li>)+/g, (match) => {
+                // Check if the first list item looks like a numbered list item
+                if (match.match(/<li class="ml-4">\d+\./)) { // Heuristic check
+                    return `<ol class="list-decimal pl-5">${match}</ol>`;
+                } else {
+                    return `<ul class="list-disc pl-5">${match}</ul>`;
+                }
+            });
+
+
+            return html || '<p class="text-gray-500 italic">No detailed information provided.</p>';
+        }
+
+
+        function setLoadingState(isLoading) {
+            classifyButton.disabled = isLoading;
+            resetButton.disabled = isLoading;
+            if (isLoading) {
+                buttonIcon.className = 'fas fa-spinner spinner mr-2'; // Ensure spinner class is present
+                buttonText.textContent = 'Analyzing...';
+                resultPlaceholder.innerHTML = `
+                    <div class="flex flex-col items-center justify-center text-gray-600 p-6">
+                        <div class="spinner rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
+                        <span class="font-medium">Analyzing your plant image...</span>
+                        <span class="text-sm text-gray-500">This may take a moment, especially with Expert System Analysis.</span>
+                    </div>`;
+                resultPlaceholder.classList.remove('hidden');
+                resultContent.classList.add('hidden');
+                imageDetailsDiv.classList.add('hidden');
+                downloadOptionsDiv.classList.add('hidden');
+                hideError();
+            } else {
+                buttonIcon.className = 'fas fa-search'; // Reset icon
+                buttonText.textContent = 'Analyze Plant';
+            }
+        }
+
+        function showError(message) {
+            errorMessageP.textContent = message;
+            errorDisplayDiv.classList.remove('hidden');
+            // Keep results hidden, show placeholder with error state
+            resultContent.classList.add('hidden');
+            downloadOptionsDiv.classList.add('hidden');
+            imageDetailsDiv.classList.add('hidden');
+            resultPlaceholder.classList.remove('hidden');
+            resultPlaceholder.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-red-500 text-center p-6">
+                    <i class="fas fa-exclamation-triangle text-5xl mb-4"></i>
+                    <p class="text-lg font-medium text-red-700">Analysis Failed</p>
+                    <p class="text-sm text-red-600">Please check the error message above or try again.</p>
+                </div>`;
+        }
+
+        function resetUI() {
+            console.log("Resetting UI...");
+            imageInput.value = null; // Clear file input
+            previewImage.src = '#';
+            previewContainer.classList.add('hidden');
+            uploadPrompt.classList.remove('hidden'); // Reset preview
+            currentAnalysisData = null; // Clear stored data
+
+            // Hide all result/details/download sections
+            resultContent.classList.add('hidden');
+            imageDetailsDiv.classList.add('hidden');
+            downloadOptionsDiv.classList.add('hidden');
+            warningsSection.classList.add('hidden'); // Ensure warnings are hidden too
+            pdfReportSection.classList.add('hidden');
+            txtDownloadSection.classList.add('hidden');
+
+
+            // Show and reset placeholder content
+            resultPlaceholder.classList.remove('hidden');
+            resultPlaceholder.innerHTML = `
+                <div class="flex flex-col items-center justify-center text-gray-400 p-6">
+                    <i class="fas fa-seedling text-6xl mb-4"></i>
+                    <p class="text-lg font-medium text-gray-600">Ready for Analysis</p>
+                    <p class="text-sm">Upload an image and click "Analyze Plant".</p>
+                </div>
+                <div class="w-full space-y-4 opacity-50">
+                    <div class="result-placeholder-section">
+                        <h3 class="flex items-center"><i class="fas fa-chart-pie mr-2"></i>Primary Diagnosis</h3><p>Results will appear here...</p>
+                    </div>
+                    <div class="result-placeholder-section">
+                        <h3 class="flex items-center"><i class="fas fa-pills mr-2"></i>Treatment Recommendations</h3><p>Suggestions will appear here...</p>
+                    </div>
+                    <div class="result-placeholder-section">
+                        <h3 class="flex items-center"><i class="fas fa-lightbulb mr-2"></i>Possible Causes</h3><p>Insights will appear here...</p>
+                    </div>
+                </div>`;
+
+            hideError(); // Hide any previous errors
+            setLoadingState(false); // Ensure buttons are enabled
+            console.log("UI Reset complete.");
+        }
+
+        // --- UI Update Functions ---
+        function displayAnalysisSummary(prediction) {
+            if (!prediction) return;
+            const confidenceColor = prediction.confidence_level === 'High' ? 'text-green-600' : prediction.confidence_level === 'Medium' ? 'text-yellow-600' : 'text-red-600';
+            const confidenceFormatted = prediction.confidence != null ? prediction.confidence.toFixed(1) : 'N/A';
+
+            // Basic progress bar component
+            const progressBar = `
+                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: ${prediction.confidence || 0}%"></div>
+                </div>`;
+
+            resultsSummaryDiv.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-x-6 gap-y-4 text-sm">
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Plant</p>
+                        <p class="text-lg font-semibold text-gray-800">${prediction.plant || 'N/A'}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Predicted Condition</p>
+                        <p class="text-lg font-semibold text-gray-800">${prediction.condition || 'N/A'}</p>
+                    </div>
+                    <div class="md:col-span-2">
+                         <p class="text-xs text-gray-500 font-medium uppercase tracking-wider mb-1">Confidence</p>
+                        <div class="flex items-center space-x-3">
+                           ${progressBar}
+                            <span class="font-semibold ${confidenceColor}">${confidenceFormatted}%</span>
+                            <span class="text-xs text-gray-500">(${prediction.confidence_level || 'N/A'})</span>
+                        </div>
+                    </div>
+                     <div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Est. Severity</p>
+                        <p class="font-medium text-gray-700 capitalize">${prediction.disease_info?.severity || 'N/A'}</p>
+                    </div>
+                     <div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Analysis Source</p>
+                        <p class="font-medium text-gray-700">${prediction.data_source || 'N/A'}</p>
+                    </div>
+                </div>`;
+        }
+
+        function displayTreatment(predictionData) {
+            if (!predictionData) return;
+            const treatmentText = predictionData.treatment_recommendations;
+            const dataSource = predictionData.data_source;
+            const isHealthy = predictionData.condition?.toLowerCase().includes('healthy');
+
+            treatmentTitle.innerHTML = '<i class="fas fa-pills text-green-500 mr-2"></i>Treatment Recommendations'; // Reset title
+
+            if (isHealthy || !treatmentText || treatmentText.toLowerCase().includes("no specific treatment recommendations available") || treatmentText.toLowerCase().includes("no treatment needed")) {
+                treatmentContentDiv.innerHTML = `<p class="text-gray-500 italic">${isHealthy ? 'Plant appears healthy. Monitor for any changes.' : 'No specific treatment recommendations available for this condition.'}</p>`;
+                // Optionally hide the section if healthy or no info: treatmentSection.classList.add('hidden');
+                // Or keep it visible to explicitly state no treatment needed
+                treatmentSection.classList.remove('hidden');
+            } else {
+                if (dataSource && (dataSource.toLowerCase() === 'gemini api' || dataSource.toLowerCase().includes('gemini'))) {
+                    treatmentTitle.innerHTML += '<span class="gemini-label"><i class="fas fa-wand-magic-sparkles mr-1"></i>Expert System Suggestion</span>';
+                }
+                treatmentContentDiv.innerHTML = formatApiResponseText(treatmentText);
+                treatmentSection.classList.remove('hidden');
+            }
+        }
+
+        function displayReason(predictionData) {
+            if (!predictionData) return;
+            const reasonText = predictionData.reason_for_disease;
+            const dataSource = predictionData.data_source;
+            const isHealthy = predictionData.condition?.toLowerCase().includes('healthy');
+
+            reasonTitle.innerHTML = '<i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Possible Causes / Info'; // Reset title
+
+            if (isHealthy || !reasonText || reasonText.toLowerCase().includes("no specific reason for disease available") || reasonText.toLowerCase().includes("n/a")) {
+                reasonContentDiv.innerHTML = `<p class="text-gray-500 italic">${isHealthy ? 'The plant is identified as healthy.' : 'No specific information on causes available.'}</p>`;
+                reasonSection.classList.remove('hidden'); // Keep visible to state healthy/no info
+            } else {
+                if (dataSource && (dataSource.toLowerCase() === 'gemini api' || dataSource.toLowerCase().includes('gemini'))) {
+                    reasonTitle.innerHTML += '<span class="gemini-label"><i class="fas fa-wand-magic-sparkles mr-1"></i>Expert System Insight</span>';
+                }
+                reasonContentDiv.innerHTML = formatApiResponseText(reasonText);
+                reasonSection.classList.remove('hidden');
+            }
+        }
+
+        function displayAlternatives(predictions_vgg) {
+            // Expects data.top_3_predictions_vgg from backend
+            if (predictions_vgg && predictions_vgg.length > 0) {
+                alternativeContentDiv.innerHTML = predictions_vgg.map((pred, index) => {
+                    const confidenceFormatted = pred.confidence != null ? (pred.confidence * 100).toFixed(1) : 'N/A';
+                    // Split the class name
+                    let plantName = 'Unknown Plant';
+                    let conditionName = 'Unknown Condition';
+                    if (pred.class && pred.class.includes('___')) {
+                        const parts = pred.class.split('___');
+                        plantName = parts[0].replace(/_/g, ' ');
+                        conditionName = parts[1].replace(/_/g, ' ');
+                    } else if (pred.class) {
+                        conditionName = pred.class.replace(/_/g, ' '); // Handle cases without '___' if they exist
+                    }
+
+                    return `
+                        <div class="p-3 rounded-lg ${index === 0 ? 'bg-purple-50 border-purple-200' : 'bg-gray-100 border-gray-200'} border transition-shadow hover:shadow-md">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-semibold text-sm text-gray-800">${index + 1}. ${plantName} - ${conditionName}</span>
+                                <span class="text-xs font-medium px-2 py-0.5 bg-white rounded-full shadow-sm border border-gray-200">${confidenceFormatted}%</span>
+                            </div>
+                            <p class="text-xs text-gray-600"><span class="font-medium">Severity:</span> <span class="capitalize">${pred.disease_info?.severity || 'N/A'}</span></p>
+                            ${pred.disease_info?.patterns?.length > 0 ? `<p class="text-xs text-gray-600 mt-1"><span class="font-medium">Patterns:</span> ${pred.disease_info.patterns.join(', ')}</p>` : ''}
+                        </div>`;
+                }).join('');
+                alternativePredictionsDiv.classList.remove('hidden');
+            } else {
+                alternativeContentDiv.innerHTML = '<p class="text-gray-500 italic text-sm">No alternative predictions available.</p>';
+                // Optionally hide if empty: alternativePredictionsDiv.classList.add('hidden');
+                alternativePredictionsDiv.classList.remove('hidden'); // Keep visible to state no alternatives
+            }
+        }
+
+        function displayWarnings(warnings) {
+            if (!warnings) { warningsSection.classList.add('hidden'); return; }
+            // Use the corrected key 'severe_disease_detected'
+            const hasWarnings = warnings.low_confidence || warnings.severe_disease_detected || warnings.requires_expert_review;
+            if (hasWarnings) {
+                let warningsHTML = '';
+                if (warnings.low_confidence) {
+                    warningsHTML += `<div class="flex items-start"><i class="fas fa-exclamation-circle text-yellow-500 w-4 mr-2 mt-1 shrink-0"></i><span class="text-yellow-800">Low prediction confidence. Results might be less accurate. Consider getting a second opinion if unsure.</span></div>`;
+                }
+                if (warnings.severe_disease_detected) { // Corrected key
+                    warningsHTML += `<div class="flex items-start"><i class="fas fa-biohazard text-red-500 w-4 mr-2 mt-1 shrink-0"></i><span class="text-red-800">Potentially severe condition detected. Prompt action and expert consultation may be necessary.</span></div>`;
+                } else if (warnings.requires_expert_review) { // Show general expert review if not severe but still flagged (e.g., only low confidence)
+                    warningsHTML += `<div class="flex items-start"><i class="fas fa-user-md text-blue-500 w-4 mr-2 mt-1 shrink-0"></i><span class="text-blue-800">Consulting a local agricultural expert is recommended for confirmation and tailored advice.</span></div>`;
+                }
+                warningsContentDiv.innerHTML = warningsHTML;
+                warningsSection.classList.remove('hidden');
+            } else {
+                warningsSection.classList.add('hidden');
+                warningsContentDiv.innerHTML = '';
+            }
+        }
+
+        function displayMetadata(metadata) {
+            if (!metadata) { imageDetailsDiv.classList.add('hidden'); return; }
+
+            // Use the main analysis timestamp from the metadata object
+            let analysisTimestampFormatted = formatTimestamp(metadata.analysis_timestamp);
+
+            // Format EXIF timestamp if present
+            let exifTimestampFormatted = 'N/A';
+            if (metadata.has_exif && metadata.datetime) {
+                try {
+                    // EXIF date format often needs spaces/colons replaced for JS Date parsing
+                    const exifDateStr = metadata.datetime.replace(':', '-').replace(':', '-');
+                    exifTimestampFormatted = formatTimestamp(new Date(exifDateStr).toISOString());
+                } catch (e) {
+                    exifTimestampFormatted = metadata.datetime; // Fallback
+                    console.warn("Could not parse EXIF date:", metadata.datetime, e);
+                }
+            }
+
+            // Build the metadata list items safely
+            const items = [
+                { dt: 'Filename', dd: metadata.filename },
+                { dt: 'Resolution', dd: metadata.resolution },
+                { dt: 'File Size', dd: metadata.size }, // Use 'size' which is human-readable from backend
+                { dt: 'Format', dd: metadata.format },
+                { dt: 'Analysis Time', dd: analysisTimestampFormatted },
+                { dt: 'EXIF Data Found', dd: metadata.has_exif ? 'Yes' : 'No' },
+                ...(metadata.has_exif ? [{ dt: 'EXIF Date', dd: exifTimestampFormatted }] : []),
+                ...(metadata.has_exif && (metadata.make || metadata.model) ? [{ dt: 'EXIF Device', dd: `${metadata.make || ''} ${metadata.model || ''}`.trim() }] : []),
+                { dt: 'Geo Location Found', dd: metadata.has_geo ? 'Yes' : 'No' },
+                { dt: 'Server Path', dd: metadata.upload_path, class: 'text-xs' } // Use upload_path from backend
+            ];
+
+            metadataContentDiv.innerHTML = `<dl>${items.map(item => `<div><dt>${item.dt}</dt><dd class="${item.class || ''}">${item.dd || 'N/A'}</dd></div>`).join('')}</dl>`;
+            imageDetailsDiv.classList.remove('hidden');
+        }
+
+        function displayPdfLink(report) {
+            if (!report) { // If report object is missing entirely
+                pdfReportSection.classList.add('hidden');
+                // Ensure parent download section might still show for TXT
+                if (!txtDownloadSection.classList.contains('hidden')) {
+                    downloadOptionsDiv.classList.remove('hidden');
+                } else {
+                    downloadOptionsDiv.classList.add('hidden');
+                }
+                return;
+            }
+
+            downloadOptionsDiv.classList.remove('hidden'); // Show download section as report object exists
+
+            if (report.available && report.download_url) {
+                let generatedAtFormatted = formatTimestamp(report.generated_at);
+                pdfReportContent.innerHTML = `
+                    <div class="bg-green-50 rounded-lg shadow-sm p-3 border border-green-200">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                            <div class="flex items-center space-x-2 text-xs text-gray-600">
+                                <i class="fas fa-file-pdf text-red-500 fa-lg"></i>
+                                <div>
+                                    <span class="font-medium text-sm text-gray-700 block">${report.filename || 'report.pdf'}</span>
+                                    <span class="text-gray-500">${report.size || 'N/A'}</span>
+                                </div>
+                            </div>
+                            <a href="${report.download_url}" target="_blank" rel="noopener noreferrer"
+                               class="bg-green-600 hover:bg-green-700 text-white text-sm py-1.5 px-3 rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 flex items-center space-x-1 shrink-0">
+                                <i class="fas fa-download"></i><span>Download PDF</span>
+                            </a>
+                        </div>
+                        ${report.generated_at ? `<p class="text-xs text-gray-500 mt-1 pl-1"><i class="fas fa-clock mr-1"></i>Generated: ${generatedAtFormatted}</p>` : ''}
+                    </div>`;
+                pdfReportSection.classList.remove('hidden');
+            } else if (report.error) { // Check specifically for an error message
+                pdfReportContent.innerHTML = `
+                    <div class="bg-yellow-50 rounded-lg shadow-sm p-3 border border-yellow-200 text-xs text-yellow-800">
+                        <i class="fas fa-exclamation-circle mr-1"></i> Could not generate PDF report: ${report.error}
+                    </div>`;
+                pdfReportSection.classList.remove('hidden');
+            } else { // If report.available is false but no error message
+                pdfReportContent.innerHTML = `<p class="text-xs text-gray-500 italic text-center">PDF report generation was not requested or failed silently.</p>`;
+                pdfReportSection.classList.remove('hidden'); // Still show the section to indicate status
+            }
+        }
+
+        // --- TXT File Generation and Download ---
+        function generateTxtContent(data) {
+            if (!data || !data.prediction) return "Analysis data is not available.";
+
+            const NL = "\r\n"; // New line for TXT files
+            let content = `PESTECTOR PLANT ANALYSIS REPORT${NL}==================================${NL}`;
+
+            let analysisTs = formatTimestamp(data.metadata?.analysis_timestamp);
+            content += `Analysis Timestamp: ${analysisTs}${NL}${NL}`;
+
+            content += `--- PRIMARY DIAGNOSIS (ViT Model) ---${NL}`;
+            content += `Plant: ${data.prediction.plant || 'N/A'}${NL}`;
+            content += `Predicted Condition: ${data.prediction.condition || 'N/A'}${NL}`;
+            content += `Confidence: ${data.prediction.confidence?.toFixed(1) || 'N/A'}% (${data.prediction.confidence_level || 'N/A'})${NL}`;
+            content += `Estimated Severity: ${data.prediction.disease_info?.severity || 'N/A'}${NL}`;
+            content += `Analysis Source: ${data.prediction.data_source || 'N/A'}${NL}${NL}`;
+
+            // Strip HTML/Markdown for TXT - very basic, might need improvement
+            const cleanText = (text) => text ? text.replace(/<[^>]*>/g, '').replace(/[\*\_]/g, '').replace(/ /g, ' ') : 'N/A';
+
+            content += `--- TREATMENT RECOMMENDATIONS (${data.prediction.data_source || 'Local Data'}) ---${NL}`;
+            content += `${cleanText(data.prediction.treatment_recommendations) || 'N/A'}${NL}${NL}`;
+
+            content += `--- POSSIBLE CAUSES / INFO (${data.prediction.data_source || 'Local Data'}) ---${NL}`;
+            content += `${cleanText(data.prediction.reason_for_disease) || 'N/A'}${NL}${NL}`;
+
+            content += `--- OTHER POSSIBILITIES (VGG Model - Top 3) ---${NL}`;
+            // Use the correct key and parse the class
+            if (data.top_3_predictions_vgg && data.top_3_predictions_vgg.length > 0) {
+                data.top_3_predictions_vgg.forEach((p, index) => {
+                    const confPercent = p.confidence != null ? (p.confidence * 100).toFixed(1) : 'N/A';
+                    let pName = '?', cName = '?';
+                    if (p.class && p.class.includes('___')) {
+                        const parts = p.class.split('___');
+                        pName = parts[0].replace(/_/g, ' ');
+                        cName = parts[1].replace(/_/g, ' ');
+                    } else if (p.class) {
+                        cName = p.class.replace(/_/g, ' ');
+                    }
+                    content += `${index + 1}. ${pName} - ${cName} (${confPercent}%)${NL}`;
+                    content += `   Severity: ${p.disease_info?.severity || 'N/A'}${NL}`;
+                    if (p.disease_info?.patterns?.length > 0) {
+                        content += `   Patterns: ${p.disease_info.patterns.join(', ')}${NL}`;
+                    }
+                    content += NL;
+                });
+            } else {
+                content += `N/A${NL}`;
+            }
+            content += `${NL}`;
+
+            content += `--- IMPORTANT NOTICES ---${NL}`;
+            const warnings = data.warnings;
+            // Use corrected key 'severe_disease_detected'
+            if (warnings && (warnings.low_confidence || warnings.severe_disease_detected || warnings.requires_expert_review)) {
+                if (warnings.low_confidence) content += `- Low prediction confidence.${NL}`;
+                if (warnings.severe_disease_detected) content += `- Potentially severe condition detected.${NL}`; // Corrected key
+                if (warnings.requires_expert_review) content += `- Consulting a local expert is recommended.${NL}`;
+            } else {
+                content += `None.${NL}`;
+            }
+            content += `${NL}`;
+
+            content += `--- IMAGE METADATA ---${NL}`;
+            const meta = data.metadata;
+            if (meta) {
+                content += `Filename: ${meta.filename || 'N/A'}${NL}`;
+                content += `Resolution: ${meta.resolution || 'N/A'}${NL}`;
+                content += `Size: ${meta.size || 'N/A'}${NL}`; // Use 'size'
+                content += `Format: ${meta.format || 'N/A'}${NL}`;
+                content += `EXIF Found: ${meta.has_exif ? 'Yes' : 'No'}${NL}`;
+                if (meta.has_exif && meta.datetime) {
+                    let exifTsFormatted = meta.datetime; try { const exifDateStr = meta.datetime.replace(/:/g, '-'); exifTsFormatted = formatTimestamp(new Date(exifDateStr).toISOString()); } catch (e) { }
+                    content += `EXIF Date: ${exifTsFormatted}${NL}`;
+                }
+                if (meta.has_exif && (meta.make || meta.model)) content += `EXIF Device: ${meta.make || ''} ${meta.model || ''}${NL}`;
+                content += `Geo Location Found: ${meta.has_geo ? 'Yes' : 'No'}${NL}`;
+                content += `Server Path: ${meta.upload_path || 'N/A'}${NL}`; // Use 'upload_path'
+            } else {
+                content += `N/A${NL}`;
+            }
+            content += `${NL}`;
+
+            let generationTs = formatTimestamp(new Date().toISOString());
+            content += `Report generated by Pestector - ${generationTs}${NL}`;
+            return content;
+        }
+
+        function downloadTxtFile(filename, content) {
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function handleTxtDownload() {
+            if (currentAnalysisData) {
+                const txtContent = generateTxtContent(currentAnalysisData);
+                let filename = "pestector_analysis_report.txt";
+                // Generate filename based on prediction
+                if (currentAnalysisData.prediction?.plant && currentAnalysisData.prediction?.condition) {
+                    const plantName = currentAnalysisData.prediction.plant.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                    const conditionName = currentAnalysisData.prediction.condition.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                    filename = `pestector_${plantName}_${conditionName}_report.txt`;
+                }
+                downloadTxtFile(filename, txtContent);
+            } else {
+                showError("No analysis data available to download.");
+            }
+        }
+
+        // --- Main Classification Logic ---
+        async function classifyImage() {
+            console.log("Starting classification...");
+            if (!imageInput.files || imageInput.files.length === 0) {
+                showError("Please select an image file first.");
+                return;
+            }
+            const file = imageInput.files[0];
+            if (!file.type.startsWith('image/')) {
+                showError("Invalid file type. Please upload an image (JPG, PNG, WEBP, etc.).");
+                return;
+            }
+
+            const useGemini = useGeminiCheckbox.checked;
+            const generatePDF = false; // Keep PDF generation off by default for scan page
+            const formData = new FormData();
+            formData.append('file', file);
+
+            setLoadingState(true);
+            currentAnalysisData = null; // Clear previous data
+
+            const apiUrl = `/classify?use_gemini=${useGemini}&generate_report=${generatePDF}`;
+            console.log(`Calling API: ${apiUrl}, Gemini: ${useGemini}`);
+
+            try {
+                // IMPORTANT: Replace with a secure way to handle API keys in production!
+                const apiKey = '1122333'; // Use a VALID key from your backend config
+                if (!apiKey) {
+                    throw new Error("API Key is missing. Cannot proceed.");
+                }
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-API-KEY': apiKey // Use the VALID key
+                    },
+                });
+
+                console.log(`API Response Status: ${response.status}`);
+
+                if (!response.ok) {
+                    let errorDetail = `Error ${response.status}: ${response.statusText}`;
+                    try {
+                        // Try to parse JSON error detail from FastAPI
+                        const errorData = await response.json();
+                        console.error("API Error Body:", errorData);
+                        errorDetail = errorData.detail || errorDetail; // Use FastAPI's detail if available
+                    } catch (e) {
+                        // If JSON parsing fails, use text response
+                        const text = await response.text();
+                        console.error("API Error Text:", text);
+                        errorDetail = text || errorDetail;
+                    }
+                    throw new Error(errorDetail); // Throw detailed error
+                }
+
+                const data = await response.json();
+                console.log("API Response Data Received:", data);
+
+                if (!data || !data.prediction || !data.metadata) { // Basic validation
+                    throw new Error("Received incomplete or invalid analysis data from the server.");
+                }
+                currentAnalysisData = data; // Store valid data
+
+                // --- Populate UI ---
+                resultPlaceholder.classList.add('hidden');
+                resultContent.classList.remove('hidden');
+                console.log("Populating UI sections...");
+
+                displayWarnings(currentAnalysisData.warnings); // Display warnings first
+                displayAnalysisSummary(currentAnalysisData.prediction);
+                displayTreatment(currentAnalysisData.prediction);
+                displayReason(currentAnalysisData.prediction);
+                displayAlternatives(currentAnalysisData.top_3_predictions_vgg); // Use correct key
+                displayMetadata(currentAnalysisData.metadata);
+                displayPdfLink(currentAnalysisData.report); // Handles PDF link or status
+
+                // Ensure TXT download button is visible and its parent section
+                txtDownloadSection.classList.remove('hidden');
+                downloadOptionsDiv.classList.remove('hidden');
+
+                console.log("UI Population complete.");
+
+            } catch (error) {
+                console.error('Classification Error:', error);
+                showError(`Analysis failed: ${error.message}`); // Show user-friendly error
+                currentAnalysisData = null; // Clear data on error
+                downloadOptionsDiv.classList.add('hidden'); // Hide downloads on error
+            } finally {
+                console.log("Resetting loading state.");
+                setLoadingState(false);
+            }
+        }
+
+        // --- Event Listeners ---
+        imageInput.addEventListener('change', (e) => showPreview(e.target.files[0]));
+        classifyButton.addEventListener('click', classifyImage);
+        resetButton.addEventListener('click', resetUI);
+        downloadTxtButton.addEventListener('click', handleTxtDownload);
+
+        // Drag and drop listeners
+        function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evt => {
+            dropZone.addEventListener(evt, preventDefaults, false);
+            document.body.addEventListener(evt, preventDefaults, false); // Prevent browser default drop behavior
+        });
+        ['dragenter', 'dragover'].forEach(evt => {
+            dropZone.addEventListener(evt, () => dropZone.classList.add('border-blue-500', 'bg-blue-50'), false);
+        });
+        ['dragleave', 'drop'].forEach(evt => {
+            dropZone.addEventListener(evt, () => dropZone.classList.remove('border-blue-500', 'bg-blue-50'), false);
+        });
+        dropZone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                imageInput.files = files; // Assign dropped files to input
+                showPreview(files[0]); // Show preview for the first dropped file
+            }
+        }, false);
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon'); // Get the icon itself
+
+        if (mobileMenuButton && mobileMenu && menuIcon) {
+            mobileMenuButton.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', !isHidden);
+                // Toggle icon class
+                if (isHidden) {
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                } else {
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-times');
+                }
+            });
+        }
+
+
+        // --- Initial Setup ---
+        resetUI(); // Reset on initial load
+        console.log("Scan page script initialized.");
+
+    </script>
+
+</body>
+
+</html>

@@ -1,956 +1,606 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException,APIRouter, Request, Depends, status
-from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.security import APIKeyHeader
-from tensorflow.keras.models import load_model
-import numpy as np
-from PIL import Image
-import os
 import logging
+import os
 from pathlib import Path
-from datetime import datetime
-from typing import Dict, Any, List, Union
+from typing import Dict, Any, List, Tuple, Optional, Union, Literal
 from io import BytesIO
+import time
+import numpy as np
+from PIL import Image, UnidentifiedImageError
 import requests
 import json
-import uuid
 import exifread
 import humanize
-from typing import Dict, Any, List, Union, Tuple
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image as ReportImage, Table, TableStyle, PageBreak
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib import colors
-from reportlab.lib.units import inch
+import re
+import shutil
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 
+# --- PyTorch Imports ---
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision.models as models
+import torchvision.transforms as transforms
 
-# Configure logging
+# --- TensorFlow Imports ---
+from tensorflow.keras.models import load_model as tf_load_model
+
+# --- FastAPI Imports ---
+from fastapi import FastAPI, File, UploadFile, HTTPException, Request, Depends, status, Query
+from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.security import APIKeyHeader
+
+# --- Logging Configuration ---
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format='%(asctime)s - %(name)s - %(levelname)s - [%(funcName)s] - %(message)s',
     handlers=[
-        logging.FileHandler('app.log'),
+        logging.FileHandler('app_combined_v2_2_5.log'),
         logging.StreamHandler()
     ]
 )
 logger = logging.getLogger(__name__)
 
-# FastAPI app initialization
+# --- FastAPI App Initialization ---
 app = FastAPI(
-    title="Plant Disease Classifier",
-    description="AI-powered plant disease classification system",
-    version="1.0.0"
+    title="Plant Disease Classifier (ViT + VGG)",
+    description="Upload an image to classify plant disease using PyTorch Vision Transformer, TensorFlow VGG, or the best result from both. Optionally uses Gemini 1.5 Flash for summarized details.",
+    version="2.2.5-gemini-fix"
 )
 
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# --- CORS Middleware ---
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
-# Serve static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# --- Static Files ---
+static_dir = Path("static")
+if static_dir.is_dir():
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
+    logger.info(f"Mounted static directory: {static_dir.resolve()}")
+else:
+    logger.warning(f"Static directory not found at {static_dir.resolve()}. Frontend ('/') might not work.")
 
-# API Key Authentication
+# --- Directory Configurations ---
+UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR.mkdir(exist_ok=True)
+
+# --- API Key Authentication ---
 API_KEY_NAME = "X-API-KEY"
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
-
-# List of valid API keys (in production, store these securely)
 VALID_API_KEYS = {"1122333", "445566"}
 
 async def get_api_key(api_key: str = Depends(api_key_header)):
     if api_key not in VALID_API_KEYS:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Invalid API Key"
-        )
+        logger.warning(f"Invalid API Key: {api_key}")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid API Key")
     return api_key
 
-class ModelConfig:
-    MODEL_PATH = "model/vgg_model.h5"  
-    IMAGE_SIZE = (224, 224)
-    NUM_CLASSES = 38
-    CONFIDENCE_THRESHOLD = 0.85
+# --- Common Configuration ---
+class CommonConfig:
+    CLASS_LABELS = [
+        'Apple___Apple_scab', 'Apple___Black_rot', 'Apple___Cedar_apple_rust', 'Apple___healthy',
+        'Blueberry___healthy', 'Cherry_(including_sour)___Powdery_mildew', 'Cherry_(including_sour)___healthy',
+        'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot', 'Corn_(maize)___Common_rust_',
+        'Corn_(maize)___Northern_Leaf_Blight', 'Corn_(maize)___healthy', 'Grape___Black_rot',
+        'Grape___Esca_(Black_Measles)', 'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)', 'Grape___healthy',
+        'Orange___Haunglongbing_(Citrus_greening)', 'Peach___Bacterial_spot', 'Peach___healthy',
+        'Pepper,_bell___Bacterial_spot', 'Pepper,_bell___healthy', 'Potato___Early_blight',
+        'Potato___Late_blight', 'Potato___healthy', 'Raspberry___healthy', 'Soybean___healthy',
+        'Squash___Powdery_mildew', 'Strawberry___Leaf_scorch', 'Strawberry___healthy',
+        'Tomato___Bacterial_spot', 'Tomato___Early_blight', 'Tomato___Late_blight',
+        'Tomato___Leaf_Mold', 'Tomato___Septoria_leaf_spot', 'Tomato___Spider_mites Two-spotted_spider_mite',
+        'Tomato___Target_Spot', 'Tomato___Tomato_Yellow_Leaf_Curl_Virus', 'Tomato___Tomato_mosaic_virus',
+        'Tomato___healthy'
+    ]
+    NUM_CLASSES = len(CLASS_LABELS)
+    LOW_CONFIDENCE_WARNING_THRESHOLD = 0.70
 
-class PlantDiseaseClassifier:
-    _instance = None
-    _model = None
-    
-    def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super(PlantDiseaseClassifier, cls).__new__(cls)
-            cls._instance._initialize()
-        return cls._instance
-    
-    def _initialize(self):
-        self.labels = [
-            'Apple___Apple_scab',
-            'Apple___Black_rot',
-            'Apple___Cedar_apple_rust',
-            'Apple___healthy',
-            'Blueberry___healthy',
-            'Cherry_(including_sour)___Powdery_mildew',
-            'Cherry_(including_sour)___healthy',
-            'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot',
-            'Corn_(maize)___Common_rust_',
-            'Corn_(maize)___Northern_Leaf_Blight',
-            'Corn_(maize)___healthy',
-            'Grape___Black_rot',
-            'Grape___Esca_(Black_Measles)',
-            'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)',
-            'Grape___healthy',
-            'Orange___Haunglongbing_(Citrus_greening)',
-            'Peach___Bacterial_spot',
-            'Peach___healthy',
-            'Pepper,_bell___Bacterial_spot',
-            'Pepper,_bell___healthy',
-            'Potato___Early_blight',
-            'Potato___Late_blight',
-            'Potato___healthy',
-            'Raspberry___healthy',
-            'Soybean___healthy',
-            'Squash___Powdery_mildew',
-            'Strawberry___Leaf_scorch',
-            'Strawberry___healthy',
-            'Tomato___Bacterial_spot',
-            'Tomato___Early_blight',
-            'Tomato___Late_blight',
-            'Tomato___Leaf_Mold',
-            'Tomato___Septoria_leaf_spot',
-            'Tomato___Spider_mites Two-spotted_spider_mite',
-            'Tomato___Target_Spot',
-            'Tomato___Tomato_Yellow_Leaf_Curl_Virus',
-            'Tomato___Tomato_mosaic_virus',
-            'Tomato___healthy'
-        ]
-        self.categories = self.organize_categories()
-        self.disease_patterns = {
-            "blight": {
-                "keywords": ["blight", "brown", "lesions"],
-                "description": "Causes brown lesions and tissue death",
-                "severity": "high"
-            },
-            "spot": {
-                "keywords": ["spot", "leaf spot", "lesions"],
-                "description": "Creates spotted patterns on leaves",
-                "severity": "medium"
-            },
-            "rust": {
-                "keywords": ["rust", "brown spots", "orange"],
-                "description": "Produces rusty colored spots",
-                "severity": "medium"
-            },
-            "virus": {
-                "keywords": ["virus", "mosaic", "curl", "yellow"],
-                "description": "Causes leaf deformation and discoloration",
-                "severity": "high"
-            },
-            "mold": {
-                "keywords": ["mold", "fuzzy", "growth"],
-                "description": "Creates fuzzy growth on plant surfaces",
-                "severity": "medium"
-            }
-        }
-        
-        if PlantDiseaseClassifier._model is None:
-            try:
-                if not os.path.exists(ModelConfig.MODEL_PATH):
-                    raise FileNotFoundError(f"Model file not found: {ModelConfig.MODEL_PATH}")
-                
-                PlantDiseaseClassifier._model = load_model(ModelConfig.MODEL_PATH)
-                
-                # Verify model output shape
-                if PlantDiseaseClassifier._model.output_shape[-1] != ModelConfig.NUM_CLASSES:
-                    raise ValueError(
-                        f"Model output classes ({PlantDiseaseClassifier._model.output_shape[-1]}) "
-                        f"doesn't match expected number of classes "
-                        f"({ModelConfig.NUM_CLASSES})"
-                    )
-                
-                logger.info("Model initialized successfully")
-                
-            except Exception as e:
-                logger.error(f"Model initialization error: {str(e)}")
-                raise Exception(f"Failed to initialize model: {str(e)}")
+# --- PyTorch ViT Model Setup ---
+class ViTConfig:
+    MODEL_PATH = "model/plant_disease_vit_BEST_model_state.pth"
+    IMAGE_SIZE = 224
+    NORM_MEAN = [0.485, 0.456, 0.406]
+    NORM_STD = [0.229, 0.224, 0.225]
 
-    @property
-    def model(self):
-        return PlantDiseaseClassifier._model
+def get_pytorch_device():
+    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    def organize_categories(self) -> Dict[str, Dict[str, Any]]:
-        """Organize plant categories and their diseases."""
-        categories = {}
-        
-        for label in self.labels:
-            plant, condition = label.split('___')
-            plant = plant.replace('_', ' ')
-            
-            if plant not in categories:
-                categories[plant] = {
-                    'healthy': False,
-                    'diseases': set(),
-                    'total_samples': 0
-                }
-            
-            if condition.lower() == 'healthy':
-                categories[plant]['healthy'] = True
-            else:
-                categories[plant]['diseases'].add(condition.replace('_', ' '))
-                
-            categories[plant]['total_samples'] += 1
-            
-        return categories
+pytorch_device = get_pytorch_device()
 
-    def get_disease_info(self, disease_name: str) -> Dict[str, Any]:
-        """Analyze disease patterns and get detailed information."""
-        disease_lower = disease_name.lower()
-        matched_patterns = []
-        descriptions = []
-        severity = "low"
-        
-        for pattern, info in self.disease_patterns.items():
-            if any(keyword in disease_lower for keyword in info["keywords"]):
-                matched_patterns.append(pattern)
-                descriptions.append(info["description"])
-                if info["severity"] == "high":
-                    severity = "high"
-                elif info["severity"] == "medium" and severity != "high":
-                    severity = "medium"
-        
-        return {
-            "patterns": matched_patterns,
-            "descriptions": descriptions,
-            "severity": severity
-        }
+class ViTImageClassificationBase(nn.Module):
+    pass
 
-    def predict(self, image_array: np.ndarray) -> dict:
-        """Make prediction using the loaded model."""
+class ViTPlantClassifier(ViTImageClassificationBase):
+    def __init__(self, num_classes):
+        super().__init__()
+        logger.debug(f"Initializing ViTPlantClassifier architecture for {num_classes} classes.")
         try:
-            # Get predictions
-            predictions = self.model.predict(image_array, verbose=0)
-            logger.info(f"Raw predictions shape: {predictions.shape}")  # Log raw predictions shape for debugging
-            
-            confidence = float(np.max(predictions))
-            predicted_idx = np.argmax(predictions)
-            
-            # Log the predicted index and confidence
-            logger.info(f"Predicted index: {predicted_idx}, Confidence: {confidence:.2f}")
-
-            # Get top 3 predictions
-            top_3_indices = np.argsort(predictions[0])[-3:][::-1]
-            top_3_predictions = []
-            
-            for idx in top_3_indices:
-                class_name = self.labels[idx]
-                disease_info = self.get_disease_info(class_name)
-                
-                prediction_info = {
-                    "class": class_name,
-                    "confidence": float(predictions[0][idx]),
-                    "disease_info": disease_info
-                }
-                top_3_predictions.append(prediction_info)
-            
-            return {
-                "top_prediction": self.labels[predicted_idx],
-                "confidence": confidence,
-                "top_3": top_3_predictions
-            }
-            
+            self.network = models.vit_b_16(weights=models.ViT_B_16_Weights.IMAGENET1K_V1)
+            logger.debug("ViT backbone loaded using 'weights' argument.")
+        except TypeError:
+            logger.warning("ViT 'weights' arg failed. Trying 'pretrained=True'.")
+            try:
+                self.network = models.vit_b_16(pretrained=True)
+                logger.debug("ViT backbone loaded using 'pretrained=True'.")
+            except Exception as e_inner:
+                logger.error(f"ViT backbone load failed: {e_inner}", exc_info=True)
+                raise RuntimeError(f"Could not load ViT backbone: {e_inner}")
+        except Exception as e_outer:
+            logger.error(f"Fatal error loading ViT backbone: {e_outer}", exc_info=True)
+            raise RuntimeError(f"Could not load ViT backbone: {e_outer}")
+        try:
+            if hasattr(self.network, 'heads') and isinstance(self.network.heads.head, nn.Linear):
+                num_ftrs = self.network.heads.head.in_features
+                self.network.heads.head = nn.Linear(num_ftrs, num_classes)
+                logger.debug(f"Replaced ViT classifier head ({num_ftrs} -> {num_classes}).")
+            else:
+                logger.error(f"Unexpected ViT structure: {type(getattr(self.network, 'heads', None))}")
+                raise AttributeError("Could not find or replace ViT classifier head.")
+        except AttributeError as e_attr:
+            logger.error(f"Attribute error finding ViT head: {e_attr}", exc_info=True)
+            raise
         except Exception as e:
-            logger.error(f"Prediction error: {str(e)}")
-            raise HTTPException(
-                status_code=500,
-                detail=f"Prediction failed: {str(e)}"
-            )
+            logger.error(f"Error replacing ViT classifier head: {e}", exc_info=True)
+            raise RuntimeError(f"Could not replace classifier head: {e}")
 
-# Directory configurations
-UPLOAD_DIR = Path("uploads")
-UPLOAD_DIR.mkdir(exist_ok=True)
+    def forward(self, xb: torch.Tensor) -> torch.Tensor:
+        return self.network(xb)
 
-REPORTS_DIR = Path("reports")
-REPORTS_DIR.mkdir(exist_ok=True)
+loaded_vit_model: Optional[ViTPlantClassifier] = None
 
-# Gemini API configuration
-GEMINI_API_KEY = "AIzaSyDxqEMB8Qoq84jn_uSDepoKYnsbwvB5jdc"
-GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
-
-def get_gemini_response(prompt: str) -> str:
-    """Get response from Gemini API."""
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data = {
-        "contents": [{
-            "parts": [{
-                "text": prompt
-            }]
-        }]
-    }
-    response = requests.post(
-        f"{GEMINI_API_URL}?key={GEMINI_API_KEY}",
-        headers=headers,
-        json=data
-    )
-    if response.status_code == 200:
-        return response.json()["candidates"][0]["content"]["parts"][0]["text"]
-    else:
-        logger.error(f"Gemini API error: {response.status_code}, {response.text}")
-        return "No response from Gemini API."
-
-def save_upload(file: UploadFile) -> Path:
-    """Save uploaded file and return path."""
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    file_extension = Path(file.filename).suffix
-    save_path = UPLOAD_DIR / f"upload_{timestamp}{file_extension}"
-    
-    with save_path.open("wb") as buffer:
-        file.file.seek(0)
-        buffer.write(file.file.read())
-    
-    return save_path
-
-def preprocess_image(image_bytes: bytes) -> Tuple[np.ndarray, Dict[str, Any]]:
-    """
-    Preprocess image to match the model's input requirements and extract metadata.
-    Returns a tuple of (preprocessed image array, metadata dictionary)
-    """
+def load_pytorch_vit_model():
+    global loaded_vit_model
+    logger.info("Loading PyTorch ViT model...")
+    if loaded_vit_model:
+        return
+    path = Path(ViTConfig.MODEL_PATH)
+    logger.info(f"Path: {path.resolve()}")
+    if not path.is_file():
+        raise FileNotFoundError(f"ViT Model not found: {path.resolve()}")
     try:
-        # Load and preprocess image
-        img_io = BytesIO(image_bytes)
+        arch = ViTPlantClassifier(CommonConfig.NUM_CLASSES)
+        state = torch.load(path, map_location=pytorch_device)
+        arch.load_state_dict(state)
+        loaded_vit_model = arch.to(pytorch_device)
+        loaded_vit_model.eval()
+        logger.info("PyTorch ViT loaded.")
+    except Exception as e:
+        logger.critical(f"FATAL: ViT Load Error: {e}", exc_info=True)
+        raise
+
+def preprocess_image_vit(b: bytes) -> torch.Tensor:
+    try:
+        img = Image.open(BytesIO(b)).convert('RGB')
+        tfm = transforms.Compose([
+            transforms.Resize((ViTConfig.IMAGE_SIZE, ViTConfig.IMAGE_SIZE), interpolation=transforms.InterpolationMode.BICUBIC),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=ViTConfig.NORM_MEAN, std=ViTConfig.NORM_STD)
+        ])
+        return tfm(img).unsqueeze(0)
+    except Exception as e:
+        logger.error(f"ViT Preprocessing failed: {e}", exc_info=True)
+        raise HTTPException(500, f"ViT preprocessing failed: {e}")
+
+@torch.no_grad()
+def predict_vit(t: torch.Tensor) -> Dict[str, Any]:
+    if not loaded_vit_model:
+        raise RuntimeError("ViT Model not loaded.")
+    loaded_vit_model.eval()
+    try:
+        probs = F.softmax(loaded_vit_model(t.to(pytorch_device)), dim=1)[0]
+        top_p, top_i = torch.topk(probs, 3)
+        top_3 = [
+            {"class": CommonConfig.CLASS_LABELS[i.item()], "confidence": p.item()}
+            for i, p in zip(top_i, top_p) if 0 <= i.item() < CommonConfig.NUM_CLASSES
+        ]
+        best = top_3[0] if top_3 else {"class": "Unknown", "confidence": 0.0}
+        return {
+            "top_prediction_label": best['class'],
+            "confidence": best['confidence'],
+            "top_3": top_3
+        }
+    except Exception as e:
+        logger.error(f"ViT Prediction failed: {e}", exc_info=True)
+        raise RuntimeError(f"ViT Prediction failed: {e}")
+
+# --- TensorFlow VGG Model Setup ---
+class TFVGGConfig:
+    MODEL_PATH = "model/vgg_model.h5"
+    IMAGE_SIZE = (224, 224)
+
+loaded_tf_model = None
+
+def load_tensorflow_vgg_model():
+    global loaded_tf_model
+    logger.info("Loading TensorFlow VGG model...")
+    if loaded_tf_model:
+        return
+    path = Path(TFVGGConfig.MODEL_PATH)
+    logger.info(f"Path: {path.resolve()}")
+    if not path.is_file():
+        raise FileNotFoundError(f"TF Model not found: {path.resolve()}")
+    try:
+        loaded_tf_model = tf_load_model(path)
+        assert loaded_tf_model.output_shape[-1] == CommonConfig.NUM_CLASSES, "TF Output shape mismatch"
+        logger.info("TensorFlow VGG loaded.")
+    except Exception as e:
+        logger.critical(f"FATAL: TF Load Error: {e}", exc_info=True)
+        raise
+
+def preprocess_image_tf(b: bytes) -> Tuple[np.ndarray, Dict[str, Any]]:
+    try:
+        img_io = BytesIO(b)
         img = Image.open(img_io)
-        
-        # Extract metadata
-        metadata = {
+        meta = {
+            "size": humanize.naturalsize(len(b)),
+            "format": img.format,
             "width": img.width,
             "height": img.height,
-            "resolution": f"{img.width} × {img.height}",  # Use proper multiplication symbol
-            "format": img.format,
+            "resolution": f"{img.width}x{img.height}",
             "mode": img.mode,
-            "size": humanize.naturalsize(len(image_bytes)),
             "has_exif": False,
             "has_geo": False,
             "datetime": None,
             "make": None,
-            "model": None,
+            "model": None
         }
-        
-        # Extract EXIF data if available
         try:
-            img_io.seek(0)  # Reset file pointer
-            exif_tags = exifread.process_file(img_io)
-            
-            if exif_tags:
-                metadata["has_exif"] = True
-                
-                # Extract common EXIF tags
-                if 'EXIF DateTimeOriginal' in exif_tags:
-                    metadata["datetime"] = str(exif_tags['EXIF DateTimeOriginal'])
-                
-                if 'Image Make' in exif_tags:
-                    metadata["make"] = str(exif_tags['Image Make'])
-                
-                if 'Image Model' in exif_tags:
-                    metadata["model"] = str(exif_tags['Image Model'])
-                
-                # Check for GPS data
-                gps_keys = [key for key in exif_tags.keys() if key.startswith('GPS')]
-                if gps_keys:
-                    metadata["has_geo"] = True
+            img_io.seek(0)
+            exif = exifread.process_file(img_io, stop_tag='DateTimeOriginal')
+            meta.update({
+                "has_exif": bool(exif),
+                "datetime": str(exif.get('EXIF DateTimeOriginal')),
+                "make": str(exif.get('Image Make')),
+                "model": str(exif.get('Image Model')),
+                "has_geo": any(k.startswith('GPS') for k in exif)
+            })
         except Exception as e:
-            logger.warning(f"Error extracting EXIF data: {str(e)}")
-        
-        # Convert to RGB if necessary
+            logger.warning(f"EXIF error: {e}")
         if img.mode != 'RGB':
             img = img.convert('RGB')
-        
-        # Resize image
-        img = img.resize(ModelConfig.IMAGE_SIZE, Image.LANCZOS)
-        
-        # Convert to numpy array and normalize
-        img_array = np.array(img, dtype=np.float32)
-        img_array = img_array / 255.0
-        
-        # Add batch dimension
-        img_array = np.expand_dims(img_array, axis=0)
-        
-        return img_array, metadata
-        
+        img = img.resize(TFVGGConfig.IMAGE_SIZE, Image.LANCZOS)
+        arr = np.array(img, dtype=np.float32) / 255.
+        arr = np.expand_dims(arr, axis=0)
+        return arr, meta
     except Exception as e:
-        logger.error(f"Image preprocessing error: {str(e)}")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to process image: {str(e)}"
-        )
+        logger.error(f"TF Preprocessing failed: {e}", exc_info=True)
+        raise HTTPException(500, f"TF preprocessing failed: {e}")
 
-def generate_pdf_report(report_data: Dict[str, Any], image_path: Path) -> Path:
-    """
-    Generate a professional PDF report for the plant disease classification with enhanced styling.
-    The first page includes the logo, project information, model details, and importance of plants for humans.
-    
-    Args:
-        report_data: Dictionary containing classification results and related information
-        image_path: Path to the analyzed plant image
-        
-    Returns:
-        Path: Path to the generated PDF report
-    """
-    # Create a unique filename for the report
-    report_id = str(uuid.uuid4())[:8]
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_filename = f"plant_report_{report_id}_{timestamp}.pdf"
-    report_path = REPORTS_DIR / report_filename
-    
-    # Create PDF document with margins
-    doc = SimpleDocTemplate(
-        str(report_path),
-        pagesize=letter,
-        leftMargin=0.75*inch,
-        rightMargin=0.75*inch,
-        topMargin=0.75*inch,
-        bottomMargin=0.75*inch
-    )
-    styles = getSampleStyleSheet()
-    
-    # Enhanced custom styles
-    custom_styles = {
-        'Title': ParagraphStyle(
-            'Title',
-            parent=styles['Heading1'],
-            fontSize=28,
-            textColor=colors.HexColor('#1B5E20'),  # Dark green
-            spaceAfter=16,
-            alignment=1,
-            fontName='Helvetica-Bold',
-            leading=32
-        ),
-        'Subtitle': ParagraphStyle(
-            'Subtitle',
-            parent=styles['Heading2'],
-            fontSize=20,
-            textColor=colors.HexColor('#1565C0'),  # Dark blue
-            spaceAfter=12,
-            alignment=1,
-            fontName='Helvetica-Bold',
-            leading=24
-        ),
-        'SectionHeader': ParagraphStyle(
-            'SectionHeader',
-            parent=styles['Heading3'],
-            fontSize=16,
-            textColor=colors.HexColor('#2E7D32'),  # Medium green
-            spaceBefore=12,
-            spaceAfter=8,
-            fontName='Helvetica-Bold',
-            leading=20,
-            borderWidth=1,
-            borderColor=colors.HexColor('#E8F5E9'),  # Light green
-            borderPadding=6,
-            borderRadius=4
-        ),
-        'Normal': ParagraphStyle(
-            'Normal',
-            parent=styles['Normal'],
-            fontSize=11,
-            textColor=colors.HexColor('#212121'),  # Dark gray
-            spaceBefore=6,
-            spaceAfter=6,
-            leading=14,
-            alignment=0
-        ),
-        'BulletPoint': ParagraphStyle(
-            'BulletPoint',
-            parent=styles['Normal'],
-            fontSize=11,
-            textColor=colors.HexColor('#424242'),
-            leftIndent=20,
-            spaceBefore=2,
-            spaceAfter=2,
-            leading=14,
-            bulletIndent=10,
-            alignment=0
-        ),
-        'Footer': ParagraphStyle(
-            'Footer',
-            parent=styles['Normal'],
-            fontSize=8,
-            textColor=colors.HexColor('#757575'),  # Medium gray
-            alignment=1,
-            leading=10
-        )
-    }
-    
-    # Prepare content
-    content = []
-    
-    # Add watermark
-    def add_watermark(canvas, doc):
-        canvas.saveState()
-        canvas.setFillColor(colors.HexColor('#E8F5E9'))
-        canvas.setFont('Helvetica-Bold', 60)
-        canvas.rotate(45)
-        canvas.drawString(200, 50, "CONFIDENTIAL")
-        canvas.restoreState()
-    
-    # Add cover page with logo and project information
-    content.append(Spacer(1, 1*inch))
-    
-    # Add logo
-    logo_path = "static/logo.png"
-    if os.path.exists(logo_path):
-        logo = ReportImage(logo_path, width=1.5*inch, height=1.5*inch)
-        content.append(logo)
-        content.append(Spacer(1, 0.5*inch))
-    
-    # Add project title
-    content.append(Paragraph("Pestector", custom_styles['Title']))
-    content.append(Spacer(1, 0.25*inch))
-    content.append(Paragraph("Plant Disease Classification System", custom_styles['Subtitle']))
-    content.append(Spacer(1, 0.5*inch))
-    
-    # Add project description
-    project_description = """
-        <b>Pestector</b> is an AI-powered system designed to identify plant diseases and provide 
-        actionable treatment recommendations. Our mission is to help farmers and gardeners 
-        maintain healthy crops and reduce losses due to plant diseases.
-    """
-    content.append(Paragraph(project_description, custom_styles['Normal']))
-    content.append(Spacer(1, 0.5*inch))
-    
-    # Add model information
-    model_info = """
-        <b>Model Used:</b> VGG16 (Fine-tuned for plant disease classification)
-        <br/>
-        <b>Accuracy:</b> 98.6% (Tested on PlantVillage dataset)
-        <br/>
-        <b>Training Data:</b> 38 classes, 54,305 images
-    """
-    content.append(Paragraph(model_info, custom_styles['Normal']))
-    content.append(Spacer(1, 0.5*inch))
-    
-    # Add importance of plants for humans
-    importance_of_plants = """
-        <b>Why Plants Matter:</b>
-        <br/>
-        Plants are essential for human survival. They provide food, oxygen, and raw materials 
-        for medicines, clothing, and shelter. Protecting plants from diseases ensures food 
-        security and environmental sustainability.
-    """
-    content.append(Paragraph(importance_of_plants, custom_styles['Normal']))
-    content.append(PageBreak())
-    
-    # Add analyzed image with border and caption
+def predict_tf(arr: np.ndarray) -> Dict[str, Any]:
+    if not loaded_tf_model:
+        raise RuntimeError("TF Model not loaded.")
     try:
-        img = ReportImage(str(image_path), width=3*inch, height=3*inch)
-        img_container = Table(
-            [[img]],
-            style=TableStyle([
-                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                ('TOPPADDING', (0, 0), (-1, -1), 10),
-                ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
-                ('BOX', (0, 0), (-1, -1), 1, colors.HexColor('#E0E0E0'))
-            ])
-        )
-        content.append(img_container)
-        content.append(Paragraph("Analyzed Plant Image", custom_styles['Normal']))
-        content.append(Spacer(1, 0.25*inch))
+        preds = loaded_tf_model.predict(arr, verbose=0)[0]
+        top_i = np.argsort(preds)[-3:][::-1]
+        top_3 = [
+            {"class": CommonConfig.CLASS_LABELS[i], "confidence": float(preds[i])}
+            for i in top_i if 0 <= i < CommonConfig.NUM_CLASSES
+        ]
+        best = top_3[0] if top_3 else {"class": "Unknown", "confidence": 0.0}
+        return {
+            "top_prediction_label": best['class'],
+            "confidence": best['confidence'],
+            "top_3": top_3
+        }
     except Exception as e:
-        logger.error(f"Failed to add image to PDF: {str(e)}")
-        content.append(Paragraph("(Image not available)", custom_styles['Normal']))
-    
-    # Add classification results with enhanced table
-    content.append(Paragraph("Classification Results", custom_styles['SectionHeader']))
-    
-    prediction = report_data["prediction"]
-    results_data = [
-        ["Plant Species:", prediction["plant"]],
-        ["Condition:", prediction["condition"]],
-        ["Confidence:", f"{prediction['confidence']}% ({prediction['confidence_level']})"],
-        ["Severity Level:", prediction["disease_info"]["severity"].capitalize()]
-    ]
-    
-    results_table = Table(
-        results_data,
-        colWidths=[1.5*inch, 4*inch],
-        style=TableStyle([
-            ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#E8F5E9')),
-            ('TEXTCOLOR', (0, 0), (0, -1), colors.HexColor('#1B5E20')),
-            ('TEXTCOLOR', (1, 0), (1, -1), colors.HexColor('#212121')),
-            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-            ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
-            ('FONTNAME', (1, 0), (1, -1), 'Helvetica'),
-            ('FONTSIZE', (0, 0), (-1, -1), 11),
-            ('TOPPADDING', (0, 0), (-1, -1), 6),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-            ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#81C784')),
-            ('ROWBACKGROUNDS', (0, 0), (-1, -1), [colors.HexColor('#F1F8E9'), colors.white])
-        ])
-    )
-    
-    content.append(results_table)
-    content.append(Spacer(1, 0.25*inch))
-    
-    # Add disease information with enhanced formatting
-    content.append(Paragraph("Disease Information", custom_styles['SectionHeader']))
-    descriptions = prediction["disease_info"]["descriptions"]
-    if descriptions:
-        for description in descriptions:
-            content.append(Paragraph(f"• {description}", custom_styles['BulletPoint']))
-    else:
-        content.append(Paragraph("No specific disease information available.", custom_styles['Normal']))
-    
-    # Add treatment recommendations with enhanced formatting
-    content.append(Paragraph("Treatment Recommendations", custom_styles['SectionHeader']))
-    treatment = prediction["treatment_recommendations"]
-    if isinstance(treatment, str):
-        paragraphs = treatment.split('\n')
-        for para in paragraphs:
-            if para.strip():
-                content.append(Paragraph(para, custom_styles['Normal']))
-    else:
-        content.append(Paragraph("No treatment recommendations available.", custom_styles['Normal']))
-    
-    # Add prevention tips with icons
-    content.append(Paragraph("Prevention Tips", custom_styles['SectionHeader']))
-    prevention_tips = [
-        "- Regularly inspect plants for early signs of disease",
-        "- Maintain proper spacing between plants",
-        "- Avoid overhead watering to reduce leaf wetness",
-        "- Remove and destroy infected plant parts promptly",
-        "- Use disease-resistant plant varieties when available"
-    ]
-    for tip in prevention_tips:
-        content.append(Paragraph(tip, custom_styles['BulletPoint']))
-    
-    # Add reason for disease
-    content.append(Paragraph("Reason for Disease", custom_styles['SectionHeader']))
-    reason = prediction["reason_for_disease"]
-    if isinstance(reason, str):
-        paragraphs = reason.split('\n')
-        for para in paragraphs:
-            if para.strip():
-                content.append(Paragraph(para, custom_styles['Normal']))
-    else:
-        content.append(Paragraph("No information on disease cause available.", custom_styles['Normal']))
-    
-    # Add warnings with enhanced styling
-    if report_data["warnings"]["requires_expert_review"]:
-        content.append(Spacer(1, 0.25*inch))
-        content.append(Paragraph("- Expert Review Recommended", custom_styles['SectionHeader']))
-        
-        warning_reasons = []
-        if report_data["warnings"]["low_confidence"]:
-            warning_reasons.append("❗ Low confidence in prediction")
-        if report_data["warnings"]["severe_disease"]:
-            warning_reasons.append("- Potentially severe disease detected")
-        
-        for reason in warning_reasons:
-            content.append(Paragraph(reason, custom_styles['BulletPoint']))
-    
-    # Add footer with enhanced metadata
-    content.append(Spacer(1, 0.5*inch))
-    footer_text = [
-        f"Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-        "Plant Disease Classification System v2.0",
-        f"Report ID: {report_id}",
-        "CONFIDENTIAL - For Internal Use Only"
-    ]
-    for line in footer_text:
-        content.append(Paragraph(line, custom_styles['Footer']))
-    
-    # Build the PDF with watermark
-    doc.build(content, onFirstPage=add_watermark, onLaterPages=add_watermark)
-    logger.info(f"Enhanced PDF report generated successfully: {report_path}")
-    
-    return report_path
+        logger.error(f"TF Prediction failed: {e}", exc_info=True)
+        raise RuntimeError(f"TF Prediction failed: {e}")
 
+# --- Disease Info & Gemini ---
+DISEASE_PATTERNS = {
+    "blight": {"description": "Causes brown lesions", "severity": "high"},
+    "spot": {"description": "Creates spotted patterns", "severity": "medium"},
+    "rust": {"description": "Produces rusty spots", "severity": "medium"},
+    "virus": {"description": "Causes deformation/discoloration", "severity": "high"},
+    "mold": {"description": "Creates fuzzy growth", "severity": "medium"}
+}
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyC1cdR3MGFb5EyRVy1ztylFobyqCHa8JYs")
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+
+def get_disease_info(dn: str):
+    dl = dn.lower()
+    mtch = [p for p, i in DISEASE_PATTERNS.items() if p in dl]
+    dsc = [DISEASE_PATTERNS[p]['description'] for p in mtch]
+    sev = "low"
+    if any(DISEASE_PATTERNS[p]['severity'] == 'high' for p in mtch):
+        sev = "high"
+    elif any(DISEASE_PATTERNS[p]['severity'] == 'medium' for p in mtch):
+        sev = "medium"
+    return {"patterns": mtch, "descriptions": dsc, "severity": sev}
+
+def get_gemini_response(prompt: str) -> Dict[str, Any]:
+    if not GEMINI_API_KEY or GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_HERE":
+        logger.error("Gemini API key not configured.")
+        return {"text": "Gemini API key not configured.", "success": False}
+    headers = {"Content-Type": "application/json"}
+    data = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"maxOutputTokens": 100}
+    }
+    try:
+        response = requests.post(
+            f"{GEMINI_API_URL}?key={GEMINI_API_KEY}",
+            headers=headers,
+            json=data,
+            timeout=10
+        )
+        response.raise_for_status()
+        result = response.json()
+        text = result["candidates"][0]["content"]["parts"][0]["text"].strip()
+        logger.info(f"Gemini response received: {text[:50]}...")
+        return {"text": text, "success": True}
+    except requests.exceptions.HTTPError as e:
+        if response.status_code == 401:
+            logger.error("Gemini API key invalid or unauthorized.")
+            return {"text": "Invalid Gemini API key.", "success": False}
+        logger.error(f"Gemini HTTP error: {e}")
+        return {"text": f"Gemini HTTP error: {e}", "success": False}
+    except requests.exceptions.Timeout:
+        logger.error("Gemini request timed out.")
+        return {"text": "Gemini request timed out.", "success": False}
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Gemini request failed: {e}")
+        return {"text": f"Gemini request failed: {e}", "success": False}
+    except (KeyError, IndexError) as e:
+        logger.error(f"Gemini response parsing error: {e}")
+        return {"text": "Error parsing Gemini response.", "success": False}
+    except Exception as e:
+        logger.error(f"Unexpected Gemini error: {e}", exc_info=True)
+        return {"text": f"Unexpected Gemini error: {e}", "success": False}
+
+def extract_first_sentence(t: str) -> str:
+    if not t or not isinstance(t, str):
+        return ""
+    t = t.strip()
+    if not t:
+        return ""
+    m = re.search(r'([.!?])(?:\s+|$)', t)
+    if m:
+        fs = t[:m.end()].strip()
+        return fs if len(fs) > 1 else t.split('\n')[0]
+    return t.split('\n')[0]
+
+# --- FastAPI Events ---
 @app.on_event("startup")
 async def startup_event():
-    """Initialize the application and verify setup on startup."""
+    logger.info("Startup: Loading models...")
+    errs = []
     try:
-        # Initialize the classifier which loads the model
-        PlantDiseaseClassifier()
-        logger.info("Application initialized successfully")
-        
+        load_pytorch_vit_model()
     except Exception as e:
-        logger.error(f"Startup error: {str(e)}")
-        raise Exception(f"Failed to initialize application: {str(e)}")
+        logger.critical(f"ViT Load Err: {e}", exc_info=True)
+        errs.append("ViT")
+    try:
+        load_tensorflow_vgg_model()
+    except Exception as e:
+        logger.critical(f"TF Load Err: {e}", exc_info=True)
+        errs.append("TF")
+    if not errs:
+        logger.info("Model loading attempt finished.")
+    else:
+        logger.critical(f"Startup Fail - errors: {', '.join(errs)}")
 
-@app.get("/health")
+# --- API Endpoints ---
+@app.get("/health", tags=["System"])
 async def health_check():
-    """Health check endpoint."""
-    classifier = PlantDiseaseClassifier()
-    return {
-        "status": "healthy",
-        "model_loaded": classifier.model is not None,
-        "timestamp": datetime.now().isoformat(),
-        "model_info": {
-            "path": ModelConfig.MODEL_PATH,
-            "num_classes": ModelConfig.NUM_CLASSES
+    vit = loaded_vit_model is not None
+    tf = loaded_tf_model is not None
+    ok = vit and tf
+    return JSONResponse(
+        status_code=200 if ok else 503,
+        content={
+            "status": "healthy" if ok else "unhealthy",
+            "models_loaded": {"pytorch_vit": vit, "tensorflow_vgg": tf},
+            "pytorch_device": str(pytorch_device),
+            "timestamp": datetime.now().isoformat()
         }
-    }
-
-@app.get("/categories")
-async def get_categories():
-    """Get available plant categories and diseases."""
-    classifier = PlantDiseaseClassifier()
-    
-    return {
-        "total_categories": len(classifier.categories),
-        "categories": {
-            plant: {
-                "healthy_samples_available": info["healthy"],
-                "diseases": sorted(list(info["diseases"])),
-                "total_samples": info["total_samples"]
-            }
-            for plant, info in classifier.categories.items()
-        }
-    }
-
-@app.post("/classify")
-async def classify_image(
-    file: UploadFile = File(...),
-    use_gemini: bool = False,
-    generate_report: bool = False,
-    request: Request = None,
-    api_key: str = Depends(get_api_key)
-):
-    """
-    Classify plant disease from uploaded image.
-    Returns detailed analysis including confidence scores, disease information, 
-    treatment recommendations, and reason for disease.
-    Optionally generates a PDF report.
-    """
-    try:
-        # Get host URL for report download link
-        base_url = str(request.base_url).rstrip('/')
-        
-        logger.info(f"Received file: {file.filename}, content type: {file.content_type}")
-        
-        # Validate file
-        if not file.content_type.startswith('image/'):
-            raise HTTPException(
-                status_code=400,
-                detail="File must be an image"
-            )
-        
-        # Read image
-        image_bytes = await file.read()
-        
-        # Validate image data
-        logger.info(f"Uploaded file size: {len(image_bytes)} bytes")
-        if len(image_bytes) == 0:
-            raise HTTPException(
-                status_code=400,
-                detail="Empty image file"
-            )
-        
-        # Save the image
-        save_path = save_upload(file)
-        
-        # Preprocess image and get metadata
-        img_array, metadata = preprocess_image(image_bytes)
-        
-        # Initialize classifier and make prediction
-        classifier = PlantDiseaseClassifier()
-        results = classifier.predict(img_array)
-        
-        # Parse results
-        predicted_class = results["top_prediction"]
-        confidence = results["confidence"]
-        
-        plant, condition = predicted_class.split('___')
-        plant = plant.replace('_', ' ')
-        condition = condition.replace('_', ' ')
-        
-        # Get disease information
-        disease_info = classifier.get_disease_info(condition)
-        
-        # Load default treatment recommendations and reason for disease
-        with open("treatment_recommendations.json", "r") as f:
-            treatment_recommendations = json.load(f)
-        with open("reason.json", "r") as f:
-            reason_for_disease = json.load(f)
-        
-        # Filter treatment and reason for the predicted class
-        treatment = treatment_recommendations.get(predicted_class, "No treatment recommendations available.")
-        reason = reason_for_disease.get(predicted_class, "No reason for disease available.")
-        
-        # If user chooses to use Gemini, override default data
-        if use_gemini:
-            # Get treatment recommendations from Gemini API
-            treatment_prompt = f"Provide detailed treatment recommendations for {condition} in {plant}."
-            treatment = get_gemini_response(treatment_prompt)
-            
-            # Get reason for disease from Gemini API
-            reason_prompt = f"Explain the reason for the disease {condition} in {plant}."
-            reason = get_gemini_response(reason_prompt)
-        
-        # Enhanced metadata for the response
-        full_metadata = {
-            "filename": file.filename,
-            "content_type": file.content_type,
-            "save_path": str(save_path),
-            "timestamp": datetime.now().isoformat(),
-            "file_size_bytes": len(image_bytes),
-            **metadata  # Include all the metadata from preprocess_image
-        }
-        
-        # Prepare response
-        response = {
-            "prediction": {
-                "plant": plant,
-                "condition": condition,
-                "confidence": float(round(confidence * 100, 2)),
-                "confidence_level": (
-                    "High" if confidence > ModelConfig.CONFIDENCE_THRESHOLD
-                    else "Medium" if confidence > 0.70
-                    else "Low"
-                ),
-                "disease_info": disease_info,
-                "treatment_recommendations": treatment,
-                "reason_for_disease": reason,
-                "data_source": "Gemini" if use_gemini else "Local"
-            },
-            "top_3_predictions": results["top_3"],
-            "metadata": full_metadata,
-            "warnings": {
-                "low_confidence": confidence < ModelConfig.CONFIDENCE_THRESHOLD,
-                "severe_disease": disease_info["severity"] == "high",
-                "requires_expert_review": (
-                    confidence < ModelConfig.CONFIDENCE_THRESHOLD or
-                    disease_info["severity"] == "high"
-                )
-            },
-            "requires_review": (
-                confidence < ModelConfig.CONFIDENCE_THRESHOLD or
-                disease_info["severity"] == "high"
-            )
-        }
-        
-        # Generate PDF report if requested
-        if generate_report:
-            try:
-                report_path = generate_pdf_report(response, save_path)
-                report_filename = os.path.basename(report_path)
-                
-                # Get PDF file size for report metadata
-                report_size_bytes = os.path.getsize(report_path)
-                report_size = humanize.naturalsize(report_size_bytes)
-                
-                # Get current timestamp for report metadata
-                generated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                
-                response["report"] = {
-                    "available": True,
-                    "path": str(report_path),
-                    "download_url": f"{base_url}/reports/{report_filename}",
-                    "filename": report_filename,
-                    "size": report_size,
-                    "size_bytes": report_size_bytes,
-                    "generated_at": generated_at,
-                    "page_count": 1  # Default value, could be calculated if needed
-                }
-            except Exception as e:
-                logger.error(f"Error generating PDF report: {str(e)}")
-                response["report"] = {
-                    "available": False,
-                    "error": str(e)
-                }
-        
-        logger.info(
-            f"Successfully classified image: {file.filename} "
-            f"as {plant} - {condition} "
-            f"with {confidence:.2%} confidence"
-        )
-        
-        return JSONResponse(
-            content=response,
-            headers={"Cache-Control": "no-cache"}
-        )
-        
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        logger.error(f"Error processing image: {str(e)}")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error processing image: {str(e)}"
-        )
-
-@app.get("/reports/{filename}")
-async def get_report(filename: str):
-    """Download a generated PDF report."""
-    report_path = REPORTS_DIR / filename
-    
-    if not report_path.exists():
-        raise HTTPException(
-            status_code=404,
-            detail="Report not found"
-        )
-    
-    return FileResponse(
-        path=str(report_path),
-        media_type="application/pdf",
-        filename=filename
     )
 
-# Directory configurations
-UPLOAD_DIR = Path("uploads")
-REPORTS_DIR = Path("reports")
+def save_upload(file: UploadFile) -> Path:
+    ts = datetime.now().strftime("%Y%m%d%H%M%S")
+    ext = Path(file.filename).suffix if file.filename else ".img"
+    safe_fn = f"upload_{ts}_{os.urandom(4).hex()}{ext}"
+    path = UPLOAD_DIR / safe_fn
+    try:
+        with path.open("wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        logger.info(f"File saved: {path}")
+        return path
+    except Exception as e:
+        logger.error(f"Save failed {path}: {e}", exc_info=True)
+        if path.exists():
+            try:
+                path.unlink()
+            except OSError:
+                pass
+        raise HTTPException(500, "Failed to save file.")
 
+@app.post("/classify", tags=["Classification"])
+async def classify_image_combined(
+    request: Request,
+    file: UploadFile = File(...),
+    model_choice: Literal["vit", "vgg", "best"] = Query("best"),
+    use_gemini: bool = Query(False),
+    api_key: str = Depends(get_api_key)
+):
+    start = time.time()
+    logger.info(f"Request: {file.filename}, Model: {model_choice}, Gemini: {use_gemini}")
+    if not file.content_type or not file.content_type.startswith('image/'):
+        raise HTTPException(415, "Unsupported file type.")
+    if not file.filename:
+        raise HTTPException(400, "Filename missing.")
+    try:
+        img_bytes = await file.read()
+        await file.seek(0)
+        if not img_bytes:
+            raise HTTPException(400, "Empty file.")
+        save_path = save_upload(file)
+        vit_res, tf_res, meta = None, None, None
+        if model_choice in ["vit", "best"]:
+            try:
+                vit_in = preprocess_image_vit(img_bytes)
+                vit_res = predict_vit(vit_in)
+            except Exception as e:
+                logger.error(f"ViT Err: {e}")
+            if model_choice == "vit" and not meta:
+                try:
+                    img = Image.open(BytesIO(img_bytes))
+                    meta = {"size": humanize.naturalsize(len(img_bytes)), "format": img.format}
+                except:
+                    meta = {}
+        if model_choice in ["vgg", "best"]:
+            try:
+                tf_in, tf_meta = preprocess_image_tf(img_bytes)
+                tf_res = predict_tf(tf_in)
+                meta = tf_meta
+            except Exception as e:
+                logger.error(f"TF Err: {e}")
+        best_pred, model_src = None, "N/A"
+        if model_choice == "vit" and vit_res:
+            best_pred, model_src = vit_res, "PyTorch ViT"
+        elif model_choice == "vgg" and tf_res:
+            best_pred, model_src = tf_res, "TensorFlow VGG"
+        elif model_choice == "best":
+            if vit_res and tf_res:
+                best_pred, model_src = (vit_res, "ViT") if vit_res['confidence'] >= tf_res['confidence'] else (tf_res, "VGG")
+            elif vit_res:
+                best_pred, model_src = vit_res, "PyTorch ViT"
+            elif tf_res:
+                best_pred, model_src = tf_res, "TensorFlow VGG"
+        if not best_pred:
+            raise HTTPException(500, "Prediction failed.")
+        best_lbl = best_pred['top_prediction_label']
+        # Normalize plant and condition names
+        if '___' in best_lbl:
+            plnt, cond = best_lbl.split('___')
+            plnt = plnt.replace('_', ' ').title()
+            cond = cond.replace('_', ' ').title()
+        else:
+            plnt, cond = "Unknown", best_lbl.replace('_', ' ').title()
+        dis_info = get_disease_info(cond)
+        treatment, reason, data_src = "N/A", "N/A", "Local"
+        gemini_highlighted = False
+        try:
+            with open("treatment_recommendations.json", "r", encoding='utf-8') as f:
+                treat_data = json.load(f)
+                treatment = treat_data.get(best_lbl, "No local treatment data.")
+        except FileNotFoundError:
+            logger.warning("treatments.json not found.")
+            treatment = "Treatment data missing."
+        except json.JSONDecodeError:
+            logger.warning("treatments.json decode error.")
+            treatment = "Treatment data error."
+        except Exception as e:
+            logger.warning(f"Treatment load error: {e}")
+            treatment = "Error loading treatment data."
+        try:
+            with open("reason.json", "r", encoding='utf-8') as f:
+                reason_data = json.load(f)
+                reason = reason_data.get(best_lbl, "No local reason data.")
+        except FileNotFoundError:
+            logger.warning("reason.json not found.")
+            reason = "Reason data missing."
+        except json.JSONDecodeError:
+            logger.warning("reason.json decode error.")
+            reason = "Reason data error."
+        except Exception as e:
+            logger.warning(f"Reason load error: {e}")
+            reason = "Error loading reason data."
+        if use_gemini:
+            gem_start = time.time()
+            logger.info("Requesting Gemini (1.5 Flash)...")
+            treat_prompt = f"One sentence summary of treatment for {cond} in {plnt} plants."
+            reason_prompt = f"One sentence summary of causes for {cond} in {plnt} plants."
+            gem_t_res = get_gemini_response(treat_prompt)
+            gem_r_res = get_gemini_response(reason_prompt)
+            t_ok = gem_t_res["success"]
+            r_ok = gem_r_res["success"]
+            if t_ok:
+                treatment = extract_first_sentence(gem_t_res["text"])
+                data_src = "Gemini"
+                gemini_highlighted = True
+            if r_ok:
+                reason = extract_first_sentence(gem_r_res["text"])
+                data_src = "Gemini"
+                gemini_highlighted = True
+            logger.info(f"Gemini took {time.time()-gem_start:.3f}s. Valid: T={t_ok}, R={r_ok}")
+        elapsed = time.time() - start
+        response = {
+            "overall_best_prediction": {
+                "plant": plnt,
+                "condition": cond,
+                "confidence": best_pred['confidence'],
+                "confidence_percent": float(f"{best_pred['confidence']*100:.2f}"),
+                "model_source": model_src,
+                "label": best_lbl,
+                "disease_info": dis_info,
+                "treatment_recommendations": treatment,
+                "reason_for_disease": reason,
+                "data_source": data_src,
+                "gemini_highlighted": gemini_highlighted
+            },
+            "vit_predictions": vit_res['top_3'] if vit_res else [],
+            "tf_predictions": tf_res['top_3'] if tf_res else [],
+            "metadata": {
+                "filename": file.filename,
+                "content_type": file.content_type,
+                "save_path": str(save_path),
+                "timestamp": datetime.now().isoformat(),
+                "image_details": meta or {}
+            },
+            "processing_time_seconds": float(f"{elapsed:.3f}"),
+            "model_choice_used": model_choice,
+            "low_confidence_threshold": CommonConfig.LOW_CONFIDENCE_WARNING_THRESHOLD
+        }
+        logger.info(f"Success: {file.filename} ({model_choice}) -> {best_lbl} ({best_pred['confidence']:.2%}) in {elapsed:.3f}s")
+        return JSONResponse(content=response, headers={"Cache-Control": "no-cache"})
+    except HTTPException as e:
+        logger.warning(f"HTTP Exc: {e.detail}")
+        raise e
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}", exc_info=True)
+        raise HTTPException(500, f"Internal error: {e}")
+
+# --- File Cleanup Scheduler ---
 def cleanup_old_files():
-    """Delete files older than 7 days from uploads and reports directories."""
-    cutoff_time = datetime.now() - timedelta(days=7)
-    
-    def delete_old_files_in_dir(directory: Path):
-        for file_path in directory.iterdir():
-            if file_path.is_file():
-                file_mtime = datetime.fromtimestamp(file_path.stat().st_mtime)
-                if file_mtime < cutoff_time:
-                    try:
-                        file_path.unlink()
-                        logger.info(f"Deleted old file: {file_path}")
-                    except Exception as e:
-                        logger.error(f"Failed to delete file {file_path}: {str(e)}")
-    
-    # Clean up uploads directory
-    delete_old_files_in_dir(UPLOAD_DIR)
-    
-    # Clean up reports directory
-    delete_old_files_in_dir(REPORTS_DIR)
+    cutoff = datetime.now() - timedelta(days=7)
+    logger.info(f"Cleanup job older than {cutoff.isoformat()}")
+    count = 0
+    for dp in [UPLOAD_DIR]:
+        if not dp.is_dir():
+            continue
+        for item in dp.iterdir():
+            if item.is_file():
+                try:
+                    if datetime.fromtimestamp(item.stat().st_mtime) < cutoff:
+                        item.unlink()
+                        logger.info(f"Deleted: {item}")
+                        count += 1
+                except Exception as e:
+                    logger.error(f"Delete failed {item}: {e}")
+    logger.info(f"Cleanup finished. Deleted {count} files.")
 
-# Schedule the cleanup task to run daily
-scheduler = BackgroundScheduler()
+scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(cleanup_old_files, 'interval', days=1)
 scheduler.start()
+logger.info("File cleanup scheduler started.")
 
-# Ensure the scheduler shuts down gracefully
 @app.on_event("shutdown")
-async def shutdown_event():
+def shutdown_event():
+    logger.info("Shutting down scheduler...")
     scheduler.shutdown()
 
-
-# Define the router
-router = APIRouter()
-
-# Directory configurations
-UPLOAD_DIR = Path("uploads")
-REPORTS_DIR = Path("reports")
+# --- Other Endpoints ---
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
+async def get_index_page():
+    path = static_dir / "index.html"
+    return HTMLResponse(content=path.read_text(encoding='utf-8')) if path.is_file() else HTMLResponse("Frontend not found.", 404)
 
 @app.delete("/delete-all-files")
 async def delete_all_files():
-    """
-    Delete all files from the uploads and reports directories immediately.
-    """
     try:
-        # Function to delete all files in a directory
         def delete_files_in_directory(directory: Path):
             deleted_files = []
             if directory.exists():
@@ -965,31 +615,20 @@ async def delete_all_files():
                                 detail=f"Failed to delete file {file_path.name}: {str(e)}"
                             )
             return deleted_files
-
-        # Delete files from uploads directory
         deleted_images = delete_files_in_directory(UPLOAD_DIR)
-
-        # Delete files from reports directory
-        deleted_reports = delete_files_in_directory(REPORTS_DIR)
-
         return {
             "message": "All files deleted successfully.",
             "deleted_images": deleted_images,
-            "deleted_reports": deleted_reports,
         }
-
     except Exception as e:
         raise HTTPException(
             status_code=500,
             detail=f"Error deleting files: {str(e)}"
         )
 
-# Serve the HTML page at the root URL
-@app.get("/", response_class=HTMLResponse)
-async def get_index():
-    with open("static/index.html", "r") as file:
-        html_content = file.read()
-    return HTMLResponse(content=html_content)
+@app.get("/health-check")
+async def health_check():
+    return {"status": "ok"}
 
 @app.get("/scan", response_class=HTMLResponse)
 async def get_scan():
@@ -1010,7 +649,7 @@ async def get_doc():
     return HTMLResponse(content=html_content)
 
 @app.get("/library", response_class=HTMLResponse)
-async def get_doc():
+async def get_library():
     with open("static/disease-library.html", "r", encoding="utf-8") as file:
         html_content = file.read()
     return HTMLResponse(content=html_content)
@@ -1045,7 +684,6 @@ async def get_faqs():
         html_content = file.read()
     return HTMLResponse(content=html_content)
 
-
 @app.get("/knowledge", response_class=HTMLResponse)
 async def get_knowledge():
     with open("static/knowledge-base.html", "r", encoding="utf-8") as file:
@@ -1060,3 +698,4 @@ if __name__ == "__main__":
         port=8000,
         log_level="info"
     )
+# --- END OF main.py ---

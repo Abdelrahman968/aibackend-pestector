@@ -1,0 +1,391 @@
+2025-06-26 11:57:49,212 - __main__ - INFO - [<module>] - Mounted static directory: E:\Ai Code\python-api - Copy\static
+2025-06-26 11:57:49,236 - apscheduler.scheduler - INFO - [add_job] - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-06-26 11:57:49,236 - apscheduler.scheduler - INFO - [_real_add_job] - Added job "cleanup_old_files" to job store "default"
+2025-06-26 11:57:49,237 - apscheduler.scheduler - INFO - [start] - Scheduler started
+2025-06-26 11:57:49,238 - __main__ - INFO - [<module>] - File cleanup scheduler started.
+2025-06-26 11:57:49,362 - __main__ - INFO - [startup_event] - Startup: Loading models...
+2025-06-26 11:57:49,362 - __main__ - INFO - [load_pytorch_vit_model] - Loading PyTorch ViT model...
+2025-06-26 11:57:49,365 - __main__ - INFO - [load_pytorch_vit_model] - Path: E:\Ai Code\python-api - Copy\model\plant_disease_vit_BEST_model_state.pth
+2025-06-26 11:57:50,543 - __main__ - INFO - [load_pytorch_vit_model] - PyTorch ViT loaded.
+2025-06-26 11:57:50,544 - __main__ - INFO - [load_tensorflow_vgg_model] - Loading TensorFlow VGG model...
+2025-06-26 11:57:50,544 - __main__ - INFO - [load_tensorflow_vgg_model] - Path: E:\Ai Code\python-api - Copy\model\vgg_model.h5
+2025-06-26 11:57:50,966 - absl - WARNING - [try_build_compiled_arguments] - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-06-26 11:57:50,974 - __main__ - INFO - [load_tensorflow_vgg_model] - TensorFlow VGG loaded.
+2025-06-26 11:57:50,974 - __main__ - INFO - [startup_event] - Model loading attempt finished.
+2025-07-02 11:39:58,314 - __main__ - INFO - [<module>] - Mounted static directory: E:\Ai Code\python-api - Copy\static
+2025-07-02 11:39:58,337 - apscheduler.scheduler - INFO - [add_job] - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-02 11:39:58,339 - apscheduler.scheduler - INFO - [_real_add_job] - Added job "cleanup_old_files" to job store "default"
+2025-07-02 11:39:58,339 - apscheduler.scheduler - INFO - [start] - Scheduler started
+2025-07-02 11:39:58,340 - __main__ - INFO - [<module>] - File cleanup scheduler started.
+2025-07-02 11:39:58,460 - __main__ - INFO - [startup_event] - Startup: Loading models...
+2025-07-02 11:39:58,460 - __main__ - INFO - [load_pytorch_vit_model] - Loading PyTorch ViT model...
+2025-07-02 11:39:58,461 - __main__ - INFO - [load_pytorch_vit_model] - Path: E:\Ai Code\python-api - Copy\model\plant_disease_vit_BEST_model_state.pth
+2025-07-02 11:39:59,775 - __main__ - INFO - [load_pytorch_vit_model] - PyTorch ViT loaded.
+2025-07-02 11:39:59,775 - __main__ - INFO - [load_tensorflow_vgg_model] - Loading TensorFlow VGG model...
+2025-07-02 11:39:59,775 - __main__ - INFO - [load_tensorflow_vgg_model] - Path: E:\Ai Code\python-api - Copy\model\vgg_model.h5
+2025-07-02 11:40:00,414 - absl - WARNING - [try_build_compiled_arguments] - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-07-02 11:40:00,420 - __main__ - INFO - [load_tensorflow_vgg_model] - TensorFlow VGG loaded.
+2025-07-02 11:40:00,420 - __main__ - INFO - [startup_event] - Model loading attempt finished.
+2025-07-02 11:44:29,536 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751445869522-64140339.JPG, Model: best, Gemini: False
+2025-07-02 11:44:29,537 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702114429_8d7f5439.JPG
+2025-07-02 11:44:30,323 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751445869522-64140339.JPG (best) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.786s
+2025-07-02 11:47:47,710 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751446067697-271e88bc.JPG, Model: best, Gemini: False
+2025-07-02 11:47:47,711 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702114747_bec2b8e9.JPG
+2025-07-02 11:47:48,051 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751446067697-271e88bc.JPG (best) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.341s
+2025-07-02 11:50:51,498 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751446251488-54685428.JPG, Model: best, Gemini: False
+2025-07-02 11:50:51,498 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702115051_7eb5027d.JPG
+2025-07-02 11:50:51,845 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751446251488-54685428.JPG (best) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.347s
+2025-07-02 11:57:01,423 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751446621401-e3e4e72d.JPG, Model: best, Gemini: False
+2025-07-02 11:57:01,425 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702115701_c7313790.JPG
+2025-07-02 11:57:02,018 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751446621401-e3e4e72d.JPG (best) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.595s
+2025-07-02 12:03:34,149 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751447014136-8c7aac31.JPG, Model: best, Gemini: True
+2025-07-02 12:03:34,149 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702120334_114a7b46.JPG
+2025-07-02 12:03:34,596 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-02 12:03:35,565 - __main__ - INFO - [get_gemini_response] - Gemini response received: Treatment for Tomato Yellow Leaf Curl Virus focuse...
+2025-07-02 12:03:36,387 - __main__ - INFO - [get_gemini_response] - Gemini response received: Tomato Yellow Leaf Curl Virus (TYLCV) in tomato pl...
+2025-07-02 12:03:36,389 - __main__ - INFO - [classify_image_combined] - Gemini took 1.794s. Valid: T=True, R=True
+2025-07-02 12:03:36,391 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751447014136-8c7aac31.JPG (best) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 2.242s
+2025-07-02 12:41:43,671 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751449303662-7aeef810.JPG, Model: best, Gemini: False
+2025-07-02 12:41:43,674 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702124143_a6abe2fd.JPG
+2025-07-02 12:41:44,212 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751449303662-7aeef810.JPG (best) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.542s
+2025-07-02 13:16:23,202 - __main__ - INFO - [classify_image_combined] - Request: b2600118-800px-wm-1751451383175-fb364c64.jpg, Model: best, Gemini: False
+2025-07-02 13:16:23,206 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702131623_ff806ef6.jpg
+2025-07-02 13:16:24,443 - __main__ - INFO - [classify_image_combined] - Success: b2600118-800px-wm-1751451383175-fb364c64.jpg (best) -> Potato___Early_blight (83.65%) in 1.241s
+2025-07-02 13:20:56,942 - __main__ - INFO - [classify_image_combined] - Request: b2600118-800px-wm-1751451656921-252f3182.jpg, Model: best, Gemini: False
+2025-07-02 13:20:56,942 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702132056_7b38016c.jpg
+2025-07-02 13:20:57,653 - __main__ - INFO - [classify_image_combined] - Success: b2600118-800px-wm-1751451656921-252f3182.jpg (best) -> Potato___Early_blight (83.65%) in 0.712s
+2025-07-02 13:21:40,826 - __main__ - INFO - [classify_image_combined] - Request: b2600118-800px-wm-1751451700775-c9fc9d5d.jpg, Model: best, Gemini: False
+2025-07-02 13:21:40,829 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702132140_11be93b1.jpg
+2025-07-02 13:21:41,414 - __main__ - INFO - [classify_image_combined] - Success: b2600118-800px-wm-1751451700775-c9fc9d5d.jpg (best) -> Potato___Early_blight (83.65%) in 0.588s
+2025-07-02 13:21:48,232 - __main__ - INFO - [classify_image_combined] - Request: Squash___Powdery_mildew-1751451708221-3a21c327.webp, Model: best, Gemini: False
+2025-07-02 13:21:48,233 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702132148_434a462d.webp
+2025-07-02 13:21:48,790 - exifread - WARNING - [process_file] - Webp file does not have exif data.
+2025-07-02 13:21:49,156 - __main__ - INFO - [classify_image_combined] - Success: Squash___Powdery_mildew-1751451708221-3a21c327.webp (best) -> Squash___Powdery_mildew (99.83%) in 0.924s
+2025-07-02 13:25:51,670 - __main__ - INFO - [classify_image_combined] - Request: Squash___Powdery_mildew-1751451951662-6ffa255d.webp, Model: best, Gemini: False
+2025-07-02 13:25:51,675 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702132551_124553c1.webp
+2025-07-02 13:25:51,821 - exifread - WARNING - [process_file] - Webp file does not have exif data.
+2025-07-02 13:25:51,993 - __main__ - INFO - [classify_image_combined] - Success: Squash___Powdery_mildew-1751451951662-6ffa255d.webp (best) -> Squash___Powdery_mildew (99.83%) in 0.323s
+2025-07-02 13:29:44,273 - __main__ - INFO - [classify_image_combined] - Request: Squash___Powdery_mildew-1751452184241-7bebee1d.webp, Model: best, Gemini: True
+2025-07-02 13:29:44,273 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250702132944_ef82193a.webp
+2025-07-02 13:29:44,654 - exifread - WARNING - [process_file] - Webp file does not have exif data.
+2025-07-02 13:29:45,005 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-02 13:29:46,481 - __main__ - INFO - [get_gemini_response] - Gemini response received: Treat powdery mildew on squash plants with a combi...
+2025-07-02 13:29:47,520 - __main__ - INFO - [get_gemini_response] - Gemini response received: Powdery mildew in squash plants is caused by vario...
+2025-07-02 13:29:47,524 - __main__ - INFO - [classify_image_combined] - Gemini took 2.518s. Valid: T=True, R=True
+2025-07-02 13:29:47,524 - __main__ - INFO - [classify_image_combined] - Success: Squash___Powdery_mildew-1751452184241-7bebee1d.webp (best) -> Squash___Powdery_mildew (99.83%) in 3.251s
+2025-07-05 18:00:17,758 - __main__ - INFO - [<module>] - Mounted static directory: E:\Ai Code\python-api - Copy\static
+2025-07-05 18:00:17,789 - apscheduler.scheduler - INFO - [add_job] - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-05 18:00:17,789 - apscheduler.scheduler - INFO - [_real_add_job] - Added job "cleanup_old_files" to job store "default"
+2025-07-05 18:00:17,790 - apscheduler.scheduler - INFO - [start] - Scheduler started
+2025-07-05 18:00:17,805 - __main__ - INFO - [<module>] - File cleanup scheduler started.
+2025-07-05 18:00:18,053 - __main__ - INFO - [startup_event] - Startup: Loading models...
+2025-07-05 18:00:18,053 - __main__ - INFO - [load_pytorch_vit_model] - Loading PyTorch ViT model...
+2025-07-05 18:00:18,053 - __main__ - INFO - [load_pytorch_vit_model] - Path: E:\Ai Code\python-api - Copy\model\plant_disease_vit_BEST_model_state.pth
+2025-07-05 18:00:20,329 - __main__ - INFO - [load_pytorch_vit_model] - PyTorch ViT loaded.
+2025-07-05 18:00:20,329 - __main__ - INFO - [load_tensorflow_vgg_model] - Loading TensorFlow VGG model...
+2025-07-05 18:00:20,329 - __main__ - INFO - [load_tensorflow_vgg_model] - Path: E:\Ai Code\python-api - Copy\model\vgg_model.h5
+2025-07-05 18:00:21,219 - absl - WARNING - [try_build_compiled_arguments] - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-07-05 18:00:21,243 - __main__ - INFO - [load_tensorflow_vgg_model] - TensorFlow VGG loaded.
+2025-07-05 18:00:21,243 - __main__ - INFO - [startup_event] - Model loading attempt finished.
+2025-07-05 18:25:26,349 - __main__ - INFO - [classify_image_combined] - Request: AppleScab2-1751729126318-3e9de06f.JPG, Model: best, Gemini: False
+2025-07-05 18:25:26,357 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705182526_7da1494c.JPG
+2025-07-05 18:25:28,119 - __main__ - INFO - [classify_image_combined] - Success: AppleScab2-1751729126318-3e9de06f.JPG (best) -> Apple___Apple_scab (100.00%) in 1.770s
+2025-07-05 18:25:28,119 - __main__ - INFO - [classify_image_combined] - Request: AppleScab2-1751729126325-f64e0b21.JPG, Model: best, Gemini: False
+2025-07-05 18:25:28,128 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705182528_e7356867.JPG
+2025-07-05 18:25:28,685 - __main__ - INFO - [classify_image_combined] - Success: AppleScab2-1751729126325-f64e0b21.JPG (best) -> Apple___Apple_scab (100.00%) in 0.566s
+2025-07-05 18:37:31,480 - __main__ - INFO - [classify_image_combined] - Request: TomatoEarlyBlight1-1751729851469-7866e183.JPG, Model: best, Gemini: False
+2025-07-05 18:37:31,480 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705183731_c18a6591.JPG
+2025-07-05 18:37:32,228 - __main__ - INFO - [classify_image_combined] - Success: TomatoEarlyBlight1-1751729851469-7866e183.JPG (best) -> Tomato___Early_blight (99.99%) in 0.748s
+2025-07-05 18:37:32,228 - __main__ - INFO - [classify_image_combined] - Request: TomatoEarlyBlight1-1751729851477-61131478.JPG, Model: best, Gemini: False
+2025-07-05 18:37:32,235 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705183732_8f825131.JPG
+2025-07-05 18:37:32,850 - __main__ - INFO - [classify_image_combined] - Success: TomatoEarlyBlight1-1751729851477-61131478.JPG (best) -> Tomato___Early_blight (99.99%) in 0.622s
+2025-07-05 18:37:55,507 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751729875501-ed7dd021.JPG, Model: vgg, Gemini: False
+2025-07-05 18:37:55,509 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705183755_11f4cd37.JPG
+2025-07-05 18:37:55,832 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751729875501-ed7dd021.JPG (vgg) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.325s
+2025-07-05 18:37:55,839 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751729875504-e128191a.JPG, Model: vgg, Gemini: False
+2025-07-05 18:37:55,839 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705183755_3003727e.JPG
+2025-07-05 18:37:56,278 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751729875504-e128191a.JPG (vgg) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.440s
+2025-07-05 18:49:41,384 - __main__ - INFO - [classify_image_combined] - Request: TomatoHealthy3-1751730581338-19088752.JPG, Model: best, Gemini: False
+2025-07-05 18:49:41,387 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705184941_9ef3cee5.JPG
+2025-07-05 18:49:42,085 - __main__ - INFO - [classify_image_combined] - Success: TomatoHealthy3-1751730581338-19088752.JPG (best) -> Tomato___healthy (100.00%) in 0.701s
+2025-07-05 18:49:42,085 - __main__ - INFO - [classify_image_combined] - Request: TomatoHealthy3-1751730581364-6438b829.JPG, Model: best, Gemini: False
+2025-07-05 18:49:42,089 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705184942_866a8681.JPG
+2025-07-05 18:49:42,693 - __main__ - INFO - [classify_image_combined] - Success: TomatoHealthy3-1751730581364-6438b829.JPG (best) -> Tomato___healthy (100.00%) in 0.608s
+2025-07-05 18:49:58,548 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751730598525-072d71aa.JPG, Model: vgg, Gemini: False
+2025-07-05 18:49:58,553 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705184958_970ad5d0.JPG
+2025-07-05 18:49:58,866 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751730598525-072d71aa.JPG (vgg) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.318s
+2025-07-05 18:49:58,866 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751730598529-765892b2.JPG, Model: vgg, Gemini: False
+2025-07-05 18:49:58,866 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705184958_8181d62f.JPG
+2025-07-05 18:49:59,171 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751730598529-765892b2.JPG (vgg) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.306s
+2025-07-05 18:50:27,683 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus2-1751730627677-b9a6582c.JPG, Model: vit, Gemini: False
+2025-07-05 18:50:27,690 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705185027_cbe6bdb2.JPG
+2025-07-05 18:50:28,037 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus2-1751730627677-b9a6582c.JPG (vit) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.354s
+2025-07-05 18:50:28,037 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus2-1751730627714-910b662b.JPG, Model: vit, Gemini: False
+2025-07-05 18:50:28,044 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705185028_497e58b6.JPG
+2025-07-05 18:50:28,488 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus2-1751730627714-910b662b.JPG (vit) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.451s
+2025-07-05 19:16:21,080 - __main__ - INFO - [classify_image_combined] - Request: AppleScab2-1751732181062-f8dc9375.JPG, Model: vgg, Gemini: False
+2025-07-05 19:16:21,082 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705191621_603924eb.JPG
+2025-07-05 19:16:21,233 - __main__ - INFO - [classify_image_combined] - Success: AppleScab2-1751732181062-f8dc9375.JPG (vgg) -> Apple___Apple_scab (99.98%) in 0.152s
+2025-07-05 19:16:21,237 - __main__ - INFO - [classify_image_combined] - Request: AppleScab2-1751732181096-0cde7f3a.JPG, Model: vgg, Gemini: False
+2025-07-05 19:16:21,237 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705191621_86b29049.JPG
+2025-07-05 19:16:21,385 - __main__ - INFO - [classify_image_combined] - Success: AppleScab2-1751732181096-0cde7f3a.JPG (vgg) -> Apple___Apple_scab (99.98%) in 0.148s
+2025-07-05 19:20:38,406 - __main__ - INFO - [classify_image_combined] - Request: TomatoHealthy4-1751732438400-33648e5c.JPG, Model: best, Gemini: False
+2025-07-05 19:20:38,409 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705192038_1f4f55c4.JPG
+2025-07-05 19:20:39,018 - __main__ - INFO - [classify_image_combined] - Success: TomatoHealthy4-1751732438400-33648e5c.JPG (best) -> Tomato___healthy (100.00%) in 0.612s
+2025-07-05 19:22:06,982 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1751732526977-b5af8dbf.JPG, Model: best, Gemini: False
+2025-07-05 19:22:06,985 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705192206_32273e43.JPG
+2025-07-05 19:22:07,629 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1751732526977-b5af8dbf.JPG (best) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.647s
+2025-07-05 19:22:20,782 - __main__ - INFO - [classify_image_combined] - Request: TomatoEarlyBlight3-1751732540778-72d83031.JPG, Model: best, Gemini: False
+2025-07-05 19:22:20,785 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705192220_c5b3d320.JPG
+2025-07-05 19:22:21,430 - __main__ - INFO - [classify_image_combined] - Success: TomatoEarlyBlight3-1751732540778-72d83031.JPG (best) -> Tomato___Early_blight (100.00%) in 0.647s
+2025-07-05 19:23:07,509 - __main__ - INFO - [classify_image_combined] - Request: TomatoEarlyBlight3-1751732587498-09749d50.JPG, Model: best, Gemini: False
+2025-07-05 19:23:07,520 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705192307_fde97d2e.JPG
+2025-07-05 19:23:08,144 - __main__ - INFO - [classify_image_combined] - Success: TomatoEarlyBlight3-1751732587498-09749d50.JPG (best) -> Tomato___Early_blight (100.00%) in 0.634s
+2025-07-05 19:24:54,138 - __main__ - INFO - [classify_image_combined] - Request: TomatoEarlyBlight5-1751732694129-f64a5b6d.JPG, Model: vit, Gemini: False
+2025-07-05 19:24:54,144 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705192454_693843fa.JPG
+2025-07-05 19:24:54,567 - __main__ - INFO - [classify_image_combined] - Success: TomatoEarlyBlight5-1751732694129-f64a5b6d.JPG (vit) -> Tomato___Early_blight (100.00%) in 0.429s
+2025-07-05 19:24:54,567 - __main__ - INFO - [classify_image_combined] - Request: TomatoEarlyBlight5-1751732694134-f08fc1b1.JPG, Model: vit, Gemini: False
+2025-07-05 19:24:54,567 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705192454_5234a1e0.JPG
+2025-07-05 19:24:54,872 - __main__ - INFO - [classify_image_combined] - Success: TomatoEarlyBlight5-1751732694134-f08fc1b1.JPG (vit) -> Tomato___Early_blight (100.00%) in 0.305s
+2025-07-05 19:25:13,495 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus4-1751732713493-d31c78fb.JPG, Model: vgg, Gemini: False
+2025-07-05 19:25:13,502 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705192513_c5cf20eb.JPG
+2025-07-05 19:25:13,924 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus4-1751732713493-d31c78fb.JPG (vgg) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.430s
+2025-07-05 19:25:13,931 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus4-1751732713515-2afabd85.JPG, Model: vgg, Gemini: False
+2025-07-05 19:25:13,938 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705192513_4785bb88.JPG
+2025-07-05 19:25:14,264 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus4-1751732713515-2afabd85.JPG (vgg) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.332s
+2025-07-05 19:44:30,360 - __main__ - INFO - [classify_image_combined] - Request: PotatoEarlyBlight2-1751733870335-95645c73.JPG, Model: best, Gemini: False
+2025-07-05 19:44:30,376 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705194430_ec15e21b.JPG
+2025-07-05 19:44:30,992 - __main__ - INFO - [classify_image_combined] - Success: PotatoEarlyBlight2-1751733870335-95645c73.JPG (best) -> Potato___Early_blight (100.00%) in 0.632s
+2025-07-05 19:44:30,993 - __main__ - INFO - [classify_image_combined] - Request: PotatoEarlyBlight2-1751733870355-84470c9b.JPG, Model: best, Gemini: False
+2025-07-05 19:44:30,993 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705194430_e0131c85.JPG
+2025-07-05 19:44:31,592 - __main__ - INFO - [classify_image_combined] - Success: PotatoEarlyBlight2-1751733870355-84470c9b.JPG (best) -> Potato___Early_blight (100.00%) in 0.599s
+2025-07-05 19:46:18,842 - __main__ - INFO - [classify_image_combined] - Request: AppleScab1-1751733978809-db0a8ad2.JPG, Model: best, Gemini: False
+2025-07-05 19:46:18,842 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705194618_aa43ab4d.JPG
+2025-07-05 19:46:19,701 - __main__ - INFO - [classify_image_combined] - Success: AppleScab1-1751733978809-db0a8ad2.JPG (best) -> Apple___Apple_scab (100.00%) in 0.860s
+2025-07-05 19:46:19,702 - __main__ - INFO - [classify_image_combined] - Request: AppleScab1-1751733978831-12b9e641.JPG, Model: best, Gemini: False
+2025-07-05 19:46:19,702 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705194619_ba7c0120.JPG
+2025-07-05 19:46:20,411 - __main__ - INFO - [classify_image_combined] - Success: AppleScab1-1751733978831-12b9e641.JPG (best) -> Apple___Apple_scab (100.00%) in 0.709s
+2025-07-05 19:48:45,523 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus2-1751734125510-218d51a6.JPG, Model: vgg, Gemini: False
+2025-07-05 19:48:45,523 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705194845_26034beb.JPG
+2025-07-05 19:48:45,675 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus2-1751734125510-218d51a6.JPG (vgg) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.151s
+2025-07-05 19:48:45,681 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus2-1751734125520-ff91aa5d.JPG, Model: vgg, Gemini: False
+2025-07-05 19:48:45,681 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705194845_03a754f4.JPG
+2025-07-05 19:48:45,841 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus2-1751734125520-ff91aa5d.JPG (vgg) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.160s
+2025-07-05 19:52:08,868 - __main__ - INFO - [classify_image_combined] - Request: AppleScab3-1751734328865-62ae641d.JPG, Model: best, Gemini: False
+2025-07-05 19:52:08,884 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705195208_50339614.JPG
+2025-07-05 19:52:09,607 - __main__ - INFO - [classify_image_combined] - Success: AppleScab3-1751734328865-62ae641d.JPG (best) -> Apple___Apple_scab (100.00%) in 0.739s
+2025-07-05 19:52:50,543 - __main__ - INFO - [classify_image_combined] - Request: PotatoEarlyBlight3-1751734370534-026a4dc2.JPG, Model: best, Gemini: False
+2025-07-05 19:52:50,550 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250705195250_c48c13bb.JPG
+2025-07-05 19:52:51,362 - __main__ - INFO - [classify_image_combined] - Success: PotatoEarlyBlight3-1751734370534-026a4dc2.JPG (best) -> Potato___Early_blight (100.00%) in 0.819s
+2025-07-06 01:06:32,279 - __main__ - INFO - [<module>] - Mounted static directory: E:\Ai Code\python-api - Copy\static
+2025-07-06 01:06:32,297 - apscheduler.scheduler - INFO - [add_job] - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-06 01:06:32,298 - apscheduler.scheduler - INFO - [_real_add_job] - Added job "cleanup_old_files" to job store "default"
+2025-07-06 01:06:32,298 - apscheduler.scheduler - INFO - [start] - Scheduler started
+2025-07-06 01:06:32,300 - __main__ - INFO - [<module>] - File cleanup scheduler started.
+2025-07-06 01:06:32,440 - __main__ - INFO - [startup_event] - Startup: Loading models...
+2025-07-06 01:06:32,441 - __main__ - INFO - [load_pytorch_vit_model] - Loading PyTorch ViT model...
+2025-07-06 01:06:32,441 - __main__ - INFO - [load_pytorch_vit_model] - Path: E:\Ai Code\python-api - Copy\model\plant_disease_vit_BEST_model_state.pth
+2025-07-06 01:06:33,707 - __main__ - INFO - [load_pytorch_vit_model] - PyTorch ViT loaded.
+2025-07-06 01:06:33,707 - __main__ - INFO - [load_tensorflow_vgg_model] - Loading TensorFlow VGG model...
+2025-07-06 01:06:33,708 - __main__ - INFO - [load_tensorflow_vgg_model] - Path: E:\Ai Code\python-api - Copy\model\vgg_model.h5
+2025-07-06 01:06:34,181 - absl - WARNING - [try_build_compiled_arguments] - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-07-06 01:06:34,190 - __main__ - INFO - [load_tensorflow_vgg_model] - TensorFlow VGG loaded.
+2025-07-06 01:06:34,190 - __main__ - INFO - [startup_event] - Model loading attempt finished.
+2025-07-06 01:39:39,091 - __main__ - INFO - [classify_image_combined] - Request: TomatoEarlyBlight6_cropped-1751755179057-4ca97015.jpeg, Model: best, Gemini: True
+2025-07-06 01:39:39,097 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250706013939_2b51c68a.jpeg
+2025-07-06 01:39:40,722 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-06 01:39:41,654 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in tomatoes is treated by removing in...
+2025-07-06 01:39:42,537 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in tomato plants is caused by the *Al...
+2025-07-06 01:39:42,541 - __main__ - INFO - [classify_image_combined] - Gemini took 1.819s. Valid: T=True, R=True
+2025-07-06 01:39:42,542 - __main__ - INFO - [classify_image_combined] - Success: TomatoEarlyBlight6_cropped-1751755179057-4ca97015.jpeg (best) -> Tomato___Early_blight (100.00%) in 3.451s
+2025-07-06 01:39:42,547 - __main__ - INFO - [classify_image_combined] - Request: TomatoEarlyBlight6_cropped-1751755179068-77fba0bb.jpeg, Model: best, Gemini: True
+2025-07-06 01:39:42,550 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250706013942_b04385e7.jpeg
+2025-07-06 01:39:43,183 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-06 01:39:43,950 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in tomatoes is treated by removing in...
+2025-07-06 01:39:44,834 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in tomato plants is caused by the *Al...
+2025-07-06 01:39:44,836 - __main__ - INFO - [classify_image_combined] - Gemini took 1.653s. Valid: T=True, R=True
+2025-07-06 01:39:44,837 - __main__ - INFO - [classify_image_combined] - Success: TomatoEarlyBlight6_cropped-1751755179068-77fba0bb.jpeg (best) -> Tomato___Early_blight (100.00%) in 2.290s
+2025-07-06 01:58:10,894 - __main__ - INFO - [classify_image_combined] - Request: PotatoEarlyBlight1_cropped-1751756290889-76635f83.jpeg, Model: best, Gemini: True
+2025-07-06 01:58:10,896 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250706015810_e6ca0cc5.jpeg
+2025-07-06 01:58:11,222 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-06 01:58:12,314 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in potatoes is treated with preventat...
+2025-07-06 01:58:13,090 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in potato plants is caused by the *Al...
+2025-07-06 01:58:13,092 - __main__ - INFO - [classify_image_combined] - Gemini took 1.870s. Valid: T=True, R=True
+2025-07-06 01:58:13,093 - __main__ - INFO - [classify_image_combined] - Success: PotatoEarlyBlight1_cropped-1751756290889-76635f83.jpeg (best) -> Potato___Early_blight (100.00%) in 2.198s
+2025-07-06 01:58:13,093 - __main__ - INFO - [classify_image_combined] - Request: PotatoEarlyBlight1_cropped-1751756290891-c3b7cb27.jpeg, Model: best, Gemini: True
+2025-07-06 01:58:13,096 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250706015813_7a04a30f.jpeg
+2025-07-06 01:58:13,436 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-06 01:58:14,256 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in potatoes is treated by removing in...
+2025-07-06 01:58:15,139 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in potato plants is caused by the *Al...
+2025-07-06 01:58:15,140 - __main__ - INFO - [classify_image_combined] - Gemini took 1.704s. Valid: T=True, R=True
+2025-07-06 01:58:15,141 - __main__ - INFO - [classify_image_combined] - Success: PotatoEarlyBlight1_cropped-1751756290891-c3b7cb27.jpeg (best) -> Potato___Early_blight (100.00%) in 2.047s
+2025-07-06 17:05:54,548 - __main__ - INFO - [<module>] - Mounted static directory: E:\Ai Code\python-api - Copy\static
+2025-07-06 17:05:54,568 - apscheduler.scheduler - INFO - [add_job] - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-06 17:05:54,568 - apscheduler.scheduler - INFO - [_real_add_job] - Added job "cleanup_old_files" to job store "default"
+2025-07-06 17:05:54,569 - apscheduler.scheduler - INFO - [start] - Scheduler started
+2025-07-06 17:05:54,570 - __main__ - INFO - [<module>] - File cleanup scheduler started.
+2025-07-06 17:05:54,698 - __main__ - INFO - [startup_event] - Startup: Loading models...
+2025-07-06 17:05:54,699 - __main__ - INFO - [load_pytorch_vit_model] - Loading PyTorch ViT model...
+2025-07-06 17:05:54,699 - __main__ - INFO - [load_pytorch_vit_model] - Path: E:\Ai Code\python-api - Copy\model\plant_disease_vit_BEST_model_state.pth
+2025-07-06 17:05:55,921 - __main__ - INFO - [load_pytorch_vit_model] - PyTorch ViT loaded.
+2025-07-06 17:05:55,921 - __main__ - INFO - [load_tensorflow_vgg_model] - Loading TensorFlow VGG model...
+2025-07-06 17:05:55,921 - __main__ - INFO - [load_tensorflow_vgg_model] - Path: E:\Ai Code\python-api - Copy\model\vgg_model.h5
+2025-07-06 17:05:56,299 - absl - WARNING - [try_build_compiled_arguments] - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-07-06 17:05:56,303 - __main__ - INFO - [load_tensorflow_vgg_model] - TensorFlow VGG loaded.
+2025-07-06 17:05:56,303 - __main__ - INFO - [startup_event] - Model loading attempt finished.
+2025-07-06 17:27:21,430 - __main__ - INFO - [classify_image_combined] - Request: AppleCedarRust2-1751812041420-e71ac6ab.JPG, Model: best, Gemini: True
+2025-07-06 17:27:21,432 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250706172721_bdabcdfc.JPG
+2025-07-06 17:27:22,849 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-06 17:27:23,871 - __main__ - INFO - [get_gemini_response] - Gemini response received: Cedar-apple rust in apple trees is managed through...
+2025-07-06 17:27:24,865 - __main__ - INFO - [get_gemini_response] - Gemini response received: Cedar-apple rust in apple plants is caused by a fu...
+2025-07-06 17:27:24,866 - __main__ - INFO - [classify_image_combined] - Gemini took 2.016s. Valid: T=True, R=True
+2025-07-06 17:27:24,866 - __main__ - INFO - [classify_image_combined] - Success: AppleCedarRust2-1751812041420-e71ac6ab.JPG (best) -> Apple___Cedar_apple_rust (100.00%) in 3.436s
+2025-07-06 17:27:24,869 - __main__ - INFO - [classify_image_combined] - Request: AppleCedarRust2-1751812041429-4bb676c0.JPG, Model: best, Gemini: True
+2025-07-06 17:27:24,872 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250706172724_01eb1609.JPG
+2025-07-06 17:27:25,514 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-06 17:27:26,635 - __main__ - INFO - [get_gemini_response] - Gemini response received: Cedar-apple rust treatment involves removing infec...
+2025-07-06 17:27:27,658 - __main__ - INFO - [get_gemini_response] - Gemini response received: Cedar apple rust in apple plants is caused by a fu...
+2025-07-06 17:27:27,660 - __main__ - INFO - [classify_image_combined] - Gemini took 2.146s. Valid: T=True, R=True
+2025-07-06 17:27:27,661 - __main__ - INFO - [classify_image_combined] - Success: AppleCedarRust2-1751812041429-4bb676c0.JPG (best) -> Apple___Cedar_apple_rust (100.00%) in 2.791s
+2025-07-06 17:39:12,585 - __main__ - INFO - [classify_image_combined] - Request: PotatoEarlyBlight2-1751812752571-7bf3f0e6.JPG, Model: best, Gemini: True
+2025-07-06 17:39:12,587 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250706173912_bc56592d.JPG
+2025-07-06 17:39:13,225 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-06 17:39:14,263 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in potatoes is treated by removing in...
+2025-07-06 17:39:15,127 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in potato plants is caused by the fun...
+2025-07-06 17:39:15,129 - __main__ - INFO - [classify_image_combined] - Gemini took 1.904s. Valid: T=True, R=True
+2025-07-06 17:39:15,129 - __main__ - INFO - [classify_image_combined] - Success: PotatoEarlyBlight2-1751812752571-7bf3f0e6.JPG (best) -> Potato___Early_blight (100.00%) in 2.544s
+2025-07-06 17:39:15,133 - __main__ - INFO - [classify_image_combined] - Request: PotatoEarlyBlight2-1751812752580-bd07932d.JPG, Model: best, Gemini: True
+2025-07-06 17:39:15,135 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250706173915_6baff2d3.JPG
+2025-07-06 17:39:15,755 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-06 17:39:16,573 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in potatoes is treated with preventat...
+2025-07-06 17:39:17,470 - __main__ - INFO - [get_gemini_response] - Gemini response received: Early blight in potato plants is caused primarily ...
+2025-07-06 17:39:17,471 - __main__ - INFO - [classify_image_combined] - Gemini took 1.716s. Valid: T=True, R=True
+2025-07-06 17:39:17,472 - __main__ - INFO - [classify_image_combined] - Success: PotatoEarlyBlight2-1751812752580-bd07932d.JPG (best) -> Potato___Early_blight (100.00%) in 2.338s
+2025-07-06 17:43:35,060 - __main__ - INFO - [shutdown_event] - Shutting down scheduler...
+2025-07-06 17:43:35,060 - apscheduler.scheduler - INFO - [shutdown] - Scheduler has been shut down
+2025-07-11 18:16:32,554 - __main__ - INFO - [<module>] - Mounted static directory: E:\Ai Code\python-api - Copy\static
+2025-07-11 18:16:32,567 - apscheduler.scheduler - INFO - [add_job] - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-11 18:16:32,570 - apscheduler.scheduler - INFO - [_real_add_job] - Added job "cleanup_old_files" to job store "default"
+2025-07-11 18:16:32,570 - apscheduler.scheduler - INFO - [start] - Scheduler started
+2025-07-11 18:16:32,572 - __main__ - INFO - [<module>] - File cleanup scheduler started.
+2025-07-11 18:16:32,704 - __main__ - INFO - [startup_event] - Startup: Loading models...
+2025-07-11 18:16:32,704 - __main__ - INFO - [load_pytorch_vit_model] - Loading PyTorch ViT model...
+2025-07-11 18:16:32,705 - __main__ - INFO - [load_pytorch_vit_model] - Path: E:\Ai Code\python-api - Copy\model\plant_disease_vit_BEST_model_state.pth
+2025-07-11 18:16:33,845 - __main__ - INFO - [load_pytorch_vit_model] - PyTorch ViT loaded.
+2025-07-11 18:16:33,845 - __main__ - INFO - [load_tensorflow_vgg_model] - Loading TensorFlow VGG model...
+2025-07-11 18:16:33,845 - __main__ - INFO - [load_tensorflow_vgg_model] - Path: E:\Ai Code\python-api - Copy\model\vgg_model.h5
+2025-07-11 18:16:34,230 - absl - WARNING - [try_build_compiled_arguments] - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-07-11 18:16:34,238 - __main__ - INFO - [load_tensorflow_vgg_model] - TensorFlow VGG loaded.
+2025-07-11 18:16:34,240 - __main__ - INFO - [startup_event] - Model loading attempt finished.
+2025-07-11 18:27:25,799 - __main__ - INFO - [classify_image_combined] - Request: AppleCedarRust1-1752247645791-7fd8d4ce.JPG, Model: best, Gemini: False
+2025-07-11 18:27:25,799 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711182725_863dd5b5.JPG
+2025-07-11 18:27:26,733 - __main__ - INFO - [classify_image_combined] - Success: AppleCedarRust1-1752247645791-7fd8d4ce.JPG (best) -> Apple___Cedar_apple_rust (100.00%) in 0.935s
+2025-07-11 18:27:26,733 - __main__ - INFO - [classify_image_combined] - Request: AppleCedarRust1-1752247645794-24f28feb.JPG, Model: best, Gemini: False
+2025-07-11 18:27:26,733 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711182726_fc9ca95f.JPG
+2025-07-11 18:27:27,089 - __main__ - INFO - [classify_image_combined] - Success: AppleCedarRust1-1752247645794-24f28feb.JPG (best) -> Apple___Cedar_apple_rust (100.00%) in 0.356s
+2025-07-11 18:37:04,199 - __main__ - INFO - [classify_image_combined] - Request: CornCommonRust1-1752248224190-f63d96df.JPG, Model: best, Gemini: False
+2025-07-11 18:37:04,232 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711183704_14b7167c.JPG
+2025-07-11 18:37:05,056 - __main__ - INFO - [classify_image_combined] - Success: CornCommonRust1-1752248224190-f63d96df.JPG (best) -> Corn_(maize)___Common_rust_ (100.00%) in 0.857s
+2025-07-11 18:37:05,056 - __main__ - INFO - [classify_image_combined] - Request: CornCommonRust1-1752248224202-cf70d6e2.JPG, Model: best, Gemini: False
+2025-07-11 18:37:05,056 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711183705_5f328520.JPG
+2025-07-11 18:37:05,831 - __main__ - INFO - [classify_image_combined] - Success: CornCommonRust1-1752248224202-cf70d6e2.JPG (best) -> Corn_(maize)___Common_rust_ (100.00%) in 0.775s
+2025-07-11 18:37:40,965 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus5-1752248260957-0c129526.JPG, Model: best, Gemini: False
+2025-07-11 18:37:40,965 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711183740_761589b0.JPG
+2025-07-11 18:37:41,745 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus5-1752248260957-0c129526.JPG (best) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.780s
+2025-07-11 18:37:41,748 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus5-1752248260966-1514d121.JPG, Model: best, Gemini: False
+2025-07-11 18:37:41,748 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711183741_dc7d175a.JPG
+2025-07-11 18:37:42,498 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus5-1752248260966-1514d121.JPG (best) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.750s
+2025-07-11 18:38:13,608 - __main__ - INFO - [classify_image_combined] - Request: PotatoEarlyBlight5-1752248293599-2849b98a.JPG, Model: vit, Gemini: False
+2025-07-11 18:38:13,608 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711183813_65bbd0f3.JPG
+2025-07-11 18:38:14,106 - __main__ - INFO - [classify_image_combined] - Success: PotatoEarlyBlight5-1752248293599-2849b98a.JPG (vit) -> Potato___Early_blight (100.00%) in 0.498s
+2025-07-11 18:38:14,106 - __main__ - INFO - [classify_image_combined] - Request: PotatoEarlyBlight5-1752248293608-031969bb.JPG, Model: vit, Gemini: False
+2025-07-11 18:38:14,114 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711183814_f01eaa48.JPG
+2025-07-11 18:38:14,564 - __main__ - INFO - [classify_image_combined] - Success: PotatoEarlyBlight5-1752248293608-031969bb.JPG (vit) -> Potato___Early_blight (100.00%) in 0.458s
+2025-07-11 18:50:15,888 - __main__ - INFO - [classify_image_combined] - Request: TomatoHealthy1-1752249015877-0490f9a4.JPG, Model: vgg, Gemini: False
+2025-07-11 18:50:15,888 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711185015_0a831e81.JPG
+2025-07-11 18:50:16,202 - __main__ - INFO - [classify_image_combined] - Success: TomatoHealthy1-1752249015877-0490f9a4.JPG (vgg) -> Tomato___healthy (100.00%) in 0.314s
+2025-07-11 18:50:16,202 - __main__ - INFO - [classify_image_combined] - Request: TomatoHealthy1-1752249015881-d751e51c.JPG, Model: vgg, Gemini: False
+2025-07-11 18:50:16,202 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711185016_b07c0cb9.JPG
+2025-07-11 18:50:16,535 - __main__ - INFO - [classify_image_combined] - Success: TomatoHealthy1-1752249015881-d751e51c.JPG (vgg) -> Tomato___healthy (100.00%) in 0.333s
+2025-07-11 18:56:38,510 - __main__ - INFO - [classify_image_combined] - Request: PotatoHealthy1-1752249398489-ca925276.JPG, Model: vit, Gemini: False
+2025-07-11 18:56:38,515 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711185638_0c71f4f5.JPG
+2025-07-11 18:56:38,900 - __main__ - INFO - [classify_image_combined] - Success: PotatoHealthy1-1752249398489-ca925276.JPG (vit) -> Potato___healthy (100.00%) in 0.391s
+2025-07-11 19:02:09,146 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus6-1752249729134-3dae5664.JPG, Model: vit, Gemini: False
+2025-07-11 19:02:09,146 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711190209_74ba9d1d.JPG
+2025-07-11 19:02:09,614 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus6-1752249729134-3dae5664.JPG (vit) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 0.467s
+2025-07-11 19:03:31,389 - __main__ - INFO - [classify_image_combined] - Request: CornCommonRust1-1752249811380-c078605a.JPG, Model: best, Gemini: False
+2025-07-11 19:03:31,389 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250711190331_16446bf0.JPG
+2025-07-11 19:03:32,194 - __main__ - INFO - [classify_image_combined] - Success: CornCommonRust1-1752249811380-c078605a.JPG (best) -> Corn_(maize)___Common_rust_ (100.00%) in 0.805s
+2025-07-12 07:20:39,719 - __main__ - INFO - [<module>] - Mounted static directory: E:\12-07-2025\Server\Python Code\static
+2025-07-12 07:20:39,743 - apscheduler.scheduler - INFO - [add_job] - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-12 07:20:39,744 - apscheduler.scheduler - INFO - [_real_add_job] - Added job "cleanup_old_files" to job store "default"
+2025-07-12 07:20:39,744 - apscheduler.scheduler - INFO - [start] - Scheduler started
+2025-07-12 07:20:39,746 - __main__ - INFO - [<module>] - File cleanup scheduler started.
+2025-07-12 07:20:39,950 - __main__ - INFO - [startup_event] - Startup: Loading models...
+2025-07-12 07:20:39,950 - __main__ - INFO - [load_pytorch_vit_model] - Loading PyTorch ViT model...
+2025-07-12 07:20:39,950 - __main__ - INFO - [load_pytorch_vit_model] - Path: E:\12-07-2025\Server\Python Code\model\plant_disease_vit_BEST_model_state.pth
+2025-07-12 07:20:41,610 - __main__ - INFO - [load_pytorch_vit_model] - PyTorch ViT loaded.
+2025-07-12 07:20:41,611 - __main__ - INFO - [load_tensorflow_vgg_model] - Loading TensorFlow VGG model...
+2025-07-12 07:20:41,612 - __main__ - INFO - [load_tensorflow_vgg_model] - Path: E:\12-07-2025\Server\Python Code\model\vgg_model.h5
+2025-07-12 07:20:42,270 - absl - WARNING - [try_build_compiled_arguments] - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-07-12 07:20:42,284 - __main__ - INFO - [load_tensorflow_vgg_model] - TensorFlow VGG loaded.
+2025-07-12 07:20:42,284 - __main__ - INFO - [startup_event] - Model loading attempt finished.
+2025-07-12 07:32:19,844 - __main__ - INFO - [classify_image_combined] - Request: TomatoYellowCurlVirus2-1752294739801-60b49c20.JPG, Model: best, Gemini: True
+2025-07-12 07:32:19,859 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250712073219_63b5b007.JPG
+2025-07-12 07:32:21,712 - __main__ - INFO - [classify_image_combined] - Requesting Gemini (1.5 Flash)...
+2025-07-12 07:32:22,782 - __main__ - INFO - [get_gemini_response] - Gemini response received: Treatment for Tomato Yellow Leaf Curl Virus focuse...
+2025-07-12 07:32:23,781 - __main__ - INFO - [get_gemini_response] - Gemini response received: Tomato Yellow Leaf Curl Virus (TYLCV) in tomato pl...
+2025-07-12 07:32:23,785 - __main__ - INFO - [classify_image_combined] - Gemini took 2.073s. Valid: T=True, R=True
+2025-07-12 07:32:23,788 - __main__ - INFO - [classify_image_combined] - Success: TomatoYellowCurlVirus2-1752294739801-60b49c20.JPG (best) -> Tomato___Tomato_Yellow_Leaf_Curl_Virus (100.00%) in 3.943s
+2025-07-12 07:33:00,942 - __main__ - INFO - [shutdown_event] - Shutting down scheduler...
+2025-07-12 07:33:00,942 - apscheduler.scheduler - INFO - [shutdown] - Scheduler has been shut down
+2025-07-12 12:17:42,270 - __main__ - INFO - [<module>] - Mounted static directory: E:\12-07-2025\Server\Python Code\static
+2025-07-12 12:17:42,302 - apscheduler.scheduler - INFO - [add_job] - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-12 12:17:42,302 - apscheduler.scheduler - INFO - [_real_add_job] - Added job "cleanup_old_files" to job store "default"
+2025-07-12 12:17:42,302 - apscheduler.scheduler - INFO - [start] - Scheduler started
+2025-07-12 12:17:42,305 - __main__ - INFO - [<module>] - File cleanup scheduler started.
+2025-07-12 12:17:42,588 - __main__ - INFO - [startup_event] - Startup: Loading models...
+2025-07-12 12:17:42,588 - __main__ - INFO - [load_pytorch_vit_model] - Loading PyTorch ViT model...
+2025-07-12 12:17:42,592 - __main__ - INFO - [load_pytorch_vit_model] - Path: E:\12-07-2025\Server\Python Code\model\plant_disease_vit_BEST_model_state.pth
+2025-07-12 12:17:44,889 - __main__ - INFO - [load_pytorch_vit_model] - PyTorch ViT loaded.
+2025-07-12 12:17:44,891 - __main__ - INFO - [load_tensorflow_vgg_model] - Loading TensorFlow VGG model...
+2025-07-12 12:17:44,891 - __main__ - INFO - [load_tensorflow_vgg_model] - Path: E:\12-07-2025\Server\Python Code\model\vgg_model.h5
+2025-07-12 12:17:45,939 - absl - WARNING - [try_build_compiled_arguments] - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-07-12 12:17:45,964 - __main__ - INFO - [load_tensorflow_vgg_model] - TensorFlow VGG loaded.
+2025-07-12 12:17:45,964 - __main__ - INFO - [startup_event] - Model loading attempt finished.
+2025-07-12 13:56:36,543 - __main__ - INFO - [<module>] - Mounted static directory: E:\12-07-2025\Server\Python Code\static
+2025-07-12 13:56:36,575 - apscheduler.scheduler - INFO - [add_job] - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-12 13:56:36,575 - apscheduler.scheduler - INFO - [_real_add_job] - Added job "cleanup_old_files" to job store "default"
+2025-07-12 13:56:36,575 - apscheduler.scheduler - INFO - [start] - Scheduler started
+2025-07-12 13:56:36,575 - __main__ - INFO - [<module>] - File cleanup scheduler started.
+2025-07-12 13:56:36,901 - __main__ - INFO - [startup_event] - Startup: Loading models...
+2025-07-12 13:56:36,901 - __main__ - INFO - [load_pytorch_vit_model] - Loading PyTorch ViT model...
+2025-07-12 13:56:36,904 - __main__ - INFO - [load_pytorch_vit_model] - Path: E:\12-07-2025\Server\Python Code\model\plant_disease_vit_BEST_model_state.pth
+2025-07-12 13:56:39,683 - __main__ - INFO - [load_pytorch_vit_model] - PyTorch ViT loaded.
+2025-07-12 13:56:39,687 - __main__ - INFO - [load_tensorflow_vgg_model] - Loading TensorFlow VGG model...
+2025-07-12 13:56:39,689 - __main__ - INFO - [load_tensorflow_vgg_model] - Path: E:\12-07-2025\Server\Python Code\model\vgg_model.h5
+2025-07-12 13:56:40,777 - absl - WARNING - [try_build_compiled_arguments] - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-07-12 13:56:40,807 - __main__ - INFO - [load_tensorflow_vgg_model] - TensorFlow VGG loaded.
+2025-07-12 13:56:40,810 - __main__ - INFO - [startup_event] - Model loading attempt finished.
+2025-07-12 14:35:40,499 - __main__ - INFO - [classify_image_combined] - Request: AppleScab3-1752320140467-580e36fb.JPG, Model: best, Gemini: False
+2025-07-12 14:35:40,502 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250712143540_a0ba0dc4.JPG
+2025-07-12 14:35:41,772 - __main__ - INFO - [classify_image_combined] - Success: AppleScab3-1752320140467-580e36fb.JPG (best) -> Apple___Apple_scab (100.00%) in 1.273s
+2025-07-16 19:13:10,487 - __main__ - INFO - [<module>] - Mounted static directory: E:\12-07-2025\Server\Python Code\static
+2025-07-16 19:13:10,504 - apscheduler.scheduler - INFO - [add_job] - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-07-16 19:13:10,506 - apscheduler.scheduler - INFO - [_real_add_job] - Added job "cleanup_old_files" to job store "default"
+2025-07-16 19:13:10,507 - apscheduler.scheduler - INFO - [start] - Scheduler started
+2025-07-16 19:13:10,510 - __main__ - INFO - [<module>] - File cleanup scheduler started.
+2025-07-16 19:13:10,628 - __main__ - INFO - [startup_event] - Startup: Loading models...
+2025-07-16 19:13:10,628 - __main__ - INFO - [load_pytorch_vit_model] - Loading PyTorch ViT model...
+2025-07-16 19:13:10,628 - __main__ - INFO - [load_pytorch_vit_model] - Path: E:\12-07-2025\Server\Python Code\model\plant_disease_vit_BEST_model_state.pth
+2025-07-16 19:13:11,949 - __main__ - INFO - [load_pytorch_vit_model] - PyTorch ViT loaded.
+2025-07-16 19:13:11,949 - __main__ - INFO - [load_tensorflow_vgg_model] - Loading TensorFlow VGG model...
+2025-07-16 19:13:11,949 - __main__ - INFO - [load_tensorflow_vgg_model] - Path: E:\12-07-2025\Server\Python Code\model\vgg_model.h5
+2025-07-16 19:13:12,348 - absl - WARNING - [try_build_compiled_arguments] - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-07-16 19:13:12,365 - __main__ - INFO - [load_tensorflow_vgg_model] - TensorFlow VGG loaded.
+2025-07-16 19:13:12,365 - __main__ - INFO - [startup_event] - Model loading attempt finished.
+2025-07-16 19:13:40,212 - __main__ - INFO - [classify_image_combined] - Request: AppleScab2.JPG, Model: best, Gemini: False
+2025-07-16 19:13:40,212 - __main__ - INFO - [save_upload] - File saved: uploads\upload_20250716191340_5c764486.JPG
+2025-07-16 19:13:41,988 - __main__ - INFO - [classify_image_combined] - Success: AppleScab2.JPG (best) -> Apple___Apple_scab (100.00%) in 1.776s
+2025-07-16 19:14:28,496 - __main__ - INFO - [shutdown_event] - Shutting down scheduler...
+2025-07-16 19:14:28,498 - apscheduler.scheduler - INFO - [shutdown] - Scheduler has been shut down
